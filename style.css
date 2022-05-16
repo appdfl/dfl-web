@@ -1,0 +1,686 @@
+:root {
+    font-size: 62.5%;
+    /* 
+    100% ----- 16px
+    x  ------- 10px
+    
+    1rem = 10px
+    */
+
+    --nav-height: 7.2rem;
+
+    --primary-color-01: #4F9D69;
+    --primary-color-02: #7FB883;
+    --primary-color-03: #AED296;
+    --primary-color-04: #C9E2C9;
+
+    --secondary-color-01: #26413C;
+    --secondary-color-02: #346259;
+
+    --background-01: #F6F7EB;
+    --background-02: #E6EADA;
+    --background-modal: #F3F7F4;
+
+    --font-dark: #212529;
+    --font-light: #495057;
+    --white: #FEFEFE;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* As caixas agora passam a ser contadas a partir da borda, e não do conteúdo, evitando problemas com o "padding" */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter';
+    font-size: 1.6rem;
+    text-align: center;
+
+    overflow: overlay;
+    background: linear-gradient(180deg, #FFFFFF 100%, var(--background-02) 100%);
+}
+
+button {
+    font-family: 'Inter';
+    border: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.wrapper {
+    width: min(55rem, 100%);
+    margin-inline: auto;
+    padding-inline: 2rem;
+    border: 1px solid red;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+section {
+    padding-block: 7.5rem;
+    padding-inline: 1.5rem;
+}
+
+/* Descrição que vai acima do título */
+section header h4 {
+    font-size: 1.4rem;
+    /* Equivale à 100% de font-size no root = padrão do navegador = 16px */
+    color: var(--secondary-color-02);
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+/* Título da home */
+section header h1 {
+    font-size: 4.1rem;
+    color: var(--font-dark);
+    line-height: 125%;
+}
+
+/* Título das seções */
+section header h2 {
+    font-weight: 700;
+    font-size: 3.4rem;
+    line-height: 130%;
+    color: var(--font-dark);
+}
+
+/* Subtítulo que vai abaixo dos títulos */
+section p {
+    font-family: 'Roboto';
+    color: var(--font-light);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.button {
+    background-color: var(--secondary-color-02);
+    border: none;
+    border-radius: 1.5rem;
+
+    display: flex;
+    /* Altera como os "filhos" são posicionados dentro do botão */
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+
+    margin-inline: auto;
+
+    width: fit-content;
+    /* A largura se adapta ao conteúdo */
+    padding: 1.6rem 3.2rem;
+    /* primeira = vertical | segunda = horizontal */
+
+    color: var(--white);
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: var(--secondary-color-01);
+}
+
+.social-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3.2rem;
+}
+
+/* ===== NAVIGATION ================================================== */
+nav {
+    display: flex;
+
+    background-color: var(--background-02);
+    height: var(--nav-height);
+    width: 100vw;
+
+    position: fixed;
+    top: 0;
+    transition: 0.3s;
+
+    z-index: 100;
+}
+
+nav .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid red;
+}
+
+nav.scroll {
+    background-color: var(--secondary-color-02);
+    /* opacity: 0.75; */
+}
+
+nav.scroll .open-menu svg path {
+    stroke: var(--white);
+}
+
+nav.scroll .logo path {
+    fill: var(--white);
+}
+
+nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+nav .menu {
+    position: fixed;
+}
+
+/* ===== MENU ================================================== */
+body.menu-expanded {
+    /* Quando o menu estiver aberto, removemos a possibilidade de rolagem */
+    overflow: hidden;
+}
+
+/* body.menu-expanded> :not(nav) {
+    Some com TUDO na página (primeiro nível - header, body), menos o que foi especificado no :not()
+    visibility: hidden;
+} */
+
+
+/* O menu fica oculto por padrão
+ e o botão de abrir o menu fica oculto quando o menu está aberto  */
+.menu,
+body.menu-expanded .open-menu {
+    /* display: none; */
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* Por padrão, para a animação, deixamos o menu todo na direita */
+.menu {
+    z-index: initial;
+    transform: translateX(100%);
+}
+
+.menu-wrapper {
+    z-index: 10;
+}
+
+body.menu-expanded .backdrop {
+    opacity: 0.65;
+}
+
+.menu .backdrop {
+    position: absolute;
+    top: 0;
+    left: -100vw;
+
+    width: 125vw;
+    height: 100vh;
+
+    background-color: black;
+
+    opacity: 0;
+    transition: 0.25s;
+    transition-delay: 0.1s;
+
+    z-index: -1;
+    transform: translateZ(-10px)
+}
+
+/* O menu é exibido quando a classe ".menu-expanded" é adicionada pelo JavaScript */
+body.menu-expanded .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5rem;
+
+    max-width: max-content;
+
+    visibility: visible;
+    opacity: 1;
+
+    top: 0;
+    right: 0;
+    background-color: var(--secondary-color-02);
+
+    padding: 1.5rem 2.5rem;
+    width: 85vw;
+    height: 100vh;
+
+    transform-style: preserve-3d;
+
+    transition: transform 225ms;
+    transition-timing-function: cubic-bezier(0.002, 0.82, 0.165, 1);
+    transform: translateX(0%);
+}
+
+.menu .close-menu {
+    align-self: flex-start;
+}
+
+.menu .list {
+    display: flex;
+    flex-direction: column;
+
+    align-self: flex-end;
+    align-items: flex-end;
+    gap: 5rem;
+
+    font-weight: 700;
+    font-size: 2.4rem;
+}
+
+.menu ul li a {
+    color: var(--white);
+    text-decoration: none;
+}
+
+.menu .button {
+    background-color: var(--background-modal);
+    color: var(--secondary-color-02);
+    border-radius: 1.5rem;
+    padding: 1rem 2rem;
+
+    display: inline-flex;
+
+    margin-top: 4.8rem;
+    margin-bottom: 2.5rem;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.menu .button:hover svg path {
+    fill: var(--white);
+    transition: 0.3s;
+}
+
+.menu .button:hover {
+    background-color: var(--secondary-color-01);
+    color: var(--white);
+}
+
+/* body.menu-expanded .logo,
+body.menu-expanded nav button {
+    Lembrar de especificar que o botão é o do nav
+    position: relative;
+    z-index: 3;
+} */
+
+/* ===== HOME ================================================== */
+#home {
+    margin-top: var(--nav-height);
+    align-items: center;
+
+    background-color: var(--background-02);
+
+    padding-block: 0;
+    /* padding-inline: 1rem; */
+}
+
+#home h4 {
+    margin-top: 4rem;
+    opacity: 1;
+}
+
+#home .button {
+    justify-self: center;
+}
+
+/* #home::before {
+    content: "";
+    background-color: var(--background-02);
+
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    width: 100%;
+    height: calc(105% + var(--nav-height));
+} */
+
+#home .platforms {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: 'Inter';
+    color: var(--secondary-color-02);
+
+    margin-top: 2.5rem;
+    margin-bottom: 5rem;
+}
+
+#home p {
+    line-height: 150%;
+    font-weight: 400;
+    margin-bottom: 2.5rem;
+}
+
+#home .landing {
+    display: block;
+    margin-inline: auto;
+    /* 
+        Movimenta a imagem dentro da caixa "img" nos eixos (x e y) 
+        Precisa ser em "rem" já que atualizamos o width
+    */
+
+    max-width: 75%;
+    /* Para que o tamanho da imagem acompanhe o zoom da página */
+}
+
+/* ===== ABOUT ================================================== */
+
+#about .tags {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+
+    margin-top: 1.2rem;
+    margin-bottom: 3.2rem;
+}
+
+#about .tag {
+    border-radius: 3rem;
+    color: var(--secondary-color-01);
+    background-color: transparent;
+    border: 1.5px solid var(--secondary-color-01);
+    /* Quando não está selecionado (padrão) */
+
+
+    display: flex;
+    padding: 0.35rem 1.2rem;
+    transform: 0.3s;
+}
+
+#about .tag:hover {
+    cursor: pointer;
+}
+
+#about .tag.selected {
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1.2rem;
+    background-color: var(--secondary-color-01);
+}
+
+#about .phone-container {
+    display: block;
+    width: 100%;
+    height: 52.5rem;
+    margin-bottom: 2.5rem;
+}
+
+#about .overlay-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#about .phone-overlay {
+    width: fit-content;
+    min-width: fit-content;
+    height: 53.5rem;
+}
+
+#about .app-overlay {
+    position: relative;
+    z-index: -1;
+    width: fit-content;
+    min-width: fit-content;
+    height: 50.2rem;
+    top: -100%;
+    border-radius: 2.5rem;
+}
+
+#about .column-1,
+#about .column-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5rem;
+}
+
+/* No caso de telas pequenas (dispositivos móveis) a coluna 1 tem que empurrar a coluna 2 para baixo */
+#about .column-1 {
+    margin-bottom: 2.5rem;
+}
+
+#about .info-container {
+    display: flex;
+}
+
+.bolder {
+    font-weight: 800;
+}
+
+#about .info-container p {
+    text-align: left;
+    font-size: 1.4rem;
+    line-height: 150%;
+    font-family: 'Roboto';
+    color: var(--secondary-color-01);
+    font-weight: 400;
+}
+
+#about .info-shape {
+    border-radius: 0px 0.5rem 0.5rem 0.5rem;
+    background-color: var(--primary-color-04);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.8rem;
+
+    max-width: fit-content;
+    height: 4.5rem;
+
+    margin-right: 2.6rem;
+}
+
+/* ===== REPORTS ================================================== */
+#reports h4,
+#reports h2 {
+    color: var(--background-01);
+}
+
+#reports h4 {
+    font-size: 1.2rem;
+}
+
+#reports h2 {
+    font-size: 2.8rem;
+}
+
+#reports .wrapper {
+    padding: 0;
+}
+
+#reports {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    gap: 2rem;
+
+    background: linear-gradient(180deg, #7FB883 0%, #AED296 100%);
+    border-radius: 1.5rem;
+
+    margin: 2.55rem;
+}
+
+#reports .content h4 {
+    opacity: 1;
+    text-transform: uppercase;
+    color: var(--background-modal);
+    margin-block: 2rem;
+}
+
+#reports .cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.8rem;
+}
+
+#reports .card {
+    padding: 2.5rem 3.4rem;
+    background-color: var(--background-01);
+    color: var(--primary-color-01);
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#reports .card h3 {
+    font-weight: 900;
+    font-size: 3.6rem;
+    line-height: 150%;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.08rem;
+
+    color: var(--primary-color-02);
+}
+
+#reports .card p {
+    font-family: 'Roboto';
+    ;
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 100%;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.08rem;
+
+    color: var(--primary-color-02);
+}
+
+/* ===== COMMUNITY ================================================== */
+.big {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+#community {
+    text-align: left;
+    padding: 0;
+    margin-top: 7.5rem;
+}
+
+#community img {
+    margin-block: 3.5rem;
+}
+
+#community .wrapper .content p:nth-child(3) {
+    /* Lembrar que o "child" conta TODOS os elementos, não só os do mesmo tipo */
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--secondary-color-01);
+}
+
+/* ===== DOWNLOAD ================================================== */
+#download {
+    text-align: right;
+}
+
+#download h2 {
+    margin-bottom: 1.5rem;
+}
+
+#download p:nth-child(1) {
+    margin-bottom: 2.5rem;
+}
+
+#download .coming-soon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+
+    margin-top: 1rem;
+    margin-bottom: 4.5rem;
+
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 150%;
+
+    color: var(--secondary-color-02);
+}
+
+/* ===== FOOTER ================================================== */
+footer {
+    background-color: var(--secondary-color-02);
+    padding-block: 6rem;
+
+    text-align: left;
+    font-weight: 400;
+    color: var(--white);
+}
+
+footer .logo {
+    display: inline-block;
+    /* Display inline não aceita quase nada (width, margin) */
+    width: 23.6rem;
+    height: 3.1rem;
+    margin-bottom: 2.4rem;
+}
+
+footer .logo svg {
+    width: 23.6rem;
+    height: 3.1rem;
+}
+
+footer .logo path {
+    fill: var(--white);
+}
+
+footer p {
+    color: var(--primary-color-beige);
+    line-height: 2;
+    margin-bottom: 3.2rem;
+}
+
+footer .social-links {
+    justify-content: flex-start;
+}
