@@ -37,12 +37,13 @@ function closeMenu() {
 
 const animation_time = 250 // 0.25 segundos
 
-const column1 = document.querySelector("#about .column-1").childNodes;
+const column1 = document.querySelector("#about .column-1");
+const column1_child = column1.childNodes;
 // As colunas são sempre os items [1, 3 e 5] (por algum motivo os outros são textos "\n")
 
-const column1_1 = column1[1]
-const column1_2 = column1[3]
-const column1_3 = column1[5]
+const column1_1 = column1_child[1]
+const column1_2 = column1_child[3]
+const column1_3 = column1_child[5]
 
 // Para obtermos o elemento [i] de ícone, precisamos entrar primeiro na info-shape, para daí entrar no [i]
 const icon1_1 = column1_1.childNodes[1].childNodes[1]
@@ -54,11 +55,12 @@ const text1_2 = column1_2.childNodes[3]
 const icon1_3 = column1_3.childNodes[1].childNodes[1]
 const text1_3 = column1_3.childNodes[3]
 
-const column2 = document.querySelector("#about .column-2").childNodes;
+const column2 = document.querySelector("#about .column-2")
+const column2_child = column2.childNodes;
 
-const column2_1 = column1[1]
-const column2_2 = column1[3]
-const column2_3 = column1[5]
+const column2_1 = column2_child[1]
+const column2_2 = column2_child[3]
+const column2_3 = column2_child[5]
 
 const icon2_1 = column2_1.childNodes[1].childNodes[1]
 const text2_1 = column2_1.childNodes[3]
@@ -77,18 +79,30 @@ async function changeAboutInstance(element, instance) {
 
     const response = await fetch("./aboutInfo.json");
     const aboutInfo = await response.json();
-    console.log(aboutInfo);
+    console.log(aboutInfo)
 
     const imageElement = document.getElementById("app-overlay")
     imageElement.classList.remove('visible')
     imageElement.classList.add('hidden');
-    console.log("Ocultamos a imagem")
+    //console.log("Ocultamos a imagem")
 
+    column1.classList.remove("visible")
+    column1.classList.add("hidden")
+    column2.classList.remove("visible")
+    column2.classList.add("hidden")
     setTimeout(function () {
+        column1.classList.remove("hidden")
+        column1.classList.add("visible")
+
+        imageElement.classList.remove('hidden')
+        imageElement.classList.add('visible');
         switch (instance) {
             case "community":
+                column2.classList.remove("hidden")
+                column2.classList.add("visible")
+
                 imageElement.src = "./assets/screens/CommunityScreen.png"
-                for (let index = 0; index < icons.length; index++) {
+                for (let index = 0; index < aboutInfo.community.length; index++) {
                     const icon = icons[index];
                     const text = texts[index];
                     const info = aboutInfo.community[index]
@@ -97,24 +111,35 @@ async function changeAboutInstance(element, instance) {
                 }
                 break;
             case "reports":
+                column2.classList.remove("hidden")
+                column2.classList.add("visible")
+
                 imageElement.src = "./assets/screens/ReportsScreen.png"
-                for (let index = 0; index < icons.length; index++) {
+                for (let index = 0; index < aboutInfo.reports.length; index++) {
+                    const icon = icons[index];
+                    const text = texts[index];
+                    const info = aboutInfo.reports[index]
+                    icon.textContent = info.icon
+                    text.innerHTML = `<span class="bolder">${info.title}</span><br />${info.description}`
+                    console.log(icon.textContent, info.icon)
+                }
+                break;
+            case "notify":
+                imageElement.src = "./assets/screens/ReportScreen_1.png"
+                for (let index = 0; index < aboutInfo.notify.length; index++) {
                     const icon = icons[index];
                     const text = texts[index];
                     const info = aboutInfo.reports[index]
                     icon.textContent = info.icon
                     text.innerHTML = `<span class="bolder">${info.title}</span><br />${info.description}`
                 }
-                break;
-            case "notify":
-                imageElement.src = "./assets/screens/ReportScreen_1.png"
+                column2.classList.remove("visible")
+                column2.classList.add("hidden")
                 break;
             default:
                 break;
         }
 
-        imageElement.classList.remove('hidden')
-        imageElement.classList.add('visible');
         console.log("Exibimos a imagem.")
     }, animation_time);
 

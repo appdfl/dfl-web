@@ -62,5 +62,22 @@
             "title": "Eu tenho que mostrar isso.",
             "description": "Encontrou um foco de lixo daqueles? Compartilhe o relatório com seus contatos para eles ficarem sabendo de tudo."
         }
+    ],
+    "notify": [
+        {
+            "icon": "place",
+            "title": "Temos que saber onde tá o lixo, né?",
+            "description": "Obtemos sua localização aproximada para definir a posição do foco de lixo, então, fique o mais próximo possível do foco!"
+        },
+        {
+            "icon": "photo_camera",
+            "title": "Agora, como é que tá a situação?",
+            "description": "Fotografe o foco de lixo da maneira que quiser para mostrar ao mundo como está o local."
+        },
+        {
+            "icon": "info",
+            "title": "Detalhes! Precisamos de detalhes!",
+            "description": "Selecione entre as tags que disponibilizamos para caracterizar o foco. Além disso, deixe uma sugestão para o problema, é sempre bom!"
+        }
     ]
 }
