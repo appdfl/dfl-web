@@ -13,6 +13,25 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+        /* Rules for icon sizes: */
+        .material-icons.default {
+            font-size: 24px;
+        }
+
+        /* Default */
+        .material-icons.about {
+            font-size: 28px;
+            color: #7FB883;
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 48
+        }
+    </style>
 </head>
 
 <body>
@@ -168,28 +187,23 @@
             </header>
             <div class="content">
                 <div class="tags">
-                    <button class="community tag selected">Comunidade</button>
-                    <button class="reports tag">Relatórios</button>
-                    <button class="notify tag">Notificar Foco</button>
-                    <button class="rewards tag">Recompensas</button>
+                    <button onclick="changeAboutInstance(this, 'community')" class="tag selected">Comunidade</button>
+                    <button onclick="changeAboutInstance(this, 'reports')" class="tag">Relatórios</button>
+                    <button onclick="changeAboutInstance(this, 'notify')" class="tag">Notificar Foco</button>
+                    <!-- <button onclick="changeAboutInstance(this, 'rewards')" class="tag">Recompensas</button> -->
                 </div>
                 <div class="phone-container">
                     <div class="overlay-container">
                         <img class="phone-overlay" src="./assets/phone_overlay.png"
                             alt="Modelo de telefone que circunda imagens de telas presentes no aplicativo.">
                     </div>
-                    <img class="app-overlay" src="./assets/screens/CommunityScreen.png"
+                    <img id="app-overlay" src="./assets/screens/CommunityScreen.png"
                         alt='Tela da seção "Comunidade" do aplicativo móvel.'>
                 </div>
                 <div class="column-1">
                     <div class="info-container">
                         <div class="info-shape">
-                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M19.8333 12.8333V3.5H8.16667V8.16667H3.5V24.5H12.8333V19.8333H15.1667V24.5H24.5V12.8333H19.8333ZM8.16667 22.1667H5.83333V19.8333H8.16667V22.1667ZM8.16667 17.5H5.83333V15.1667H8.16667V17.5ZM8.16667 12.8333H5.83333V10.5H8.16667V12.8333ZM12.8333 17.5H10.5V15.1667H12.8333V17.5ZM12.8333 12.8333H10.5V10.5H12.8333V12.8333ZM12.8333 8.16667H10.5V5.83333H12.8333V8.16667ZM17.5 17.5H15.1667V15.1667H17.5V17.5ZM17.5 12.8333H15.1667V10.5H17.5V12.8333ZM17.5 8.16667H15.1667V5.83333H17.5V8.16667ZM22.1667 22.1667H19.8333V19.8333H22.1667V22.1667ZM22.1667 17.5H19.8333V15.1667H22.1667V17.5Z"
-                                    fill="#7FB883" />
-                            </svg>
+                            <i class="material-icons about">apartment</i>
                         </div>
                         <p><span class="bolder">Você não está sozinho em sua cidade.</span><br />
                             Mantenha-se ativo com uma comunidade de pessoas como você.
@@ -197,12 +211,7 @@
                     </div>
                     <div class="info-container">
                         <div class="info-shape">
-                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M25.655 4.66671C25.655 3.38337 24.6166 2.33337 23.3333 2.33337H4.66665C3.38331 2.33337 2.33331 3.38337 2.33331 4.66671V18.6667C2.33331 19.95 3.38331 21 4.66665 21H21L25.6666 25.6667L25.655 4.66671ZM23.3333 4.66671V20.0317L21.9683 18.6667H4.66665V4.66671H23.3333ZM6.99998 14H21V16.3334H6.99998V14ZM6.99998 10.5H21V12.8334H6.99998V10.5ZM6.99998 7.00004H21V9.33337H6.99998V7.00004Z"
-                                    fill="#7FB883" />
-                            </svg>
+                            <i class="material-icons about">comment</i>
                         </div>
                         <p><span class="bolder">É bom se manter atualizado.</span><br />
                             Acompanhe os comentários e discussões realizadas por outros usuários.
@@ -210,27 +219,7 @@
                     </div>
                     <div class="info-container">
                         <div class="info-shape">
-                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M15.19 23.2517V25.6084C17.535 25.3751 19.67 24.4417 21.3967 23.0301L19.74 21.3617C18.445 22.3651 16.8933 23.0417 15.19 23.2517Z"
-                                    fill="#7FB883" />
-                                <path
-                                    d="M4.70168 14.0001C4.70168 9.27506 8.23668 5.35506 12.81 4.74839V2.39172C6.94168 3.01006 2.36835 7.98006 2.36835 14.0001C2.36835 20.0201 6.94168 24.9901 12.81 25.6084V23.2517C8.23668 22.6451 4.70168 18.7251 4.70168 14.0001Z"
-                                    fill="#7FB883" />
-                                <path
-                                    d="M23.275 12.8334H25.6317C25.3983 10.4884 24.465 8.35339 23.0533 6.62672L21.385 8.29506C22.3883 9.57839 23.065 11.1301 23.275 12.8334Z"
-                                    fill="#7FB883" />
-                                <path
-                                    d="M21.3967 4.97006C19.67 3.55839 17.5233 2.62506 15.19 2.39172V4.74839C16.8933 4.95839 18.445 5.63506 19.74 6.63839L21.3967 4.97006Z"
-                                    fill="#7FB883" />
-                                <path
-                                    d="M21.385 19.7167L23.0533 21.3734C24.465 19.6467 25.3983 17.5117 25.6317 15.1667H23.275C23.065 16.8701 22.3883 18.4217 21.385 19.7167Z"
-                                    fill="#7FB883" />
-                                <path
-                                    d="M18.6667 12.9501C18.6667 10.0451 16.45 8.16672 14 8.16672C11.55 8.16672 9.33335 10.0451 9.33335 12.9501C9.33335 14.8867 10.885 17.1851 14 19.8334C17.115 17.1851 18.6667 14.8867 18.6667 12.9501ZM14 14.0001C13.3117 14.0001 12.7517 13.4401 12.7517 12.7517C12.7517 12.0634 13.3117 11.5034 14 11.5034C14.6883 11.5034 15.2483 12.0634 15.2483 12.7517C15.2483 13.4401 14.6883 14.0001 14 14.0001Z"
-                                    fill="#7FB883" />
-                            </svg>
+                            <i class="material-icons about">share_location</i>
                         </div>
                         <p><span class="bolder">Encontrou um ecoponto por perto?</span><br />
                             Obtenha a rota mais próxima para o ponto de coleta ou compartilhe a localização com pessoas
@@ -241,12 +230,7 @@
                 <div class="column-2">
                     <div class="info-container">
                         <div class="info-shape">
-                            <svg width="29" height="28" viewBox="0 0 29 28" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M24.087 6.99996H14.7536L12.4203 4.66663H5.42031C4.13698 4.66663 3.09864 5.71663 3.09864 6.99996L3.08698 21C3.08698 22.2833 4.13698 23.3333 5.42031 23.3333H24.9853C25.7786 23.3333 26.4203 22.68 26.4203 21.8983V9.33329C26.4203 8.04996 25.3703 6.99996 24.087 6.99996ZM24.087 21H5.42031V6.99996H11.452L13.7853 9.33329H24.087V21ZM21.7536 14H7.75364V11.6666H21.7536V14ZM17.087 18.6666H7.75364V16.3333H17.087V18.6666Z"
-                                    fill="#7FB883" />
-                            </svg>
+                            <i class="material-icons about">topic</i>
                         </div>
                         <p><span class="bolder">É sempre bor ter detalhes.</span><br />
                             Acompanhe diversos relatórios com fotos e a localização do foco, além de uma sugestão do
@@ -256,12 +240,7 @@
                     </div>
                     <div class="info-container">
                         <div class="info-shape">
-                            <svg width="29" height="28" viewBox="0 0 29 28" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M26.4203 11.3633L18.032 10.64L14.7536 2.91663L11.4753 10.6516L3.08698 11.3633L9.45697 16.8816L7.54364 25.0833L14.7536 20.7316L21.9636 25.0833L20.062 16.8816L26.4203 11.3633ZM14.7536 18.55L10.367 21.1983L11.5336 16.205L7.66031 12.845L12.7703 12.4016L14.7536 7.69996L16.7486 12.4133L21.8586 12.8566L17.9853 16.2166L19.152 21.21L14.7536 18.55Z"
-                                    fill="#7FB883" />
-                            </svg>
+                            <i class="material-icons about">star</i>
                         </div>
                         <p><span class="bolder">Nem 8 ou 80.</span><br />
                             Saiba o nível de degradação do ambiente por meio da avaliação do foco de lixo de um
@@ -270,12 +249,7 @@
                     </div>
                     <div class="info-container">
                         <div class="info-shape">
-                            <svg width="29" height="28" viewBox="0 0 29 28" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M8.92615 6.99996H20.5928L14.7478 14.35L8.92615 6.99996ZM5.71782 6.54496C8.07449 9.56663 12.4262 15.1666 12.4262 15.1666V22.1666C12.4262 22.8083 12.9512 23.3333 13.5928 23.3333H15.9262C16.5678 23.3333 17.0928 22.8083 17.0928 22.1666V15.1666C17.0928 15.1666 21.4328 9.56663 23.7895 6.54496C24.3845 5.77496 23.8362 4.66663 22.8678 4.66663H6.63949C5.67115 4.66663 5.12282 5.77496 5.71782 6.54496Z"
-                                    fill="#7FB883" />
-                            </svg>
+                            <i class="material-icons about">filter_alt</i>
                         </div>
                         <p><span class="bolder">Filtre somente o que você quer ver.</span><br />
                             Escolha entre os escopos de bairro, cidade e estado para determinar quais relatórios você
@@ -371,13 +345,113 @@
                 </div>
             </div>
         </div>
+        <div class="wrapper second">
+            <header>
+                <h4>Guia de Download</h4>
+                <h2>Como instalar o aplicativo?</h2>
+                <p>Ainda estamos trabalhando no aplicativo, por isso, não tivemos a oportunidade de tornar o aplicativo
+                    disponível na PlayStore.<br />
+                    <span class="underlined">Por enquanto, pedimos que siga os seguinte passos:</span>
+                </p>
+            </header>
+            <div class="content">
+                <div class="step">
+                    <div class="circle">
+                        1
+                    </div>
+                    <p><strong>Baixe</strong> o arquivo .apk do aplicativo pelo seu navegador</p>
+                </div>
+                <div class="step">
+                    <div class="circle">
+                        2
+                    </div>
+                    <div>
+                        <p><strong>Instale</strong> o aplicativo por meio do arquivo .apk</p>
+                        <p class="hint">Na maioria dos dispositivos Android, instalar aplicativos por fontes externas
+                            requer algum passos adicionais. <br> <br>
+                            Em dispositivos com a versão Android 8.0 ou superior, você deve navegar para a tela
+                            “Instalar app desconhecidos” nas configurações do sistema do dispositivo de um local
+                            específico (por exemplo, o navegador web que você está usando agora). <br> <br>
+                            Em dispositivos com a versão Android 7.1.1 ou inferior, você deve ativar a configuração do
+                            sistema “Fontes desconhecidas”, encontrada em: Configurações > Segunça no seu dispositivo.
+                        </p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="circle">
+                        3
+                    </div>
+                    <p><strong>Pronto!</strong> Agora você está apto a tornar sua cidade mais limpa.</p>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper faq">
+            <h4>F.A.Q</h4>
+            <a href="#faq/1">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M8.58331 4.91683H10.4166V6.75016H8.58331V4.91683ZM8.58331 8.5835H10.4166V14.0835H8.58331V8.5835ZM9.49998 0.333496C4.43998 0.333496 0.333313 4.44016 0.333313 9.50016C0.333313 14.5602 4.43998 18.6668 9.49998 18.6668C14.56 18.6668 18.6666 14.5602 18.6666 9.50016C18.6666 4.44016 14.56 0.333496 9.49998 0.333496ZM9.49998 16.8335C5.45748 16.8335 2.16665 13.5427 2.16665 9.50016C2.16665 5.45766 5.45748 2.16683 9.49998 2.16683C13.5425 2.16683 16.8333 5.45766 16.8333 9.50016C16.8333 13.5427 13.5425 16.8335 9.49998 16.8335Z"
+                        fill="white" />
+                </svg>
+                Por que o aplicativo não está disponível para dispositivos iOS?
+                <svg width="36" height="36" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10 10H3V3H6.5V2H3C2.445 2 2 2.45 2 3V10C2 10.55 2.445 11 3 11H10C10.55 11 11 10.55 11 10V6.5H10V10ZM7.5 2V3H9.295L4.38 7.915L5.085 8.62L10 3.705V5.5H11V2H7.5Z"
+                        fill="#E5E5E5" />
+                </svg>
+            </a>
+            <a href="#faq/2">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M8.58331 4.91683H10.4166V6.75016H8.58331V4.91683ZM8.58331 8.5835H10.4166V14.0835H8.58331V8.5835ZM9.49998 0.333496C4.43998 0.333496 0.333313 4.44016 0.333313 9.50016C0.333313 14.5602 4.43998 18.6668 9.49998 18.6668C14.56 18.6668 18.6666 14.5602 18.6666 9.50016C18.6666 4.44016 14.56 0.333496 9.49998 0.333496ZM9.49998 16.8335C5.45748 16.8335 2.16665 13.5427 2.16665 9.50016C2.16665 5.45766 5.45748 2.16683 9.49998 2.16683C13.5425 2.16683 16.8333 5.45766 16.8333 9.50016C16.8333 13.5427 13.5425 16.8335 9.49998 16.8335Z"
+                        fill="white" />
+                </svg>
+                Por que o aplicativo não está disponível na PlayStore?
+                <svg width="36" height="36" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10 10H3V3H6.5V2H3C2.445 2 2 2.45 2 3V10C2 10.55 2.445 11 3 11H10C10.55 11 11 10.55 11 10V6.5H10V10ZM7.5 2V3H9.295L4.38 7.915L5.085 8.62L10 3.705V5.5H11V2H7.5Z"
+                        fill="#E5E5E5" />
+                </svg>
+            </a>
+        </div>
     </section>
 
     <footer>
         <div class="wrapper">
+            <div class="links">
+                <div class="column">
+                    <h5>DOCS</h5>
+                    <a>F.A.Q</a>
+                    <a>Que dados são coletados?</a>
+                </div>
+                <div class="column">
+                    <h5>Comunidade</h5>
+                    <a>O que a comunidade vem fazendo?</a>
+                    <a>Estatísticas</a>
+                </div>
+                <div class="column">
+                    <h5>Mais</h5>
+                    <a>Termos de Serviço
+                        <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M7.91667 8.41667H2.08333V2.58333H5V1.75H2.08333C1.62083 1.75 1.25 2.125 1.25 2.58333V8.41667C1.25 8.875 1.62083 9.25 2.08333 9.25H7.91667C8.375 9.25 8.75 8.875 8.75 8.41667V5.5H7.91667V8.41667ZM5.83333 1.75V2.58333H7.32917L3.23333 6.67917L3.82083 7.26667L7.91667 3.17083V4.66667H8.75V1.75H5.83333Z"
+                                fill="#E5E5E5" />
+                        </svg>
+
+                    </a>
+                    <a>Política de Privacidade
+                        <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M7.91667 8.41667H2.08333V2.58333H5V1.75H2.08333C1.62083 1.75 1.25 2.125 1.25 2.58333V8.41667C1.25 8.875 1.62083 9.25 2.08333 9.25H7.91667C8.375 9.25 8.75 8.875 8.75 8.41667V5.5H7.91667V8.41667ZM5.83333 1.75V2.58333H7.32917L3.23333 6.67917L3.82083 7.26667L7.91667 3.17083V4.66667H8.75V1.75H5.83333Z"
+                                fill="#E5E5E5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
             <div class="col-a">
                 <a href="#home">
-                    <svg width="85" height="38" viewBox="0 0 85 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="logo" width="85" height="38" viewBox="0 0 85 38" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M3.1541 0H11.0393C14.4738 0 17.146 0.653583 19.056 1.96075C20.966 3.26792 22.2977 5.17638 23.0512 7.68614C23.8047 10.1959 24.1814 13.8211 24.1814 18.5618C24.1814 21.6293 24.0412 24.2262 23.7609 26.3525C23.4805 28.4788 22.911 30.3524 22.0524 31.9733C21.1934 33.5942 19.8617 34.8578 18.0572 35.7641C16.2527 36.6704 13.9135 37.1235 11.0393 37.1235H3.1541C2.38309 37.1235 1.74351 36.9754 1.23535 36.6791C0.727194 36.3828 0.394262 35.9374 0.236557 35.3429C0.0807993 34.7503 0.00194697 33.9486 0 32.9377V4.18003C0 3.16915 0.0788523 2.36742 0.236557 1.77484C0.394262 1.18226 0.727194 0.737823 1.23535 0.441532C1.74312 0.147952 2.38271 0.000774617 3.1541 0ZM9.98797 7.0587C9.63752 7.0587 9.36591 7.14584 9.17316 7.32013C8.98041 7.49442 8.88404 7.94757 8.88404 8.67959L8.93661 27.1891C8.93661 27.9916 9.0067 28.6277 9.14688 29.0975C9.28706 29.5673 9.56743 29.8026 9.98797 29.8034C10.9689 29.8034 11.7749 29.5681 12.4061 29.0975C13.0373 28.627 13.4929 27.7206 13.7729 26.3786C14.0533 25.0374 14.1934 22.3456 14.1934 18.3032C14.1934 15.166 14.0883 12.8741 13.878 11.4275C13.6678 9.98094 13.2647 8.89164 12.669 8.15963C12.0724 7.42568 11.1787 7.0587 9.98797 7.0587Z"
                             fill="#F3F7F4" />
@@ -391,7 +465,7 @@
                 </a>
 
                 <p>
-                    ©2022 | DFL - Detector de Focos de Lixo.<br>
+                    ©2022 | DFL - Detector de Focos de Lixo.<br> <br>
                     Todos os direitos reservados.
                 </p>
             </div>

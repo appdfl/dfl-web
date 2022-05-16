@@ -23,6 +23,8 @@
 
     --font-dark: #212529;
     --font-light: #495057;
+
+    --light-gray: #747474;
     --white: #FEFEFE;
 
 }
@@ -64,8 +66,8 @@ button {
 .wrapper {
     width: min(55rem, 100%);
     margin-inline: auto;
-    padding-inline: 2rem;
-    border: 1px solid red;
+    padding-inline: 2.3rem;
+    /* border: 1px solid red; */
 }
 
 ul {
@@ -78,7 +80,7 @@ img {
 
 section {
     padding-block: 7.5rem;
-    padding-inline: 1.5rem;
+    /* padding-inline: 1.5rem; */
 }
 
 /* Descrição que vai acima do título */
@@ -171,7 +173,6 @@ nav .wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid red;
 }
 
 nav.scroll {
@@ -335,9 +336,13 @@ body.menu-expanded nav button {
     z-index: 3;
 } */
 
+body {
+    padding-top: var(--nav-height);
+}
+
 /* ===== HOME ================================================== */
 #home {
-    margin-top: var(--nav-height);
+    /* margin-top: var(--nav-height); */
     align-items: center;
 
     background-color: var(--background-02);
@@ -421,7 +426,7 @@ body.menu-expanded nav button {
 
     display: flex;
     padding: 0.35rem 1.2rem;
-    transform: 0.3s;
+    transition: 0.125s;
 }
 
 #about .tag:hover {
@@ -439,7 +444,7 @@ body.menu-expanded nav button {
     display: block;
     width: 100%;
     height: 52.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 4.5rem;
 }
 
 #about .overlay-container {
@@ -454,14 +459,37 @@ body.menu-expanded nav button {
     height: 53.5rem;
 }
 
-#about .app-overlay {
+/* #about .app-overlay {
     position: relative;
     z-index: -1;
     width: fit-content;
     min-width: fit-content;
+    max-width: max-content;
     height: 50.2rem;
     top: -100%;
     border-radius: 2.5rem;
+}
+ */
+
+.hidden {
+    opacity: 0;
+}
+
+.visible {
+    opacity: 1;
+}
+
+#app-overlay {
+    position: relative;
+    z-index: -1;
+    width: fit-content;
+    min-width: fit-content;
+    max-width: max-content;
+    height: 50.2rem;
+    top: -100%;
+    border-radius: 2.5rem;
+
+    transition: 250ms;
 }
 
 #about .column-1,
@@ -470,6 +498,8 @@ body.menu-expanded nav button {
     flex-direction: column;
     justify-content: space-between;
     gap: 2.5rem;
+
+    transition: 0.3s;
 }
 
 /* No caso de telas pequenas (dispositivos móveis) a coluna 1 tem que empurrar a coluna 2 para baixo */
@@ -524,11 +554,11 @@ body.menu-expanded nav button {
     font-size: 2.8rem;
 }
 
-#reports .wrapper {
-    padding: 0;
+#reports {
+    margin-inline: 2.5rem;
 }
 
-#reports {
+#reports .wrapper {
     display: flex;
     flex-direction: column;
     padding: 2.5rem;
@@ -537,7 +567,6 @@ body.menu-expanded nav button {
     background: linear-gradient(180deg, #7FB883 0%, #AED296 100%);
     border-radius: 1.5rem;
 
-    margin: 2.55rem;
 }
 
 #reports .content h4 {
@@ -557,6 +586,7 @@ body.menu-expanded nav button {
 
 #reports .card {
     padding: 2.5rem 3.4rem;
+
     background-color: var(--background-01);
     color: var(--primary-color-01);
     border-radius: 1rem;
@@ -603,7 +633,6 @@ body.menu-expanded nav button {
 
 #community {
     text-align: left;
-    padding: 0;
     margin-top: 7.5rem;
 }
 
@@ -627,7 +656,7 @@ body.menu-expanded nav button {
     margin-bottom: 1.5rem;
 }
 
-#download p:nth-child(1) {
+#download .wrapper:not(.second) p:nth-child(1) {
     margin-bottom: 2.5rem;
 }
 
@@ -648,6 +677,101 @@ body.menu-expanded nav button {
     color: var(--secondary-color-02);
 }
 
+
+/* ----- Download Guide -------------------------------------------------- */
+.underlined {
+    text-decoration: underline;
+}
+
+#download .second {
+    text-align: center;
+}
+
+#download .second .content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+}
+
+#download .second .step {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    text-align: left;
+}
+
+#download .second .step:nth-child(1) {
+    margin-top: 3.7rem;
+}
+
+#download .second .circle {
+    padding: 0.8rem;
+
+    min-width: 3.5rem;
+    height: 3.5rem;
+
+    margin-right: 3rem;
+
+    border-radius: calc(3.5rem / 2);
+    background-color: var(--primary-color-02);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--background-modal);
+    font-size: 1.2rem;
+}
+
+#download .second .hint {
+    font-family: 'Roboto';
+    line-height: 115%;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    font-size: 1.2rem;
+    color: var(--light-gray);
+}
+
+#download .second {
+    margin-bottom: 2.4rem;
+}
+
+#download .faq {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+#download .faq h4 {
+    margin-bottom: 0.5rem;
+    font-family: 'Roboto';
+    font-weight: 600;
+    color: var(--primary-color-03);
+}
+
+#download .faq a {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    gap: 1.5rem;
+
+    background: linear-gradient(180deg, #7FB883 0%, #AED296 100%);
+    border-radius: 1.5rem;
+
+    color: var(--background-modal);
+    text-decoration: none;
+    font-weight: 700;
+    text-align: left;
+    font-size: 1.4rem;
+    line-height: 150%;
+    letter-spacing: 0.08em;
+
+    margin-bottom: 1.5rem;
+}
+
 /* ===== FOOTER ================================================== */
 footer {
     background-color: var(--secondary-color-02);
@@ -659,11 +783,7 @@ footer {
 }
 
 footer .logo {
-    display: inline-block;
-    /* Display inline não aceita quase nada (width, margin) */
-    width: 23.6rem;
-    height: 3.1rem;
-    margin-bottom: 2.4rem;
+    margin-bottom: 1.5rem;
 }
 
 footer .logo svg {
@@ -677,10 +797,49 @@ footer .logo path {
 
 footer p {
     color: var(--primary-color-beige);
-    line-height: 2;
-    margin-bottom: 3.2rem;
+    margin-bottom: 1.5rem;
+
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.5;
+    font-family: 'Inter';
+
 }
 
 footer .social-links {
     justify-content: flex-start;
+}
+
+footer .links {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+
+    justify-content: space-between;
+    margin-bottom: 5rem;
+}
+
+footer .links h5 {
+    color: var(--primary-color-04);
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 1.9rem;
+    text-transform: uppercase;
+}
+
+footer .links .column {
+    max-width: 45%;
+    margin-bottom: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+footer .links .column a {
+    /* margin-bottom: 1.5rem; */
+    font-size: 1.6rem;
+    font-weight: 600;
 }

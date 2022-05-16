@@ -1,0 +1,66 @@
+{
+    "community": [
+        {
+            "icon": "apartment",
+            "title": "Você não está sozinho em sua cidade.",
+            "description": "Mantenha-se ativo com uma comunidade de pessoas como você."
+        },
+        {
+            "icon": "comment",
+            "title": "É bom se manter atualizado.",
+            "description": "Acompanhe os comentários e discussões realizadas por outros usuários."
+        },
+        {
+            "icon": "share_location",
+            "title": "Encontrou um ecoponto por perto?",
+            "description": "Obtenha a rota mais próxima para o ponto de coleta ou compartilhe a localização com pessoas próximas."
+        },
+        {
+            "icon": "topic",
+            "title": "É sempre bor ter detalhes.",
+            "description": "Acompanhe diversos relatórios com fotos e a localização do foco, além de uma sugestão do usuário que o encontrou."
+        },
+        {
+            "icon": "star",
+            "title": "Nem 8 ou 80.",
+            "description": "Saiba o nível de degradação do ambiente por meio da avaliação do foco de lixo de um relatório, numa nota de 0 a 5."
+        },
+        {
+            "icon": "filter_alt",
+            "title": "Filtre somente o que você quer ver.",
+            "description": "Escolha entre os escopos de bairro, cidade e estado para determinar quais relatórios você deseja ver."
+        }
+    ],
+    "reports": [
+        {
+            "icon": "search",
+            "title": "Será que tem lixo em tal canto?",
+            "description": "Pesquise por relatórios de outros usuários de focos de lixo ao redor de qualquer lugar e veja o estado do local."
+        },
+        {
+            "icon": "alternate_email",
+            "title": "Quem foi que achou isso, ein?",
+            "description": "Saiba quem foi que enviou o foco de lixo e, caso queira, visualize outros relatórios informados por esse usuário."
+        },
+        {
+            "icon": "place",
+            "title": "Cadê o foco? Achooou!",
+            "description": "Saiba o local aproximado em que o foco de lixo foi encontrado."
+        },
+        {
+            "icon": "delete",
+            "title": "Tá tão ruim assim?",
+            "description": "Avalie o nível de degradação do foco de lixo, com uma nota de 0 a 5 e deixe os outros sabendo como estão as coisas."
+        },
+        {
+            "icon": "comment",
+            "title": "Menina, nem te conto...",
+            "description": "Converse e discuta com outras pessoas por meio dos comentários individuais de cada relatório."
+        },
+        {
+            "icon": "share",
+            "title": "Eu tenho que mostrar isso.",
+            "description": "Encontrou um foco de lixo daqueles? Compartilhe o relatório com seus contatos para eles ficarem sabendo de tudo."
+        }
+    ]
+}
