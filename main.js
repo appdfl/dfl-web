@@ -152,3 +152,30 @@ async function changeAboutInstance(element, instance) {
 
     lastButtonPressed = element
 }
+
+// Get the modal
+const downloadModal = document.getElementById("download-modal");
+// Get the <span> element that closes the modal
+const closeSpan = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+function openDownloadModal() {
+    downloadModal.style.display = "block";
+}
+
+function closeDownloadModal() {
+    downloadModal.classList.add("fade-out")
+    setTimeout(() => {
+        downloadModal.classList.remove("fade-out")
+        downloadModal.style.display = "none";
+    }, 400);
+}
+
+window.addEventListener('click', onScreenClick)
+
+function onScreenClick(event) {
+    if (event.target == downloadModal) {
+        console.log("fecha")
+        closeDownloadModal()
+    }
+} 
