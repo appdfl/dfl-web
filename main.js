@@ -82,24 +82,24 @@ async function changeAboutInstance(element, instance) {
     console.log(aboutInfo)
 
     const imageElement = document.getElementById("app-overlay")
-    imageElement.classList.remove('visible')
-    imageElement.classList.add('hidden');
+    imageElement.classList.remove('fade-in')
+    imageElement.classList.add('fade-out');
     //console.log("Ocultamos a imagem")
 
-    column1.classList.remove("visible")
-    column1.classList.add("hidden")
-    column2.classList.remove("visible")
-    column2.classList.add("hidden")
+    column1.classList.remove("fade-in")
+    column1.classList.add("fade-out")
+    column2.classList.remove("fade-in")
+    column2.classList.add("fade-out")
     setTimeout(function () {
-        column1.classList.remove("hidden")
-        column1.classList.add("visible")
+        column1.classList.remove("fade-out")
+        column1.classList.add("fade-in")
 
-        imageElement.classList.remove('hidden')
-        imageElement.classList.add('visible');
+        imageElement.classList.remove('fade-out')
+        imageElement.classList.add('fade-in');
         switch (instance) {
             case "community":
-                column2.classList.remove("hidden")
-                column2.classList.add("visible")
+                column2.classList.remove("fade-out")
+                column2.classList.add("fade-in")
 
                 imageElement.src = "./assets/screens/CommunityScreen.png"
                 for (let index = 0; index < aboutInfo.community.length; index++) {
@@ -111,8 +111,8 @@ async function changeAboutInstance(element, instance) {
                 }
                 break;
             case "reports":
-                column2.classList.remove("hidden")
-                column2.classList.add("visible")
+                column2.classList.remove("fade-out")
+                column2.classList.add("fade-in")
 
                 imageElement.src = "./assets/screens/ReportsScreen.png"
                 for (let index = 0; index < aboutInfo.reports.length; index++) {
@@ -133,8 +133,8 @@ async function changeAboutInstance(element, instance) {
                     icon.textContent = info.icon
                     text.innerHTML = `<span class="bolder">${info.title}</span><br />${info.description}`
                 }
-                column2.classList.remove("visible")
-                column2.classList.add("hidden")
+                column2.classList.remove("fade-in")
+                column2.classList.add("fade-out")
                 break;
             default:
                 break;

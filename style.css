@@ -344,8 +344,8 @@ body.menu-expanded nav button {
 
     background-color: var(--background-02);
 
-    padding-block: 0;
-    padding-top: var(--nav-height);
+    padding-top: calc(var(--nav-height) + 4rem);
+    padding-bottom: 4rem;
     /* padding-inline: 1rem; */
 }
 
@@ -461,24 +461,12 @@ body.menu-expanded nav button {
     height: 53.5rem;
 }
 
-/* #about .app-overlay {
-    position: relative;
-    z-index: -1;
-    width: fit-content;
-    min-width: fit-content;
-    max-width: max-content;
-    height: 50.2rem;
-    top: -100%;
-    border-radius: 2.5rem;
-}
- */
-
-.hidden {
-    opacity: 0;
-}
-
-.visible {
+.fade-in {
     opacity: 1;
+}
+
+.fade-out {
+    opacity: 0;
 }
 
 #app-overlay {
@@ -798,11 +786,7 @@ body.menu-expanded nav button {
     }
 }
 
-.fade-out {
-    opacity: 0;
-}
-
-.backdrop {
+.modal-backdrop {
     display: none;
     /* Hidden by default */
     position: fixed;
@@ -815,7 +799,7 @@ body.menu-expanded nav button {
     width: 100%;
     height: 100%;
 
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.45);
 
     animation-name: fade-in;
     animation-duration: 0.4s;
