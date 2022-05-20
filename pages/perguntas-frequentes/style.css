@@ -3,8 +3,8 @@
 
     background-color: var(--background-02);
 
-    padding-top: calc(var(--nav-height) + 4rem);
-    padding-bottom: 4rem;
+    padding-top: calc(var(--nav-height) + 12rem);
+    padding-bottom: 12rem;
 }
 
 /* #header h4 {
@@ -19,26 +19,27 @@
     display: flex;
     flex-direction: column;
 
-    gap: 5rem;
+    gap: 12rem;
 
     text-align: left;
     letter-spacing: 0.05em;
 }
 
 .pergunta header {
+    padding-top: 8rem;
     text-align: left;
 }
 
-.pergunta:not(.content:first-child)::after {
+/* .pergunta:not(.content:first-child)::after {
     content: "";
 
     width: 100%;
     height: 1px;
 
     position: relative;
-    bottom: -1.5rem;
+    bottom: 1.5rem;
     border-bottom: 1px dotted var(--secondary-color-01);
-}
+} */
 
 #questions .content header h2 {
     font-size: 2.8rem;

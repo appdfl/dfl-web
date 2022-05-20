@@ -84,6 +84,10 @@ section {
     /* padding-inline: 1.5rem; */
 }
 
+footer a:visited {
+    color: var(--background-modal)
+}
+
 /* Descrição que vai acima do título */
 section header h4 {
     font-size: 1.4rem;
@@ -339,18 +343,15 @@ body.menu-expanded nav button {
 
 /* ===== HOME ================================================== */
 #home {
-    /* margin-top: var(--nav-height); */
+    margin-top: var(--nav-height);
+    padding-block: 0;
+
     align-items: center;
-
     background-color: var(--background-02);
-
-    padding-top: calc(var(--nav-height) + 4rem);
-    padding-bottom: 4rem;
-    /* padding-inline: 1rem; */
 }
 
 #home h4 {
-    margin-top: 4rem;
+    padding-top: 4rem;
     opacity: 1;
 }
 

@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DFL</title>
 
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +40,7 @@
 <body>
     <nav id="navigation" class="">
         <div class="wrapper">
-            <a class="logo" href="#home">
+            <a class="logo" href="/">
                 <svg width="85" height="38" viewBox="0 0 85 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M3.1541 0H11.0393C14.4738 0 17.146 0.653583 19.056 1.96075C20.966 3.26792 22.2977 5.17638 23.0512 7.68614C23.8047 10.1959 24.1814 13.8211 24.1814 18.5618C24.1814 21.6293 24.0412 24.2262 23.7609 26.3525C23.4805 28.4788 22.911 30.3524 22.0524 31.9733C21.1934 33.5942 19.8617 34.8578 18.0572 35.7641C16.2527 36.6704 13.9135 37.1235 11.0393 37.1235H3.1541C2.38309 37.1235 1.74351 36.9754 1.23535 36.6791C0.727194 36.3828 0.394262 35.9374 0.236557 35.3429C0.0807993 34.7503 0.00194697 33.9486 0 32.9377V4.18003C0 3.16915 0.0788523 2.36742 0.236557 1.77484C0.394262 1.18226 0.727194 0.737823 1.23535 0.441532C1.74312 0.147952 2.38271 0.000774617 3.1541 0ZM9.98797 7.0587C9.63752 7.0587 9.36591 7.14584 9.17316 7.32013C8.98041 7.49442 8.88404 7.94757 8.88404 8.67959L8.93661 27.1891C8.93661 27.9916 9.0067 28.6277 9.14688 29.0975C9.28706 29.5673 9.56743 29.8026 9.98797 29.8034C10.9689 29.8034 11.7749 29.5681 12.4061 29.0975C13.0373 28.627 13.4929 27.7206 13.7729 26.3786C14.0533 25.0374 14.1934 22.3456 14.1934 18.3032C14.1934 15.166 14.0883 12.8741 13.878 11.4275C13.6678 9.98094 13.2647 8.89164 12.669 8.15963C12.0724 7.42568 11.1787 7.0587 9.98797 7.0587Z"
@@ -59,10 +62,11 @@
                     </svg>
                 </button>
                 <ul class="list">
-                    <li><a onclick="closeMenu()" href="#home">Início</a></li>
-                    <li><a onclick="closeMenu()" href="#about">Sobre</a></li>
-                    <li><a onclick="closeMenu()" href="#reports">Relatórios</a></li>
-                    <li><a onclick="closeMenu()" href="#community">Comunidade</a></li>
+                    <li><a onclick="closeMenu()" href="/#home">Início</a></li>
+                    <li><a onclick="closeMenu()" href="/#about">Sobre</a></li>
+                    <li><a onclick="closeMenu()" href="/#reports">Relatórios</a></li>
+                    <li><a onclick="closeMenu()" href="/#community">Comunidade</a></li>
+                    <li><a onclick="closeMenu()" href="/pages/perguntas-frequentes/">F.A.Q</a></li>
                 </ul>
                 <div>
                     <a class="button" onclick="closeMenu()" href="#download">
@@ -387,7 +391,7 @@
         </div>
         <div class="wrapper faq">
             <h4>F.A.Q</h4>
-            <a href="pages/faq/perguntas-frequentes.html">
+            <a href="pages/perguntas-frequentes/#por-que-o-aplicativo-nao-esta-disponivel-para-dispositivos-ios">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M8.58331 4.91683H10.4166V6.75016H8.58331V4.91683ZM8.58331 8.5835H10.4166V14.0835H8.58331V8.5835ZM9.49998 0.333496C4.43998 0.333496 0.333313 4.44016 0.333313 9.50016C0.333313 14.5602 4.43998 18.6668 9.49998 18.6668C14.56 18.6668 18.6666 14.5602 18.6666 9.50016C18.6666 4.44016 14.56 0.333496 9.49998 0.333496ZM9.49998 16.8335C5.45748 16.8335 2.16665 13.5427 2.16665 9.50016C2.16665 5.45766 5.45748 2.16683 9.49998 2.16683C13.5425 2.16683 16.8333 5.45766 16.8333 9.50016C16.8333 13.5427 13.5425 16.8335 9.49998 16.8335Z"
@@ -400,7 +404,7 @@
                         fill="#E5E5E5" />
                 </svg>
             </a>
-            <a href="pages/faq/perguntas-frequentes.html">
+            <a href="pages/perguntas-frequentes/#por-que-o-aplicativo-nao-esta-disponivel-na-playstore">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M8.58331 4.91683H10.4166V6.75016H8.58331V4.91683ZM8.58331 8.5835H10.4166V14.0835H8.58331V8.5835ZM9.49998 0.333496C4.43998 0.333496 0.333313 4.44016 0.333313 9.50016C0.333313 14.5602 4.43998 18.6668 9.49998 18.6668C14.56 18.6668 18.6666 14.5602 18.6666 9.50016C18.6666 4.44016 14.56 0.333496 9.49998 0.333496ZM9.49998 16.8335C5.45748 16.8335 2.16665 13.5427 2.16665 9.50016C2.16665 5.45766 5.45748 2.16683 9.49998 2.16683C13.5425 2.16683 16.8333 5.45766 16.8333 9.50016C16.8333 13.5427 13.5425 16.8335 9.49998 16.8335Z"
@@ -446,7 +450,7 @@
             <div class="links">
                 <div class="column">
                     <h5>DOCS</h5>
-                    <a>F.A.Q</a>
+                    <a href="/pages/perguntas-frequentes/">F.A.Q</a>
                     <a>Que dados são coletados?</a>
                 </div>
                 <div class="column">
