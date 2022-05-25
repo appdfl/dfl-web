@@ -62,12 +62,12 @@
                     </svg>
                 </button>
                 <div class="content">
-                    <div class="line"></div>
                     <ul class="list">
-                        <li><a onclick="closeMenu()" href="/#home">Início</a></li>
-                        <li><a onclick="closeMenu()" href="/#about">Sobre</a></li>
-                        <li><a onclick="closeMenu()" href="/#reports">Relatórios</a></li>
-                        <li><a onclick="closeMenu()" href="/#community">Comunidade</a></li>
+                        <div id="nav-line"></div>
+                        <li><a onclick="closeMenu(home)" title="Início" href="/#home">Início</a></li>
+                        <li><a onclick="closeMenu(about)" title="Sobre" href="/#about">Sobre</a></li>
+                        <li><a onclick="closeMenu(reports)" title="Relatórios" href="/#reports">Relatórios</a></li>
+                        <li><a onclick="closeMenu(community)" title="Comunidade" href="/#community">Comunidade</a></li>
                         <li><a onclick="closeMenu()" href="/pages/perguntas-frequentes/">F.A.Q</a></li>
                     </ul>
                     <div>
@@ -342,9 +342,8 @@
             <header>
                 <h4>Download</h4>
                 <h2>Preparado para tornar sua cidade em um lugar mais limpo?</h2>
-            </header>
-            <div class="content">
-                <p>Ajude o planeta reportando focos de lixo descartado irregularmente e encontre e pontos de coleta em
+                <p>Ajude o planeta reportando focos de lixo descartado irregularmente e encontre e pontos de coleta
+                    em
                     sua cidade.</p>
                 <button onclick="openDownloadModal()" class="button">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -359,6 +358,10 @@
                     <img src="./assets/google_play.png"
                         alt="Ícone que indica que o aplicativo está disponível na Google Play (no nosso caso, não está)">
                 </div>
+            </header>
+            <div class="content">
+                <img src="assets/phonewithicon_placeholder.png"
+                    alt="Telefone exibindo a tela inicial do aplicativo junto com a moça do ícone do app ao lado">
             </div>
         </div>
         <div class="wrapper second">

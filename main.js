@@ -1,46 +1,93 @@
-window.addEventListener('scroll', onScroll)
+// Configuramos a possibilidade de clique nos botões de seção da navBar
+const navLine = document.querySelector("#nav-line")
+const items = document.querySelectorAll('.menu .list a')
 
-let lastSectionId = "home"
+/* Essa variável evita que a animação seja realizada duas vezes suprimindo a função quando o elemento é clicado, já que a rolagem será realizada e a função será chamada novamente */
+/* let clicked = false; */
+
+function indicator(element) {
+    /* navLine.style.left = `${element.offsetLeft}px`; */
+    /* navLine.style.width = `${element.offsetWidth}px`; */
+    //if (!clicked) {
+    navLine.style.left = `${element.offsetLeft + (element.offsetWidth / 2) - (navLine.offsetWidth / 2)}px`;
+    //}
+}
+
+/* items.forEach(link => {
+    link.addEventListener('click', (e) => {
+        clicked = true
+        console.log("Link clicado")
+        indicator(e.target)
+    })
+}) */
+
+/* O loop abaixo é responsável por fixar a largura dos botões da nav bar para que quando o texto fique em negrito o tamanho não aumente e empurre os outros elementos */
+function updateMenuButtonsWidth() {
+    const liList = document.querySelectorAll('.menu .list li')
+    liList.forEach(list => {
+        list.style.width = `${list.offsetWidth + 15}px`;
+    })
+}
+
+/* Seções da Navigation Bar */
+const sections = [home, about, reports, community]
+
+let lastSection = sections[0]
+
+window.addEventListener('scroll', onScroll)
 
 onScroll() // Precisamos atualizar pelo menos uma vez
 function onScroll() {
     showNavOnScroll()
     //showBackToTopButtonOnScroll()
-
-    activateMenuAtCurrentSection(home)
-    activateMenuAtCurrentSection(about)
-    activateMenuAtCurrentSection(reports)
-    activateMenuAtCurrentSection(community)
+    changeMenuSection()
 }
 
-function activateMenuAtCurrentSection(section) {
+// Precisamos atualizar pelo menos uma vez
+const menuElement = document.querySelector(`.menu a[href*=home]`)
+menuElement.classList.add('active')
+
+function changeMenuSection() {
     const middleLine = scrollY + (innerHeight / 2)
 
-    // Verificando em qual seção o usuário está
-    // Utilizaremos o "id" da seção e obteremos o "offsetTop"
-    const sectionTop = section.offsetTop
-    const sectionHeight = section.offsetHeight
+    function getCurrentSection(section) {
+        // Verificando em qual seção o usuário está
+        // Utilizaremos o "id" da seção e obteremos o "offsetTop"
+        const sectionTop = section.offsetTop
+        const sectionHeight = section.offsetHeight
 
-    const sectionIsAboveOrInsideMiddleLine = middleLine >= sectionTop
+        const sectionIsAboveOrInsideMiddleLine = middleLine >= sectionTop
 
-    const nextSectionBegin = sectionHeight + sectionTop // Somamos o tamanho fixo da seção com o valor da altura da seção para sabermos a localização de início da seção seguinte
-    const nextSectionIsUnderMiddleLine = middleLine < nextSectionBegin
+        const nextSectionBegin = sectionHeight + sectionTop // Somamos o tamanho fixo da seção com o valor da altura da seção para sabermos a localização de início da seção seguinte
+        const nextSectionIsUnderMiddleLine = middleLine < nextSectionBegin
 
-    const isInBoundaries = sectionIsAboveOrInsideMiddleLine && nextSectionIsUnderMiddleLine
+        const isInBoundaries = sectionIsAboveOrInsideMiddleLine && nextSectionIsUnderMiddleLine
 
-    const sectionId = section.getAttribute("id")
-
-    const lineElement = document.querySelector(`.menu .line`)
-    const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`)
-
-    lineElement.classList.toggle(`menuButton-${lastSectionId}`)
-    menuElement.classList.remove('active')
-    if (isInBoundaries) {
-        console.log(`Dentro dos limites da seção ${sectionId}`)
-        menuElement.classList.add('active')
-        lineElement.classList.add(`menuButton-${sectionId}`)
-        lastSectionId = sectionId
+        if (isInBoundaries) {
+            return true
+        }
     }
+
+    sections.forEach(section => {
+        if (section !== lastSection) {
+            const sectionIsInBoundaries = getCurrentSection(section)
+            if (sectionIsInBoundaries) {
+                const sectionId = section.getAttribute("id")
+                //console.log(`Atual: ${sectionId}`)
+                const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`)
+                menuElement.classList.add('active')
+                //clicked = false;
+                indicator(menuElement)
+
+                const lastSectionId = lastSection.getAttribute("id")
+                // console.log(`Anterior: ${lastSectionId}`)
+                const lastMenuElement = document.querySelector(`.menu a[href*=${lastSectionId}]`)
+                lastMenuElement.classList.remove('active')
+
+                lastSection = section
+            }
+        }
+    });
 
 }
 
@@ -64,8 +111,13 @@ function openMenu() {
     document.body.classList.add('menu-expanded')
 }
 
-function closeMenu() {
+function closeMenu(section) {
     document.body.classList.remove('menu-expanded')
+
+    // Essencial para que o botão clicado seja des-selecionado quando o usuário rolar a página
+    if (section) {
+        lastSection = section
+    }
 }
 
 const animation_time = 250 // 0.25 segundos
@@ -218,9 +270,16 @@ window.addEventListener('resize', onScreenResize)
 const navBarButton = document.querySelector("#navigation .button");
 function onScreenResize() {
     const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    console.log(width)
+    //console.log(width)
     if (width >= 1024) {
         navBarButton.textContent = "Baixar o Aplicativo"
+
+        // O atraso é necessário para que a barra de navegação termine a animação e o botão fique no local correto
+        setTimeout(() => {
+            const lastSectionId = lastSection.getAttribute("id")
+            const menuElement = document.querySelector(`.menu a[href*=${lastSectionId}]`)
+            indicator(menuElement)
+        }, 500);
     } else {
         navBarButton.textContent = "Baixar o App"
     }
