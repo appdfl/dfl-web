@@ -987,9 +987,18 @@ footer .links .column a {
     #home header h2,
     #about header h2,
     #reports header h2,
-    #community header h2 {
+    #community header h2,
+    #download header h2 {
         font-size: 4.8rem;
         line-height: 5.2rem;
+    }
+
+    #home header p,
+    #about header p,
+    #reports header p,
+    #community header p,
+    #download header p {
+        font-size: 1.8rem;
     }
 
     .col-a {
