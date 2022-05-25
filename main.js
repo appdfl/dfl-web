@@ -1,14 +1,47 @@
 window.addEventListener('scroll', onScroll)
 
+let lastSectionId = "home"
+
 onScroll() // Precisamos atualizar pelo menos uma vez
 function onScroll() {
     showNavOnScroll()
     //showBackToTopButtonOnScroll()
 
-    /* activateMenuAtCurrentSection(home)
-    activateMenuAtCurrentSection(services)
+    activateMenuAtCurrentSection(home)
     activateMenuAtCurrentSection(about)
-    activateMenuAtCurrentSection(contact) */
+    activateMenuAtCurrentSection(reports)
+    activateMenuAtCurrentSection(community)
+}
+
+function activateMenuAtCurrentSection(section) {
+    const middleLine = scrollY + (innerHeight / 2)
+
+    // Verificando em qual seção o usuário está
+    // Utilizaremos o "id" da seção e obteremos o "offsetTop"
+    const sectionTop = section.offsetTop
+    const sectionHeight = section.offsetHeight
+
+    const sectionIsAboveOrInsideMiddleLine = middleLine >= sectionTop
+
+    const nextSectionBegin = sectionHeight + sectionTop // Somamos o tamanho fixo da seção com o valor da altura da seção para sabermos a localização de início da seção seguinte
+    const nextSectionIsUnderMiddleLine = middleLine < nextSectionBegin
+
+    const isInBoundaries = sectionIsAboveOrInsideMiddleLine && nextSectionIsUnderMiddleLine
+
+    const sectionId = section.getAttribute("id")
+
+    const lineElement = document.querySelector(`.menu .line`)
+    const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`)
+
+    lineElement.classList.toggle(`menuButton-${lastSectionId}`)
+    menuElement.classList.remove('active')
+    if (isInBoundaries) {
+        console.log(`Dentro dos limites da seção ${sectionId}`)
+        menuElement.classList.add('active')
+        lineElement.classList.add(`menuButton-${sectionId}`)
+        lastSectionId = sectionId
+    }
+
 }
 
 function showNavOnScroll() {
@@ -178,4 +211,20 @@ function onScreenClick(event) {
         console.log("fecha")
         closeDownloadModal()
     }
-} 
+}
+
+window.addEventListener('resize', onScreenResize)
+
+const navBarButton = document.querySelector("#navigation .button");
+function onScreenResize() {
+    const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    console.log(width)
+    if (width >= 1024) {
+        navBarButton.textContent = "Baixar o Aplicativo"
+    } else {
+        navBarButton.textContent = "Baixar o App"
+    }
+}
+
+/* Para já atualizar o texto do botão independente de ter alterado o tamanho da tela */
+onScreenResize()

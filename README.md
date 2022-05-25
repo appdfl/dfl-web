@@ -1,11 +1,14 @@
 <h1 align="center">
-  <img alt="DFL - Web" height="80" title="DFL - Web" src="./favicon-32x32.png" />
+  <img alt="DFL - Web" height="80" title="DFL - Web" src=".github/app_icon.png" />
+</h1>
+
+<h1 align="center">
+  DFL - Web
 </h1>
 
 <p align="center">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=346259&labelColor=26413C">
-
- <img src="https://img.shields.io/static/v1?label=version&message=web&color=346259&labelColor=26413C" alt="NLW 06" />
+    <img src="https://img.shields.io/static/v1?label=version&message=web&color=346259&labelColor=26413C" alt="Web Version" />
 </p>
 
 
