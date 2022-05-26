@@ -1,0 +1,13 @@
+{
+    "dependencies": {
+        "axios": "^0.25.0",
+        "dotenv": "^16.0.0"
+    },
+    "devDependencies": {
+        "typescript": "^4.7.2"
+    },
+    "type": "module",
+    "private": true,
+    "version": "0.1.5",
+    "name": "dfl-web"
+}

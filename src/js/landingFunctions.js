@@ -44,7 +44,7 @@ async function changeAboutInstance(element, instance) {
     const aboutInfo = await response.json();
     console.log(aboutInfo)
 
-    const imageElement = document.getElementById("app-overlay")
+    const imageElement = document.getElementById("app-overlay"); //as HTMLImageElement;
     imageElement.classList.remove('fade-in')
     imageElement.classList.add('fade-out');
     //console.log("Ocultamos a imagem")
@@ -67,7 +67,7 @@ async function changeAboutInstance(element, instance) {
                 imageElement.src = "/src/assets/screens/CommunityScreen.png"
                 for (let index = 0; index < aboutInfo.community.length; index++) {
                     const icon = icons[index];
-                    const text = texts[index];
+                    const text = texts[index] //as HTMLElement;
                     const info = aboutInfo.community[index]
                     icon.textContent = info.icon
                     text.innerHTML = `<span class="bolder">${info.title}</span><br />${info.description}`
@@ -80,7 +80,7 @@ async function changeAboutInstance(element, instance) {
                 imageElement.src = "/src/assets/screens/ReportsScreen.png"
                 for (let index = 0; index < aboutInfo.reports.length; index++) {
                     const icon = icons[index];
-                    const text = texts[index];
+                    const text = texts[index] //as HTMLElement;
                     const info = aboutInfo.reports[index]
                     icon.textContent = info.icon
                     text.innerHTML = `<span class="bolder">${info.title}</span><br />${info.description}`
@@ -91,7 +91,7 @@ async function changeAboutInstance(element, instance) {
                 imageElement.src = "/src/assets/screens/ReportScreen_1.png"
                 for (let index = 0; index < aboutInfo.notify.length; index++) {
                     const icon = icons[index];
-                    const text = texts[index];
+                    const text = texts[index] //as HTMLElement;
                     const info = aboutInfo.notify[index]
                     icon.textContent = info.icon
                     text.innerHTML = `<span class="bolder">${info.title}</span><br />${info.description}`
@@ -145,8 +145,8 @@ function onScreenClick(event) {
 
 /* Header Functions */
 // Configuramos a possibilidade de clique nos botões de seção da navBar
-const navLine = document.querySelector("#nav-line")
-const items = document.querySelectorAll('.menu .list a')
+const navLine = document.querySelector("#nav-line") //as HTMLElement;
+const items = document.querySelectorAll('.menu .list a') //as NodeListOf<HTMLElement>;
 
 function indicator(element) {
     /* navLine.style.left = `${element.offsetLeft}px`; */
@@ -155,15 +155,15 @@ function indicator(element) {
 }
 
 /* Seções da Navigation Bar */
-const sections = [home, about, reports, community]
+const sections = [document.querySelector("#home"), document.querySelector("#about"), document.querySelector("#reports"), document.querySelector("#community")]
 let lastSection = sections[0]
 
-window.addEventListener('scroll', onScroll)
-
-onScroll() // Precisamos atualizar pelo menos uma vez
-function onScroll() {
+function onScrollChangeMenu() {
     changeMenuSection()
 }
+
+onScrollChangeMenu() // Precisamos atualizar pelo menos uma vez
+window.addEventListener('scroll', onScrollChangeMenu)
 
 // Precisamos atualizar pelo menos uma vez
 const menuElement = document.querySelector(`.menu a[href*=home]`)

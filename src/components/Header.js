@@ -30,7 +30,7 @@ class Header extends HTMLElement {
                     <div class="content">
                         <ul class="list">
                             <li><a onclick="closeMenu()" title="Início" href="/">Início</a></li>
-                            <li><a onclick="closeMenu()" href="/perguntas-frequentes">F.A.Q</a></li>
+                            <li><a onclick="closeMenu()" href="/perguntas-frequentes.html">F.A.Q</a></li>
                         </ul>
                         <div>
                             <a class="button" onclick="closeMenu()" href="/index#download">
