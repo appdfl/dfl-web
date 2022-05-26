@@ -1,0 +1,43 @@
+#header {
+    align-items: center;
+
+    background-color: var(--background-02);
+
+    padding-top: calc(var(--nav-height) + 12rem);
+    padding-bottom: 12rem;
+}
+
+/* #header h4 {
+    margin-top: 4rem;
+}
+#header p {
+    padding-bottom: 4rem;
+} */
+
+#questions .content {
+    display: flex;
+    flex-direction: column;
+
+    width: 85%;
+    margin-inline: auto;
+    gap: 12rem;
+    padding-bottom: 12rem;
+
+    text-align: left;
+    letter-spacing: 0.05em;
+}
+
+.pergunta header {
+    padding-top: 8rem;
+    text-align: left;
+}
+
+#questions .content header h2 {
+    font-size: 2.8rem;
+}
+
+#questions .content .pergunta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}

@@ -1232,6 +1232,7 @@ footer .links .column a {
     #about .column-2 {
         justify-content: space-around;
         gap: 0rem;
+        width: 85%;
     }
 
     #about .phone-container {
@@ -1370,4 +1371,22 @@ footer .links .column a {
         justify-content: space-between;
         flex-direction: row;
     }
+}
+
+#backToTopButton {
+    position: fixed;
+    right: 3rem;
+    bottom: 1rem;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(100%);
+    transition: 200ms;
+}
+
+#backToTopButton.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }

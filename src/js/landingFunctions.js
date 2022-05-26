@@ -1,125 +1,3 @@
-// Configuramos a possibilidade de clique nos botões de seção da navBar
-const navLine = document.querySelector("#nav-line")
-const items = document.querySelectorAll('.menu .list a')
-
-/* Essa variável evita que a animação seja realizada duas vezes suprimindo a função quando o elemento é clicado, já que a rolagem será realizada e a função será chamada novamente */
-/* let clicked = false; */
-
-function indicator(element) {
-    /* navLine.style.left = `${element.offsetLeft}px`; */
-    /* navLine.style.width = `${element.offsetWidth}px`; */
-    //if (!clicked) {
-    navLine.style.left = `${element.offsetLeft + (element.offsetWidth / 2) - (navLine.offsetWidth / 2)}px`;
-    //}
-}
-
-/* items.forEach(link => {
-    link.addEventListener('click', (e) => {
-        clicked = true
-        console.log("Link clicado")
-        indicator(e.target)
-    })
-}) */
-
-/* O loop abaixo é responsável por fixar a largura dos botões da nav bar para que quando o texto fique em negrito o tamanho não aumente e empurre os outros elementos */
-function updateMenuButtonsWidth() {
-    const liList = document.querySelectorAll('.menu .list li')
-    liList.forEach(list => {
-        list.style.width = `${list.offsetWidth + 15}px`;
-    })
-}
-
-/* Seções da Navigation Bar */
-const sections = [home, about, reports, community]
-
-let lastSection = sections[0]
-
-window.addEventListener('scroll', onScroll)
-
-onScroll() // Precisamos atualizar pelo menos uma vez
-function onScroll() {
-    showNavOnScroll()
-    //showBackToTopButtonOnScroll()
-    changeMenuSection()
-}
-
-// Precisamos atualizar pelo menos uma vez
-const menuElement = document.querySelector(`.menu a[href*=home]`)
-menuElement.classList.add('active')
-
-function changeMenuSection() {
-    const middleLine = scrollY + (innerHeight / 2)
-
-    function getCurrentSection(section) {
-        // Verificando em qual seção o usuário está
-        // Utilizaremos o "id" da seção e obteremos o "offsetTop"
-        const sectionTop = section.offsetTop
-        const sectionHeight = section.offsetHeight
-
-        const sectionIsAboveOrInsideMiddleLine = middleLine >= sectionTop
-
-        const nextSectionBegin = sectionHeight + sectionTop // Somamos o tamanho fixo da seção com o valor da altura da seção para sabermos a localização de início da seção seguinte
-        const nextSectionIsUnderMiddleLine = middleLine < nextSectionBegin
-
-        const isInBoundaries = sectionIsAboveOrInsideMiddleLine && nextSectionIsUnderMiddleLine
-
-        if (isInBoundaries) {
-            return true
-        }
-    }
-
-    sections.forEach(section => {
-        if (section !== lastSection) {
-            const sectionIsInBoundaries = getCurrentSection(section)
-            if (sectionIsInBoundaries) {
-                const sectionId = section.getAttribute("id")
-                //console.log(`Atual: ${sectionId}`)
-                const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`)
-                menuElement.classList.add('active')
-                //clicked = false;
-                indicator(menuElement)
-
-                const lastSectionId = lastSection.getAttribute("id")
-                // console.log(`Anterior: ${lastSectionId}`)
-                const lastMenuElement = document.querySelector(`.menu a[href*=${lastSectionId}]`)
-                lastMenuElement.classList.remove('active')
-
-                lastSection = section
-            }
-        }
-    });
-
-}
-
-function showNavOnScroll() {
-    if (scrollY === 0) {
-        navigation.classList.remove("scroll")
-    } else {
-        navigation.classList.add("scroll")
-    }
-}
-
-function showBackToTopButtonOnScroll() {
-    if (scrollY > 500) {
-        backToTopButton.classList.add("show")
-    } else {
-        backToTopButton.classList.remove("show")
-    }
-}
-
-function openMenu() {
-    document.body.classList.add('menu-expanded')
-}
-
-function closeMenu(section) {
-    document.body.classList.remove('menu-expanded')
-
-    // Essencial para que o botão clicado seja des-selecionado quando o usuário rolar a página
-    if (section) {
-        lastSection = section
-    }
-}
-
 const animation_time = 250 // 0.25 segundos
 
 const column1 = document.querySelector("#about .column-1");
@@ -162,7 +40,7 @@ const texts = [text1_1, text1_2, text1_3, text2_1, text2_2, text2_3]
 let lastButtonPressed;
 async function changeAboutInstance(element, instance) {
 
-    const response = await fetch("./aboutInfo.json");
+    const response = await fetch("/src/utils/data/aboutInfo.json");
     const aboutInfo = await response.json();
     console.log(aboutInfo)
 
@@ -186,7 +64,7 @@ async function changeAboutInstance(element, instance) {
                 column2.classList.remove("fade-out")
                 column2.classList.add("fade-in")
 
-                imageElement.src = "./assets/screens/CommunityScreen.png"
+                imageElement.src = "/src/assets/screens/CommunityScreen.png"
                 for (let index = 0; index < aboutInfo.community.length; index++) {
                     const icon = icons[index];
                     const text = texts[index];
@@ -199,7 +77,7 @@ async function changeAboutInstance(element, instance) {
                 column2.classList.remove("fade-out")
                 column2.classList.add("fade-in")
 
-                imageElement.src = "./assets/screens/ReportsScreen.png"
+                imageElement.src = "/src/assets/screens/ReportsScreen.png"
                 for (let index = 0; index < aboutInfo.reports.length; index++) {
                     const icon = icons[index];
                     const text = texts[index];
@@ -210,11 +88,11 @@ async function changeAboutInstance(element, instance) {
                 }
                 break;
             case "notify":
-                imageElement.src = "./assets/screens/ReportScreen_1.png"
+                imageElement.src = "/src/assets/screens/ReportScreen_1.png"
                 for (let index = 0; index < aboutInfo.notify.length; index++) {
                     const icon = icons[index];
                     const text = texts[index];
-                    const info = aboutInfo.reports[index]
+                    const info = aboutInfo.notify[index]
                     icon.textContent = info.icon
                     text.innerHTML = `<span class="bolder">${info.title}</span><br />${info.description}`
                 }
@@ -265,6 +143,88 @@ function onScreenClick(event) {
     }
 }
 
+/* Header Functions */
+// Configuramos a possibilidade de clique nos botões de seção da navBar
+const navLine = document.querySelector("#nav-line")
+const items = document.querySelectorAll('.menu .list a')
+
+function indicator(element) {
+    /* navLine.style.left = `${element.offsetLeft}px`; */
+    /* navLine.style.width = `${element.offsetWidth}px`; */
+    navLine.style.left = `${element.offsetLeft + (element.offsetWidth / 2) - (navLine.offsetWidth / 2)}px`;
+}
+
+/* Seções da Navigation Bar */
+const sections = [home, about, reports, community]
+let lastSection = sections[0]
+
+window.addEventListener('scroll', onScroll)
+
+onScroll() // Precisamos atualizar pelo menos uma vez
+function onScroll() {
+    changeMenuSection()
+}
+
+// Precisamos atualizar pelo menos uma vez
+const menuElement = document.querySelector(`.menu a[href*=home]`)
+menuElement.classList.add('active')
+
+function changeMenuSection() {
+    const middleLine = scrollY + (innerHeight / 2)
+
+    function getCurrentSection(section) {
+        // Verificando em qual seção o usuário está
+        // Utilizaremos o "id" da seção e obteremos o "offsetTop"
+        const sectionTop = section.offsetTop
+        const sectionHeight = section.offsetHeight
+
+        const sectionIsAboveOrInsideMiddleLine = middleLine >= sectionTop
+
+        const nextSectionBegin = sectionHeight + sectionTop // Somamos o tamanho fixo da seção com o valor da altura da seção para sabermos a localização de início da seção seguinte
+        const nextSectionIsUnderMiddleLine = middleLine < nextSectionBegin
+
+        const isInBoundaries = sectionIsAboveOrInsideMiddleLine && nextSectionIsUnderMiddleLine
+
+        if (isInBoundaries) {
+            return true
+        }
+    }
+
+    sections.forEach(section => {
+        if (section !== lastSection) {
+            const sectionIsInBoundaries = getCurrentSection(section)
+            if (sectionIsInBoundaries) {
+                const sectionId = section.getAttribute("id")
+                //console.log(`Atual: ${sectionId}`)
+                const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`)
+                menuElement.classList.add('active')
+                //clicked = false;
+                indicator(menuElement)
+
+                const lastSectionId = lastSection.getAttribute("id")
+                // console.log(`Anterior: ${lastSectionId}`)
+                const lastMenuElement = document.querySelector(`.menu a[href*=${lastSectionId}]`)
+                lastMenuElement.classList.remove('active')
+
+                lastSection = section
+            }
+        }
+    });
+}
+
+function openMenu() {
+    document.body.classList.add('menu-expanded')
+}
+
+function closeAndUpdateMenu(section) {
+    document.body.classList.remove('menu-expanded')
+
+    // Essencial para que o botão clicado seja des-selecionado quando o usuário rolar a página
+    if (section) {
+        lastSection = section
+    }
+}
+
 window.addEventListener('resize', onScreenResize)
 
 const navBarButton = document.querySelector("#navigation .button");
@@ -279,7 +239,7 @@ function onScreenResize() {
             const lastSectionId = lastSection.getAttribute("id")
             const menuElement = document.querySelector(`.menu a[href*=${lastSectionId}]`)
             indicator(menuElement)
-        }, 500);
+        }, 250);
     } else {
         navBarButton.textContent = "Baixar o App"
     }
