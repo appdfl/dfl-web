@@ -33,3 +33,26 @@ function showBackToTopButtonOnScroll() {
 function closeMenu() {
     document.body.classList.remove('menu-expanded')
 }
+
+ScrollReveal({
+    delay: 125,
+    origin: 'up',
+    distance: '30px',
+}).reveal(`
+    #home, 
+    #home img, 
+    #about,
+    #about header,
+    #about .phone-container,
+    #about .content,
+    #reports,
+    #reports .card-1,
+    #reports .card-2,
+    #reports .card-3,
+    #community,
+    #community img,
+    #download,
+    #download header,
+    #download img,
+    #download .wrapper.second
+`);
