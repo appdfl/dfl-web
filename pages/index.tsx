@@ -12,6 +12,7 @@ import { getAboutData } from '../utils/about';
 
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
+import BackToTop from '../components/BackToTop/BackToTop';
 
 import styles from '../styles/landing.module.css';
 import Modal from '../components/Modal/Modal';
@@ -332,6 +333,7 @@ export default function Landing({ aboutData }) {
             </section>
 
             <Footer />
+            <BackToTop />
             <Modal
                 title={`Eita! Parece que temos um problema...`}
                 content={

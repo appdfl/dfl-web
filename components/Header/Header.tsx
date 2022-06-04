@@ -32,19 +32,6 @@ export default function Header({ isHome }: Props) {
         }
     }
 
-    function handleScreenResize() {
-        const isWide = isScreenWide()
-        if (isWide) {
-            setDownloadText("Baixar o Aplicativo")
-
-            // O atraso é necessário para que a barra de navegação termine a animação e o botão fique no local correto
-            setTimeout(() => {
-            }, 250);
-        } else {
-            setDownloadText("Baixar o App")
-        }
-    }
-
     const [isMenuVisible, setMenuVisible] = useState(false)
     const [isScreenScrolled, setScreenScrolled] = useState(false)
 
@@ -56,11 +43,12 @@ export default function Header({ isHome }: Props) {
         }
     }
 
-    const closeMenu = () => {
+    const closeMenu = (button) => {
         setMenuVisible(false)
+        lastSectionId = button.title
     }
 
-    let lastSection;
+    let lastSectionId = "home";
 
     const handleScroll = () => {
         showNavOnScroll()
@@ -88,27 +76,42 @@ export default function Header({ isHome }: Props) {
             }
 
             sections.forEach(section => {
+                const lastSection = document.querySelector(`#${lastSectionId}`)
                 if (section !== lastSection) {
                     const sectionIsInBoundaries = getCurrentSection(section)
                     if (sectionIsInBoundaries) {
                         const sectionId = section.getAttribute("id")
-                        console.log(`Atual: ${sectionId}`)
-                        const menuElement = document.querySelector(`.${styles.menu} a[href*=${sectionId}]`)
+
+                        const menuElement = document.querySelector(`.${styles.menu} a[title*=${sectionId}]`)
                         menuElement.classList.add(styles.active)
+
                         updateNavLine(menuElement)
 
-                        if (lastSection) {
-                            const lastSectionId = lastSection.getAttribute("id")
-                            console.log(`Anterior: ${lastSectionId}`)
-                            const lastMenuElement = document.querySelector(`.${styles.menu} a[href*=${lastSectionId}]`)
-                            lastMenuElement.classList.remove(styles.active)
-                        }
-                        lastSection = section
+                        const lastMenuElement = document.querySelector(`.${styles.menu} a[title*=${lastSectionId}]`)
+                        lastMenuElement.classList.remove(styles.active)
+                        lastSectionId = sectionId
                     }
                 }
             });
         }
         changeMenuSection()
+    }
+
+    function handleScreenResize() {
+        const isWide = isScreenWide()
+        if (isWide) {
+            setDownloadText("Baixar o Aplicativo")
+
+            if (lastSectionId) {
+                const menuElement = document.querySelector(`.${styles.menu} a[title*=${lastSectionId}]`)
+                // O atraso é necessário para que a barra de navegação termine a animação e o botão fique no local correto
+                setTimeout(() => {
+                    updateNavLine(menuElement)
+                }, 250);
+            }
+        } else {
+            setDownloadText("Baixar o App")
+        }
     }
 
     useEffect(() => {
@@ -155,16 +158,18 @@ export default function Header({ isHome }: Props) {
                         <ul className={styles.list}>
                             <div ref={navLine} className={styles.navLine}></div>
                             <li className='list'>
-                                <Link href="/#home">
-                                    <a onClick={closeMenu} className={styles.active} title="Início">Início</a>
+                                <Link href="/">
+                                    {/* Há um problema aqui. Como o href está redirecionando para /#home, a página não rola totalmente para o topo */}
+                                    {/* Poderíamos tirar isso se o função não trocasse os botões de acordo com o href */}
+                                    <a onClick={(event) => closeMenu(event.target)} className={styles.active} title="home">Início</a>
                                 </Link>
                             </li>
                             {
                                 isHome ?
                                     <>
-                                        <li className='list'><a onClick={closeMenu} title="Sobre" href="/#about">Sobre</a></li>
-                                        <li className='list'><a onClick={closeMenu} title="Relatórios" href="/#reports">Relatórios</a></li>
-                                        <li className='list'><a onClick={closeMenu} title="Comunidade" href="/#community">Comunidade</a></li>
+                                        <li className='list'><a onClick={(event) => closeMenu(event.target)} title="about" href="/#about">Sobre</a></li>
+                                        <li className='list'><a onClick={(event) => closeMenu(event.target)} title="reports" href="/#reports">Relatórios</a></li>
+                                        <li className='list'><a onClick={(event) => closeMenu(event.target)} title="community" href="/#community">Comunidade</a></li>
                                     </>
                                     : null
                             }
