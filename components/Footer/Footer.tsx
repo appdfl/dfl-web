@@ -12,7 +12,7 @@ export default function Footer() {
                     <div className={styles.links}>
                         <div className={styles.column}>
                             <h5>DOCS</h5>
-                            <a href="/perguntas-frequentes.html">F.A.Q</a>
+                            <a href="/perguntas-frequentes">F.A.Q</a>
                             <a>Que dados são coletados?</a>
                         </div>
                         <div className={styles.column}>

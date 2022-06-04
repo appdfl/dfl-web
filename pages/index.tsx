@@ -1,4 +1,5 @@
-import Head from 'next/head';
+import { useState } from 'react';
+
 import Link from 'next/link';
 import Image from "next/image";
 
@@ -6,15 +7,13 @@ import Icon from '@mui/material/Icon';
 import LinkIcon from '/public/icons/link_icon.svg'
 import InfoIcon from '/public/icons/info_icon.svg'
 
-import Header from '../components/Header/Header';
-
 import { getReportsData } from '../utils/reports';
 import { getAboutData } from '../utils/about';
 
+import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 
 import styles from '../styles/landing.module.css';
-import { createRef, useRef, useState } from 'react';
 import Modal from '../components/Modal/Modal';
 
 export async function getStaticProps() {
@@ -33,29 +32,12 @@ const animation_time = 250 // 0.25 segundos
 export default function Landing({ aboutData }) {
     const [modalOpen, setModalOpen] = useState(false);
 
-    /* const defaultIcons = aboutData["community"].map(item => {
-        return item.icon
-    })
-    const defaultDescriptions = aboutData["community"].map(item => {
-        return item.description
-    }) */
-
     const [currentTag, setCurrentTag] = useState("community" as string)
     const [aboutInstancesVisible, setAboutInstancesVisible] = useState(true)
-
-    /* const [icons, setIcons] = useState(defaultIcons)
-    const [description, setDescriptions] = useState(defaultDescriptions) */
 
     function changeAboutInstance(instance: string) {
         setAboutInstancesVisible(false)
         console.log(`Atualizando instância do "sobre" para ${instance}.`)
-
-        /* setIcons(aboutData[instance].map(item => {
-            return item.icon
-        }))
-        setDescriptions(aboutData[instance].map(item => {
-            return item.description
-        })) */
 
         setTimeout(() => {
             setCurrentTag(instance)
@@ -65,6 +47,8 @@ export default function Landing({ aboutData }) {
 
     return (
         <body>
+            <Header isHome />
+
             <section id='home' className={styles.home}>
                 <div className={`wrapper ${styles.wrapper}`}>
                     <div className={`${styles["col-a"]}`}>

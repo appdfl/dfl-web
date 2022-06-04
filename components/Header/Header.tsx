@@ -1,128 +1,142 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import styles from './header.module.css';
 import Logo from '/public/logo.svg'
-
-// Configuramos a possibilidade de clique nos botões de seção da navBar
-const navLine = document.querySelector("#nav-line") as HTMLElement;
-function updateNavLine(element) {
-    /* navLine.style.left = `${element.offsetLeft}px`; */
-    /* navLine.style.width = `${element.offsetWidth}px`; */
-    navLine.style.left = `${element.offsetLeft + (element.offsetWidth / 2) - (navLine.offsetWidth / 2)}px`;
-}
-
-/* Seções da Navigation Bar */
-const sections = [document.querySelector("#home"), document.querySelector("#about"), document.querySelector("#reports"), document.querySelector("#community")]
-let lastSection = sections[0]
-
-function openMenu() {
-    document.body.classList.add('menu-expanded')
-}
-
-function closeMenu(sectionName: string) {
-    document.body.classList.remove('menu-expanded')
-
-    // Essencial para que o botão clicado seja des-selecionado quando o usuário rolar a página
-    const section = document.querySelector(`#${sectionName}`)
-    if (section) {
-        lastSection = section
-    }
-}
-
-function changeMenuSection() {
-    const middleLine = scrollY + (innerHeight / 2)
-
-    function getCurrentSection(section) {
-        // Verificando em qual seção o usuário está
-        // Utilizaremos o "id" da seção e obteremos o "offsetTop"
-        const sectionTop = section.offsetTop
-        const sectionHeight = section.offsetHeight
-
-        const sectionIsAboveOrInsideMiddleLine = middleLine >= sectionTop
-
-        const nextSectionBegin = sectionHeight + sectionTop // Somamos o tamanho fixo da seção com o valor da altura da seção para sabermos a localização de início da seção seguinte
-        const nextSectionIsUnderMiddleLine = middleLine < nextSectionBegin
-
-        const isInBoundaries = sectionIsAboveOrInsideMiddleLine && nextSectionIsUnderMiddleLine
-
-        if (isInBoundaries) {
-            return true
-        }
-    }
-
-    sections.forEach(section => {
-        if (section !== lastSection) {
-            const sectionIsInBoundaries = getCurrentSection(section)
-            if (sectionIsInBoundaries) {
-                const sectionId = section.getAttribute("id")
-                //console.log(`Atual: ${sectionId}`)
-                const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`)
-                menuElement.classList.add('active')
-                //clicked = false;
-                indicator(menuElement)
-
-                const lastSectionId = lastSection.getAttribute("id")
-                // console.log(`Anterior: ${lastSectionId}`)
-                const lastMenuElement = document.querySelector(`.menu a[href*=${lastSectionId}]`)
-                lastMenuElement.classList.remove('active')
-
-                lastSection = section
-            }
-        }
-    });
-}
-
-/* O loop abaixo é responsável por fixar a largura dos botões da nav bar para que quando o texto fique em negrito o tamanho não aumente e empurre os outros elementos */
-function updateMenuButtonsWidth() {
-    const liList = document.querySelectorAll('.menu .list li') as NodeListOf<HTMLElement>;
-    liList.forEach(list => {
-        list.style.width = `${list.offsetWidth + 15}px`;
-    })
-}
-updateMenuButtonsWidth()
 
 type Props = {
     isHome?: boolean;
 }
 
 export default function Header({ isHome }: Props) {
+    const [downloadText, setDownloadText] = useState("Baixar o App")
 
-    const navBarButton = document.querySelector("#navigation .button");
-    const [isMobile, setIsMobile] = useState(true)
-    function handleScreenResize() {
+    const navLine = useRef(null);
+
+    function updateNavLine(button) {
+        // navLine.style.left = `${element.offsetLeft}px`;
+        // navLine.style.width = `${element.offsetWidth}px`;
+        if (button) {
+            navLine.current.style.left = `${button.offsetLeft + (button.offsetWidth / 2) - (navLine.current.offsetWidth / 2)}px`;
+        } else {
+            return console.warn("Um botão não foi encontrado para ser selecionado.")
+        }
+    }
+
+    const isScreenWide = () => {
         const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-        //console.log(width)
         if (width >= 1024) {
-            navBarButton.textContent = "Baixar o Aplicativo"
+            return true
+        } else {
+            return false
+        }
+    }
+
+    function handleScreenResize() {
+        const isWide = isScreenWide()
+        if (isWide) {
+            setDownloadText("Baixar o Aplicativo")
 
             // O atraso é necessário para que a barra de navegação termine a animação e o botão fique no local correto
             setTimeout(() => {
-                const lastSectionId = lastSection.getAttribute("id")
-                const menuElement = document.querySelector(`.menu a[href*=${lastSectionId}]`)
-                updateNavLine(menuElement)
             }, 250);
         } else {
-            navBarButton.textContent = "Baixar o App"
+            setDownloadText("Baixar o App")
         }
     }
 
-    /* Para já atualizar o texto do botão independente de ter alterado o tamanho da tela */
-    handleScreenResize()
+    const [isMobile, setIsMobile] = useState(null)
 
-    const [isNavVisible, setNavVisible] = useState(false)
+    const [isMenuVisible, setMenuVisible] = useState(false)
+    const [isScreenScrolled, setScreenScrolled] = useState(false)
+
     function showNavOnScroll() {
         if (scrollY === 0) {
-            setNavVisible(false)
+            setScreenScrolled(false)
         } else {
-            setNavVisible(true)
+            setScreenScrolled(true)
         }
     }
+
+    const toggleMenu = (buttonElement) => {
+        if (buttonElement) {
+            /* if (lastButtonSelected) {
+                lastButtonSelected.classList.remove(styles.active)
+            }
+            buttonElement.classList.add(styles.active) */
+            //updateNavLine(buttonElement)
+            //lastButtonSelected = buttonElement
+        } else {
+            setMenuVisible(!isMenuVisible)
+        }
+    }
+
+    let lastSection;
 
     const handleScroll = () => {
         showNavOnScroll()
+
+        function changeMenuSection() {
+            const sections = [document.querySelector("#home"), document.querySelector("#about"), document.querySelector("#reports"), document.querySelector("#community")]
+            const middleLine = scrollY + (innerHeight / 2)
+
+            function getCurrentSection(section) {
+                // Verificando em qual seção o usuário está
+                // Utilizaremos o "id" da seção e obteremos o "offsetTop"
+                const sectionTop = section.offsetTop
+                const sectionHeight = section.offsetHeight
+
+                const sectionIsAboveOrInsideMiddleLine = middleLine >= sectionTop
+
+                const nextSectionBegin = sectionHeight + sectionTop // Somamos o tamanho fixo da seção com o valor da altura da seção para sabermos a localização de início da seção seguinte
+                const nextSectionIsUnderMiddleLine = middleLine < nextSectionBegin
+
+                const isInBoundaries = sectionIsAboveOrInsideMiddleLine && nextSectionIsUnderMiddleLine
+
+                if (isInBoundaries) {
+                    return true
+                }
+            }
+
+            sections.forEach(section => {
+                if (section !== lastSection) {
+                    const sectionIsInBoundaries = getCurrentSection(section)
+                    if (sectionIsInBoundaries) {
+                        const sectionId = section.getAttribute("id")
+                        console.log(`Atual: ${sectionId}`)
+                        const menuElement = document.querySelector(`.${styles.menu} a[href*=${sectionId}]`)
+                        menuElement.classList.add(styles.active)
+                        updateNavLine(menuElement)
+
+                        if (lastSection) {
+                            const lastSectionId = lastSection.getAttribute("id")
+                            console.log(`Anterior: ${lastSectionId}`)
+                            const lastMenuElement = document.querySelector(`.${styles.menu} a[href*=${lastSectionId}]`)
+                            lastMenuElement.classList.remove(styles.active)
+                        }
+                        lastSection = section
+                    }
+                }
+            });
+        }
         changeMenuSection()
     }
+
+    useEffect(() => {
+        function updateMenuButtonsWidth() {
+            const liList = document.querySelectorAll('.list') as NodeListOf<HTMLElement>;
+
+            liList.forEach(list => {
+                console.log(list.style.width)
+                list.style.width = `${list.offsetWidth + 15}px`;
+            })
+            console.log("Tamanhos atualizados!")
+
+            // Atualizamos a navLine para a posição do primeiro botão (após atualizarmos o tamanho dos botões, claro)
+            updateNavLine(liList[0])
+        }
+        updateMenuButtonsWidth()
+    }, [])
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -130,58 +144,59 @@ export default function Header({ isHome }: Props) {
     });
 
     useEffect(() => {
+        setIsMobile(isScreenWide)
         window.addEventListener('resize', handleScreenResize);
         return () => window.removeEventListener('resize', handleScreenResize);
     });
 
     return (
-        <nav id="navigation" className={isNavVisible ? "scroll" : ""}>
-            <div className="wrapper">
-                <a className="logo" href="/">
-                    <Logo />
+        <nav className={`${styles.nav} ${isMenuVisible && styles.menuExpanded} ${isScreenScrolled && styles.scroll}`}>
+            <div className={`wrapper ${styles.wrapper}`}>
+                <a href="/">
+                    <Logo className={styles.logo} />
                 </a>
 
-                <div className="menu">
-                    <button type="button" className="close-menu" aria-expanded="true" aria-label="Fechar menu"
-                        onClick={() => closeMenu}>
+                <div className={styles.menu}>
+                    <button type="button" className={styles["close-menu"]} aria-expanded="true" aria-label="Fechar menu"
+                        onClick={toggleMenu}>
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M19.41 12L16.59 14.82L25.75 24L16.59 33.18L19.41 36L31.41 24L19.41 12Z" fill="white" />
                         </svg>
                     </button>
-                    <div className="content">
-                        <ul className="list">
-                            <div id="nav-line"></div>
-                            <li>
-                                <Link onClick={() => closeMenu("home")} href="/#home">
-                                    <a className='active' >Início</a>
+                    <div className={styles.content}>
+                        <ul className={styles.list}>
+                            <div ref={navLine} className={styles.navLine}></div>
+                            <li className='list'>
+                                <Link href="/#home">
+                                    <a onClick={(event) => toggleMenu(event.target)} className={styles.active} title="Início">Início</a>
                                 </Link>
                             </li>
                             {
                                 isHome ?
                                     <>
-                                        <li><a onClick={() => closeMenu("about")} title="Sobre" href="/#about">Sobre</a></li>
-                                        <li><a onClick={() => closeMenu("reports")} title="Relatórios" href="/#reports">Relatórios</a></li>
-                                        <li><a onClick={() => closeMenu("community")} title="Comunidade" href="/#community">Comunidade</a></li>
+                                        <li className='list'><a onClick={(event) => toggleMenu(event.target)} title="Sobre" href="/#about">Sobre</a></li>
+                                        <li className='list'><a onClick={(event) => toggleMenu(event.target)} title="Relatórios" href="/#reports">Relatórios</a></li>
+                                        <li className='list'><a onClick={(event) => toggleMenu(event.target)} title="Comunidade" href="/#community">Comunidade</a></li>
                                     </>
                                     : null
                             }
-                            <li>
-                                <Link onClick={closeMenu} href="/perguntas-frequentes">
-                                    <a>F.A.Q</a>
+                            <li className='list'>
+                                <Link href="/perguntas-frequentes">
+                                    <a onClick={toggleMenu}>F.A.Q</a>
                                 </Link>
                             </li>
                         </ul>
                         <div>
-                            <a className="button" onClick={() => closeMenu} href="#download">
+                            <a className={`button ${styles.button}`} onClick={toggleMenu} href="#download">
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M17.4167 8.70833H13.75V3.20833H8.25V8.70833H4.58334L11 15.125L17.4167 8.70833ZM10.0833 10.5417V5.04166H11.9167V10.5417H12.9892L11 12.5308L9.01084 10.5417H10.0833ZM4.58334 16.9583H17.4167V18.7917H4.58334V16.9583Z"
                                         fill="#346259" />
                                 </svg>
-                                Baixar o APP
+                                {downloadText}
                             </a>
-                            <ul className="social-links">
+                            <ul className={`social-links ${styles["social-links"]}`}>
                                 <li>
                                     <a target="_blank" href="https://instagram.com/appdfl">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -219,8 +234,19 @@ export default function Header({ isHome }: Props) {
                             </ul>
                         </div>
                     </div>
-                    <div className="backdrop"></div>
+                    <div className={styles.backdrop}></div>
                 </div>
+
+                <button type='button' className={styles['open-menu']} aria-expanded="false" aria-label="Abrir menu" onClick={toggleMenu}>
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 20H30" stroke="#346259" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M10 12H30" stroke="#346259" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M18 28L30 28" stroke="#346259" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
             </div>
         </nav>
     );
