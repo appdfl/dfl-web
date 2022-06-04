@@ -23,7 +23,8 @@ Um aplicativo que irá lhe ajudar a reportar focos de lixo e encontrar pontos de
 -   [ ] HTML
 -   [ ] CSS
 -   [ ] JavaScript
--   [ ] Context API
+-   [ ] React
+-   [ ] Next.js
 -   [ ] Material Icons
 -   [ ] Express
 -   [ ] Axios

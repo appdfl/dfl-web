@@ -1,0 +1,314 @@
+nav {
+    display: flex;
+
+    background-color: var(--background-02);
+    height: var(--nav-height);
+    width: 100vw;
+
+    position: fixed;
+    top: 0;
+    transition: 0.3s;
+
+    z-index: 100;
+}
+
+nav .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav.scroll {
+    background-color: var(--secondary-color-02);
+    /* opacity: 0.75; */
+}
+
+nav.scroll .open-menu svg path {
+    stroke: var(--white);
+}
+
+nav.scroll .logo path {
+    fill: var(--white);
+}
+
+nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+nav .menu {
+    position: fixed;
+}
+
+/* ===== MENU ================================================== */
+body.menu-expanded {
+    /* Quando o menu estiver aberto, removemos a possibilidade de rolagem */
+    overflow: hidden;
+}
+
+/* body.menu-expanded> :not(nav) {
+    Some com TUDO na página (primeiro nível - header, body), menos o que foi especificado no :not()
+    visibility: hidden;
+} */
+
+
+/* O menu fica oculto por padrão
+ e o botão de abrir o menu fica oculto quando o menu está aberto  */
+.menu,
+body.menu-expanded .open-menu {
+    /* display: none; */
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* Por padrão, para a animação, deixamos o menu todo na direita */
+.menu {
+    z-index: initial;
+    transform: translateX(100%);
+}
+
+.menu-wrapper {
+    z-index: 10;
+}
+
+body.menu-expanded .backdrop {
+    opacity: 0.65;
+}
+
+.menu .backdrop {
+    position: absolute;
+    top: 0;
+    left: -100vw;
+
+    width: 125vw;
+    height: 100vh;
+
+    background-color: black;
+
+    opacity: 0;
+    transition: 0.25s;
+    transition-delay: 0.1s;
+
+    z-index: -1;
+    transform: translateZ(-10px)
+}
+
+/* O menu é exibido quando a classe ".menu-expanded" é adicionada pelo JavaScript */
+body.menu-expanded .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5rem;
+
+    max-width: max-content;
+
+    visibility: visible;
+    opacity: 1;
+
+    top: 0;
+    right: 0;
+    background-color: var(--secondary-color-02);
+
+    padding: 1.5rem 2.5rem;
+    width: 85vw;
+    height: 100vh;
+
+    transform-style: preserve-3d;
+
+    transition: transform 225ms;
+    transition-timing-function: cubic-bezier(0.002, 0.82, 0.165, 1);
+    transform: translateX(0%);
+}
+
+.menu .close-menu {
+    align-self: flex-start;
+}
+
+.menu .list {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+    gap: 5rem;
+
+    font-weight: 700;
+    font-size: 2.4rem;
+}
+
+.menu ul li a {
+    color: var(--white);
+    text-decoration: none;
+}
+
+.menu .button {
+    background-color: var(--background-modal);
+    color: var(--secondary-color-02);
+    border-radius: 1.5rem;
+    padding: 1rem 2rem;
+
+    display: inline-flex;
+
+    margin-top: 4.8rem;
+    margin-bottom: 2.5rem;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.menu .button:hover svg path {
+    fill: var(--white);
+    transition: 0.3s;
+}
+
+.menu .button:hover {
+    background-color: var(--secondary-color-01);
+    color: var(--white);
+}
+
+@media (min-width: 1024px) {
+
+    /* NAVIGATION ====================================== */
+    /* [RESETS] */
+    /* Para garantir, colocamos o (nav#navigation) para que essas propriedades sejam mais específicas que as que colocamos anteriormente */
+    nav#navigation .wrapper * {
+        margin: 0;
+        padding: 0;
+        visibility: initial;
+        display: initial;
+        opacity: initial;
+        flex-direction: initial;
+        position: initial;
+        font-size: initial;
+        transform: initial;
+        color: initial;
+        background-color: initial;
+        filter: initial;
+    }
+
+    nav#navigation .close-menu,
+    nav#navigation .open-menu,
+    nav#navigation .backdrop,
+    nav#navigation .menu li:nth-child(6),
+    nav#navigation .menu a.button svg,
+    nav#navigation .social-links {
+        display: none;
+    }
+
+    nav#navigation .menu .content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 3rem;
+    }
+
+    nav#navigation .list {
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+
+        display: flex;
+        gap: 5rem;
+    }
+
+    nav#navigation .menu ul li a {
+        color: var(--secondary-color-02);
+        font-weight: 400;
+        opacity: 0.6;
+    }
+
+    nav#navigation .menu a.button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 2.4rem;
+
+        border: 1px solid var(--secondary-color-02);
+        border-radius: 1.5rem;
+
+        color: var(--secondary-color-02);
+        font-weight: 700;
+        line-height: 1.8rem;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+    }
+
+    nav#navigation .menu a.button:hover {
+        background-color: var(--secondary-color-02);
+        border: none;
+        color: var(--white);
+    }
+
+    nav#navigation.scroll .menu ul li a {
+        color: var(--white);
+        opacity: 0.6;
+    }
+
+    nav#navigation.scroll .menu a.button {
+        border-color: var(--white);
+        color: var(--white);
+    }
+
+    nav#navigation .menu li a {
+        transition: opacity 0.4s;
+    }
+
+    nav#navigation .menu li a.active,
+    nav#navigation .menu li a:hover {
+        opacity: 1;
+        font-weight: 700;
+    }
+
+    nav#navigation #nav-line {
+        height: 3px;
+        width: 25px;
+        display: block;
+
+        position: absolute;
+        bottom: 2rem;
+        left: 0;
+
+        border-radius: 0.2rem;
+        background-color: var(--secondary-color-02);
+
+        transition: 0.35s;
+    }
+
+    nav#navigation.scroll #nav-line {
+        background-color: var(--white);
+    }
+
+    nav#navigation.scroll .menu li a.active,
+    nav#navigation.scroll .menu li a:hover {
+        opacity: 1;
+    }
+
+    nav#navigation.scroll .menu a.button.active,
+    nav#navigation.scroll .menu a.button:hover {
+        background-color: var(--secondary-color-02);
+        filter: brightness(1.15);
+        border: none;
+    }
+
+    nav#navigation .menuButton-home {
+        transform: translateX(10%);
+    }
+
+    nav#navigation .menuButton-about {
+        transform: translateX(25%);
+    }
+
+    nav#navigation .menuButton-reports {
+        transform: translateX(55%);
+    }
+
+    nav#navigation .menuButton-community {
+        transform: translateX(75%);
+    }
+}

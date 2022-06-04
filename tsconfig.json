@@ -11,6 +11,26 @@
         "typeRoots": [
             "./src/@types",
             "node_modules/@types"
-        ]
+        ],
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "incremental": true,
+        "module": "esnext",
+        "resolveJsonModule": true,
+        "jsx": "preserve"
     },
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "pages/posts/[id].js"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
