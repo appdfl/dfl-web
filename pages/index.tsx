@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import Image from "next/image";
@@ -16,6 +16,7 @@ import BackToTop from '../components/BackToTop/BackToTop';
 
 import styles from '../styles/landing.module.css';
 import Modal from '../components/Modal/Modal';
+import { isScreenWide } from '../utils/isScreenWide';
 
 export async function getStaticProps() {
     const aboutData = await getAboutData();
@@ -33,6 +34,9 @@ const animation_time = 250 // 0.25 segundos
 export default function Landing({ aboutData }) {
     const [modalOpen, setModalOpen] = useState(false);
 
+    const [isMobile, setIsMobile] = useState(false);
+    // Determinamos o padrão como sendo falso já que a exibição da seção "about" também funciona normalmente no telefone
+
     const [currentTag, setCurrentTag] = useState("community" as string)
     const [aboutInstancesVisible, setAboutInstancesVisible] = useState(true)
 
@@ -45,6 +49,20 @@ export default function Landing({ aboutData }) {
             setAboutInstancesVisible(true)
         }, animation_time);
     }
+
+    useEffect(() => {
+        function handleScreenResize() {
+            const isWide = isScreenWide();
+            if (isWide) {
+                setIsMobile(false)
+            } else {
+                setIsMobile(true)
+            }
+        }
+
+        window.addEventListener('resize', handleScreenResize);
+        return () => window.removeEventListener('resize', handleScreenResize);
+    })
 
     return (
         <body>
@@ -155,33 +173,42 @@ export default function Landing({ aboutData }) {
                                     alt='Tela da seção "Comunidade" do aplicativo móvel.' />
                             </div>
                             {
-                                currentTag !== "notify" &&
-                                <div className={`${styles[`column-2`]} ${aboutInstancesVisible === true ? "fadeIn" : "fadeOut"}`}>
-                                    <div className={styles["info-container"]}>
-                                        <div className={styles["info-shape"]}>
-                                            <Icon className={styles.info}>{aboutData[currentTag][3].icon}</Icon>
+                                currentTag !== "notify" ?
+                                    <div className={`${styles[`column-2`]} ${aboutInstancesVisible === true ? "fadeIn" : "fadeOut"}`}>
+                                        <div className={styles["info-container"]}>
+                                            <div className={styles["info-shape"]}>
+                                                <Icon className={styles.info}>{aboutData[currentTag][3].icon}</Icon>
+                                            </div>
+                                            <p><span className="bolder">{aboutData[currentTag][3].title}</span><br />
+                                                {aboutData[currentTag][3].description}
+                                            </p>
                                         </div>
-                                        <p><span className="bolder">{aboutData[currentTag][3].title}</span><br />
-                                            {aboutData[currentTag][3].description}
-                                        </p>
-                                    </div>
-                                    <div className={styles["info-container"]}>
-                                        <div className={styles["info-shape"]}>
-                                            <Icon className={styles.info}>{aboutData[currentTag][4].icon}</Icon>
+                                        <div className={styles["info-container"]}>
+                                            <div className={styles["info-shape"]}>
+                                                <Icon className={styles.info}>{aboutData[currentTag][4].icon}</Icon>
+                                            </div>
+                                            <p><span className="bolder">{aboutData[currentTag][4].title}</span><br />
+                                                {aboutData[currentTag][4].description}
+                                            </p>
                                         </div>
-                                        <p><span className="bolder">{aboutData[currentTag][4].title}</span><br />
-                                            {aboutData[currentTag][4].description}
-                                        </p>
-                                    </div>
-                                    <div className={styles["info-container"]}>
-                                        <div className={styles["info-shape"]}>
-                                            <Icon className={styles.info}>{aboutData[currentTag][5].icon}</Icon>
+                                        <div className={styles["info-container"]}>
+                                            <div className={styles["info-shape"]}>
+                                                <Icon className={styles.info}>{aboutData[currentTag][5].icon}</Icon>
+                                            </div>
+                                            <p><span className="bolder">{aboutData[currentTag][5].title}</span><br />
+                                                {aboutData[currentTag][5].description}
+                                            </p>
                                         </div>
-                                        <p><span className="bolder">{aboutData[currentTag][5].title}</span><br />
-                                            {aboutData[currentTag][5].description}
-                                        </p>
                                     </div>
-                                </div>
+                                    :
+                                    <div className={`${styles["phone-container"]} ${aboutInstancesVisible === true ? "fadeIn" : "fadeOut"}`}>
+                                        <div className={styles["overlay-container"]}>
+                                            <img className={styles["phone-overlay"]} src="/images/phone_overlay.png"
+                                                alt="Modelo de telefone que circunda imagens de telas presentes no aplicativo." />
+                                        </div>
+                                        <img className={`${styles["app-overlay"]}`} src={"/images/screens/ReportScreen_2.png"}
+                                            alt='Tela da seção "Comunidade" do aplicativo móvel.' />
+                                    </div>
                             }
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { isScreenWide } from '../../utils/isScreenWide';
 
 import styles from './header.module.css';
 import Logo from '/public/logo.svg'
@@ -20,15 +21,6 @@ export default function Header({ isHome }: Props) {
             navLine.current.style.left = `${button.offsetLeft + (button.offsetWidth / 2) - (navLine.current.offsetWidth / 2)}px`;
         } else {
             return console.warn("Um botão não foi encontrado para ser selecionado.")
-        }
-    }
-
-    const isScreenWide = () => {
-        const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-        if (width >= 1024) {
-            return true
-        } else {
-            return false
         }
     }
 
