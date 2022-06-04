@@ -45,8 +45,6 @@ export default function Header({ isHome }: Props) {
         }
     }
 
-    const [isMobile, setIsMobile] = useState(null)
-
     const [isMenuVisible, setMenuVisible] = useState(false)
     const [isScreenScrolled, setScreenScrolled] = useState(false)
 
@@ -58,17 +56,8 @@ export default function Header({ isHome }: Props) {
         }
     }
 
-    const toggleMenu = (buttonElement) => {
-        if (buttonElement) {
-            /* if (lastButtonSelected) {
-                lastButtonSelected.classList.remove(styles.active)
-            }
-            buttonElement.classList.add(styles.active) */
-            //updateNavLine(buttonElement)
-            //lastButtonSelected = buttonElement
-        } else {
-            setMenuVisible(!isMenuVisible)
-        }
+    const closeMenu = () => {
+        setMenuVisible(false)
     }
 
     let lastSection;
@@ -144,7 +133,6 @@ export default function Header({ isHome }: Props) {
     });
 
     useEffect(() => {
-        setIsMobile(isScreenWide)
         window.addEventListener('resize', handleScreenResize);
         return () => window.removeEventListener('resize', handleScreenResize);
     });
@@ -158,7 +146,7 @@ export default function Header({ isHome }: Props) {
 
                 <div className={styles.menu}>
                     <button type="button" className={styles["close-menu"]} aria-expanded="true" aria-label="Fechar menu"
-                        onClick={toggleMenu}>
+                        onClick={closeMenu}>
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M19.41 12L16.59 14.82L25.75 24L16.59 33.18L19.41 36L31.41 24L19.41 12Z" fill="white" />
                         </svg>
@@ -168,26 +156,26 @@ export default function Header({ isHome }: Props) {
                             <div ref={navLine} className={styles.navLine}></div>
                             <li className='list'>
                                 <Link href="/#home">
-                                    <a onClick={(event) => toggleMenu(event.target)} className={styles.active} title="Início">Início</a>
+                                    <a onClick={closeMenu} className={styles.active} title="Início">Início</a>
                                 </Link>
                             </li>
                             {
                                 isHome ?
                                     <>
-                                        <li className='list'><a onClick={(event) => toggleMenu(event.target)} title="Sobre" href="/#about">Sobre</a></li>
-                                        <li className='list'><a onClick={(event) => toggleMenu(event.target)} title="Relatórios" href="/#reports">Relatórios</a></li>
-                                        <li className='list'><a onClick={(event) => toggleMenu(event.target)} title="Comunidade" href="/#community">Comunidade</a></li>
+                                        <li className='list'><a onClick={closeMenu} title="Sobre" href="/#about">Sobre</a></li>
+                                        <li className='list'><a onClick={closeMenu} title="Relatórios" href="/#reports">Relatórios</a></li>
+                                        <li className='list'><a onClick={closeMenu} title="Comunidade" href="/#community">Comunidade</a></li>
                                     </>
                                     : null
                             }
                             <li className='list'>
                                 <Link href="/perguntas-frequentes">
-                                    <a onClick={toggleMenu}>F.A.Q</a>
+                                    <a onClick={closeMenu}>F.A.Q</a>
                                 </Link>
                             </li>
                         </ul>
                         <div>
-                            <a className={`button ${styles.button}`} onClick={toggleMenu} href="#download">
+                            <a className={`button ${styles.button}`} onClick={closeMenu} href="#download">
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -237,7 +225,7 @@ export default function Header({ isHome }: Props) {
                     <div className={styles.backdrop}></div>
                 </div>
 
-                <button type='button' className={styles['open-menu']} aria-expanded="false" aria-label="Abrir menu" onClick={toggleMenu}>
+                <button type='button' className={styles['open-menu']} aria-expanded="false" aria-label="Abrir menu" onClick={closeMenu}>
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 20H30" stroke="#346259" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" />
