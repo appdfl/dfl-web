@@ -28,7 +28,7 @@
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        "pages/posts/[id].js"
+        "src/pages/blog/[id].js"
     ],
     "exclude": [
         "node_modules"

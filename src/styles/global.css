@@ -1,0 +1,213 @@
+:root {
+    font-size: 62.5%;
+    /* 
+    100% ----- 16px
+    x  ------- 10px
+    
+    1rem = 10px
+    */
+
+    --nav-height: 7.2rem;
+
+    --primary-color-01: #4F9D69;
+    --primary-color-02: #7FB883;
+    --primary-color-03: #AED296;
+    --primary-color-04: #C9E2C9;
+
+    --secondary-color-01: #26413C;
+    --secondary-color-02: #346259;
+
+    --background-01: #F6F7EB;
+    --background-02: #E6EADA;
+    --background-modal: #F3F7F4;
+
+    --font-dark: #212529;
+    --font-light: #495057;
+
+    --light-gray: #747474;
+    --lighter-gray: #dbdbdb;
+    --white: #FEFEFE;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* As caixas agora passam a ser contadas a partir da borda, e não do conteúdo, evitando problemas com o "padding" */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter';
+    font-size: 1.6rem;
+    text-align: center;
+
+    overflow: overlay;
+    background: linear-gradient(180deg, #FFFFFF 100%, var(--background-02) 100%);
+}
+
+button {
+    font-family: 'Inter';
+    border: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.header {
+    align-items: center;
+
+    background-color: var(--background-02);
+
+    padding-top: calc(var(--nav-height) + 8rem);
+    padding-bottom: 8rem;
+}
+
+.header h1 {
+    margin-inline: auto;
+    width: 85%;
+}
+
+.wrapper {
+    width: min(55rem, 100%);
+    margin-inline: auto;
+    padding-inline: 2.3rem;
+    /* border: 1px solid red; */
+}
+
+.bolder {
+    font-weight: 800;
+}
+
+.big {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.underlined {
+    text-decoration: underline;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+section {
+    padding-block: 7.5rem;
+    /* padding-inline: 1.5rem; */
+}
+
+footer a {
+    text-decoration: none;
+    color: var(--background-modal)
+}
+
+/* Descrição que vai acima do título */
+section header h4 {
+    font-size: 1.4rem;
+    /* Equivale à 100% de font-size no root = padrão do navegador = 16px */
+    color: var(--secondary-color-02);
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+/* Título da home */
+section header h1 {
+    font-size: 4.1rem;
+    color: var(--font-dark);
+    line-height: 125%;
+}
+
+/* Título das seções */
+section header h2 {
+    font-weight: 700;
+    font-size: 3.4rem;
+    line-height: 130%;
+    color: var(--font-dark);
+}
+
+/* Subtítulo que vai abaixo dos títulos */
+section p {
+    font-family: 'Roboto';
+    color: var(--font-light);
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.button {
+    background-color: var(--secondary-color-02);
+    border: none;
+    border-radius: 1.5rem;
+
+    display: flex;
+    /* Altera como os "filhos" são posicionados dentro do botão */
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+
+    margin-inline: auto;
+
+    width: fit-content;
+    /* A largura se adapta ao conteúdo */
+    padding: 1.6rem 3.2rem;
+    /* primeira = vertical | segunda = horizontal */
+
+    color: var(--white);
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: var(--secondary-color-01);
+}
+
+.social-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3.2rem;
+}
+
+.fadeIn {
+    opacity: 1;
+}
+
+.fadeOut {
+    opacity: 0;
+}
+
+@media (min-width: 1024px) {
+    .wrapper {
+        width: min(112rem, 100%);
+        padding-inline: 5rem;
+        display: grid;
+    }
+
+    section {
+        padding-block: 8rem;
+    }
+
+    .header {
+        padding-top: calc(var(--nav-height) + 12rem);
+        padding-bottom: 12rem;
+    }
+}

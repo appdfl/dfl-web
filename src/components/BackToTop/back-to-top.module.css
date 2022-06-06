@@ -1,0 +1,19 @@
+.backToTopButton {
+    position: fixed;
+    right: 3rem;
+    bottom: 1.5rem;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(100%);
+    transition: 200ms;
+
+    z-index: 5;
+}
+
+.backToTopButton.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
