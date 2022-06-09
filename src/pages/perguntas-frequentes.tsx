@@ -1,7 +1,7 @@
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 
-import styles from "src/styles/perguntas-frequentes.module.css"
+import styles from "/src/styles/perguntas-frequentes.module.css"
 
 export default function PerguntasFrequentes() {
     return (
