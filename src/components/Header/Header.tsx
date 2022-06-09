@@ -175,19 +175,24 @@ export default function Header({ isHome, selected }: Props) {
                                     </>
                                     : null
                             }
-                            {
+                            {/* {
                                 isMobile || !isHome &&
                                 <li className='list'>
                                     <Link href="/perguntas-frequentes">
                                         <a className={selected === "perguntas-frequentes" && styles.active} onClick={closeMenu}>F.A.Q</a>
                                     </Link>
                                 </li>
-                            }
+                            } */}
                             <li className='list'>
+                                <Link href="/perguntas-frequentes">
+                                    <a className={selected === "perguntas-frequentes" && styles.active} onClick={closeMenu}>F.A.Q</a>
+                                </Link>
+                            </li>
+                            {/* <li className='list'>
                                 <Link href="/blog">
                                     <a className={selected === "blog" && styles.active} onClick={closeMenu}>Blog</a>
                                 </Link>
-                            </li>
+                            </li> */}
                         </ul>
                         <div>
                             <Link href="/#download">

@@ -80,7 +80,7 @@ body {
     text-align: center;
 
     overflow: overlay;
-    background: var(--body-color);
+    background: #FFFFFF;
     /* linear-gradient(180deg, var(--body-color) 100%, var(--background-02) 100%); */
     transition: var(--transition-05);
 }
