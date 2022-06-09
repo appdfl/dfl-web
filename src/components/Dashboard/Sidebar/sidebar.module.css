@@ -1,0 +1,265 @@
+/* ===== Sidebar ===== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--sidebar-width);
+
+    padding: 2.5rem 1.25rem;
+
+    background: var(--sidebar-color);
+    transition: var(--transition-05);
+    z-index: 100;
+}
+
+.sidebar.close {
+    width: var(--collapsed-sidebar-width);
+}
+
+.sidebar.close header .menuIcon {
+    width: 100%;
+}
+
+/* ===== Reusable code - Here ===== */
+.sidebar li {
+    height: 5rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.sidebar li .icon,
+.sidebar li .text {
+    color: var(--text-color);
+    transition: var(--transition-03);
+}
+
+.sidebar li .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 6rem;
+    font-size: 2rem;
+}
+
+.sidebar header {
+    display: flex;
+    justify-content: space-between
+}
+
+.sidebar header .logo {
+    transition: var(--transition-05);
+}
+
+.sidebar header .logo path {
+    fill: var(--secondary-color-02);
+    transition: var(--transition-03);
+    align-self: flex-start;
+}
+
+.sidebar .menuIcon {
+    font-size: 3rem;
+    color: var(--text-color);
+    cursor: pointer;
+
+    transition: var(--transition-05);
+}
+
+/* No modo escuro, as cores dos elementos do header são diferentes */
+body.dark .sidebar .menuIcon {
+    fill: var(--text-color);
+}
+
+body.dark .sidebar header .logo path {
+    fill: var(--text-color);
+}
+
+.sidebar .text {
+    font-size: 1.7rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 1;
+}
+
+.sidebar.close .text {
+    opacity: 0;
+}
+
+/* =========================== */
+
+.sidebar header {
+    position: relative;
+}
+
+.click {
+    cursor: pointer;
+}
+
+/* TOGGLE BUTTON */
+.sidebar header .toggle {
+    position: absolute;
+    top: 50%;
+    right: -2.5rem;
+    transform: translateY(-50%) rotate(180deg);
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: var(--secondary-color-02);
+    color: var(--sidebar-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: var(--transition-05);
+}
+
+body.dark .sidebar header .toggle {
+    color: var(--text-color);
+}
+
+.sidebar.close .toggle {
+    transform: translateY(-50%) rotate(0deg);
+}
+
+.sidebar .menu {
+    margin-top: 4rem;
+}
+
+.sidebar li.searchBox {
+    border-radius: 0.6rem;
+    background-color: var(--secondary-color-02-light);
+    cursor: pointer;
+    transition: var(--transition-05);
+}
+
+.sidebar li.searchBox input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: var(--secondary-color-02-light);
+    color: var(--text-color);
+    border-radius: 0.6rem;
+    font-size: 1.7rem;
+    font-weight: 500;
+    transition: var(--transition-05);
+}
+
+.sidebar li a {
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 0.6rem;
+    text-decoration: none;
+    transition: var(--transition-03);
+}
+
+.sidebar li a:hover {
+    background-color: var(--secondary-color-02);
+}
+
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text {
+    color: var(--sidebar-color);
+}
+
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text {
+    color: var(--text-color);
+}
+
+.sidebar.close header .logo {
+    opacity: 0;
+    width: 0;
+}
+
+.sidebar .menuBar {
+    height: calc(100% - 5.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* overflow-y: scroll; */
+}
+
+.menu-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.footer .mode {
+    border-radius: 0.6rem;
+    background-color: var(--secondary-color-02-light);
+    position: relative;
+    transition: var(--transition-05);
+}
+
+.footer .mode .moon_sun {
+    height: 5rem;
+    width: 6rem;
+}
+
+.mode .moon_sun .centralize {
+    height: 100%;
+    position: absolute;
+}
+
+.mode .moon_sun .sun {
+    opacity: 0;
+}
+
+body.dark .mode .moon_sun .sun {
+    opacity: 1;
+}
+
+body.dark .mode .moon_sun .moon {
+    opacity: 0;
+}
+
+.centralize {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer .toggle_switch {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    min-width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.6rem;
+    cursor: pointer;
+}
+
+.toggle_switch .switch {
+    position: relative;
+    height: 2.2rem;
+    width: 4rem;
+    border-radius: 2.5rem;
+    background-color: var(--toggle-color);
+    transition: var(--transition-05);
+}
+
+.switch::before {
+    content: '';
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    background-color: var(--sidebar-color);
+    transition: var(--transition-04);
+}
+
+body.dark .switch::before {
+    left: 2rem;
+}

@@ -6,8 +6,9 @@
     
     1rem = 10px
     */
-
     --nav-height: 7.2rem;
+    --sidebar-width: 25rem;
+    --collapsed-sidebar-width: 8.5rem;
 
     --primary-color-01: #4F9D69;
     --primary-color-02: #7FB883;
@@ -28,6 +29,27 @@
     --lighter-gray: #dbdbdb;
     --white: #FEFEFE;
 
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #695CFE;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --text-color: #707070;
+
+    /* ====== Transition ====== */
+    --transition-01: all 0.2s ease;
+    --transition-03: all 0.3s ease;
+    --transition-04: all 0.3s ease;
+    --transition-05: all 0.3s ease;
+}
+
+body.dark {
+    --body-color: #18191a;
+    --sidebar-color: #242526;
+    --primary-color: #3a3b3c;
+    --primary-color-light: #3a3b3c;
+    --toggle-color: #fff;
+    --text-color: #ccc;
 }
 
 * {
@@ -35,6 +57,11 @@
     padding: 0;
     box-sizing: border-box;
     /* As caixas agora passam a ser contadas a partir da borda, e não do conteúdo, evitando problemas com o "padding" */
+}
+
+::selection {
+    background-color: var(--primary-color);
+    color: #fff;
 }
 
 html {
@@ -53,7 +80,9 @@ body {
     text-align: center;
 
     overflow: overlay;
-    background: linear-gradient(180deg, #FFFFFF 100%, var(--background-02) 100%);
+    background: var(--body-color);
+    /* linear-gradient(180deg, var(--body-color) 100%, var(--background-02) 100%); */
+    transition: var(--transition-05);
 }
 
 button {

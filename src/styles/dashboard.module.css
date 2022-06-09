@@ -1,0 +1,55 @@
+.body {
+    display: flex;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+
+    position: absolute;
+    top: 0;
+    top: 0;
+    left: var(--sidebar-width);
+    height: 100vh;
+    width: calc(100vw - var(--sidebar-width));
+    margin-left: auto;
+
+    transition: var(--transition-05);
+
+    padding: 5rem 5rem;
+}
+
+body.dark .switch::before {
+    left: 20px;
+}
+
+.home {
+    position: absolute;
+    top: 0;
+    top: 0;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    background-color: var(--body-color);
+    transition: var(--transition-05);
+}
+
+.body .text {
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 12px 60px;
+}
+
+.sidebar.close~.home {
+    left: 78px;
+    height: 100vh;
+    width: calc(100% - 78px);
+}
+
+body.dark .body p,
+body.dark .body a,
+body.dark .body span {
+    color: var(--text-color);
+}
