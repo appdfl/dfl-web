@@ -1,0 +1,87 @@
+.holder {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: var(--primary-color-02);
+    padding: 1.5rem 2.5rem;
+    border-radius: 1.5rem 1.5rem 0px 0px;
+}
+
+.header ul {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+.address {
+    text-align: left;
+    flex: 0.45;
+}
+
+.user {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 0.5rem;
+
+    flex: 0.2;
+}
+
+.date {
+    flex: 0.125;
+}
+
+.rating {
+    flex: 0.1;
+}
+
+.hasTrashBins {
+    flex: 0.15;
+}
+
+.resolved {
+    flex: 0.1;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem 2.5rem;
+    gap: 1rem;
+    isolation: isolate;
+
+    background: #212529;
+    border-radius: 0px 0px 1.5rem 1.5rem;
+    transition: var(--transition-05);
+}
+
+.list ul {
+    width: 100%;
+}
+
+.reportItem {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 1.2rem;
+    color: var(--text-color);
+
+    cursor: pointer;
+}
+
+.reportItem input {
+    pointer-events: none;
+}

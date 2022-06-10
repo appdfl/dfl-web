@@ -31,8 +31,8 @@
 
     --body-color: #E4E9F7;
     --sidebar-color: #FFF;
-    --primary-color: #695CFE;
-    --primary-color-light: #F6F5FF;
+    --primary-color: var(--background-modal);
+    --primary-color-light: var(--primary-color-03);
     --toggle-color: #DDD;
     --text-color: #707070;
 
@@ -45,8 +45,8 @@
 
 body.dark {
     --body-color: #18191a;
-    --sidebar-color: #242526;
-    --primary-color: #3a3b3c;
+    --primary-color: #242526;
+    --primary-color-02: #191C1F;
     --primary-color-light: #3a3b3c;
     --toggle-color: #fff;
     --text-color: #ccc;
@@ -80,9 +80,12 @@ body {
     text-align: center;
 
     overflow: overlay;
-    background: #FFFFFF;
-    /* linear-gradient(180deg, var(--body-color) 100%, var(--background-02) 100%); */
+    background: linear-gradient(180deg, var(--body-color) 100%, var(--background-02) 100%);
     transition: var(--transition-05);
+}
+
+body.dashboard {
+    background: var(--body-color);
 }
 
 button {

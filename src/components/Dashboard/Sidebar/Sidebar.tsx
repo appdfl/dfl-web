@@ -12,6 +12,8 @@ import Icon from '@mui/material/Icon';
 import MenuIcon from '@mui/icons-material/Menu';
  */
 import SearchIcon from '@mui/icons-material/Search';
+import ReportIcon from '@mui/icons-material/ReportOutlined';
+import FlagIcon from '@mui/icons-material/FlagOutlined';
 
 import DashboardIcon from '@mui/icons-material/DashboardOutlined';
 import ReportsIcon from '@mui/icons-material/TextSnippetOutlined';
@@ -23,17 +25,25 @@ import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import NavLink from "./NavLink";
 
-export default function Sidebar() {
+/* type Props = {
+    actualSection: string;
+} */
 
-    const [theme, setTheme] = useState("light")
-    function switchTheme() {
-        setTheme(theme === "light" ? "dark" : "light")
+// if it's not set in localStorage value is null, then !! will set as false
+
+export default function Sidebar(/* { actualSection }: Props */) {
+
+    const [isDarkMode, setIsDarkMode] = useState(true)
+
+    function switchTheme(onlyCheck) {
+        setIsDarkMode(!isDarkMode)
+        localStorage.setItem('theme', JSON.stringify(isDarkMode))
 
         const body = document.body.querySelector("body");
         body.classList.toggle(`dark`)
         body.classList.toggle(`${styles.dark}`)
         document.body.classList.toggle(`dark`)
-        document.body.classList.toggle(`${styles.dark}`)
+        //document.body.classList.toggle(`${styles.dark}`)
     }
 
     const [sidebarOpened, setSidebarOpened] = useState(true)
@@ -51,6 +61,23 @@ export default function Sidebar() {
         }
     }
 
+    const [actualSection, setActualSection] = useState("dashboard")
+    useEffect(() => {
+        setIsDarkMode(JSON.parse(localStorage.getItem('theme')))
+        const body = document.body.querySelector("body");
+        if (isDarkMode) {
+            body.classList.add(`dark`)
+            body.classList.add(`${styles.dark}`)
+            document.body.classList.add(`dark`)
+        } else {
+            body.classList.remove(`dark`)
+            body.classList.remove(`${styles.dark}`)
+            document.body.classList.remove(`dark`)
+        }
+
+        setActualSection(document.title)
+    }, [])
+
     return (
         <nav className={`${styles.sidebar} ${sidebarOpened ? "" : styles.close}`}>
             <header>
@@ -61,17 +88,27 @@ export default function Sidebar() {
             <div className={styles.menuBar}>
                 <div className={styles.menu}>
 
-                    <li className={styles.searchBox}>
+                    {/* <li className={styles.searchBox}>
                         <SearchIcon className={styles.icon} />
                         <input type="text" placeholder="Pesquisar" onClick={() => setSidebarOpened(true)} />
-                    </li>
+                    </li> */}
 
                     <ul className="menuLinks">
-                        <NavLink title={"Dashboard"} Icon={DashboardIcon} />
-                        <NavLink title={"Relatórios"} Icon={ReportsIcon} href={"/dashboard/reports"} />
-                        <NavLink title={"Estatísticas"} Icon={StatisticsIcon} href={"/dashboard/statistics"} />
-                        <NavLink title={"Blog"} Icon={BlogIcon} href={"/dashboard/blog"} />
+                        <NavLink title={"Dashboard"} Icon={DashboardIcon} isActualSection={actualSection === "Dashboard"} />
+                        <NavLink title={"Relatórios"} Icon={ReportsIcon} href={"/dashboard/reports"} isActualSection={actualSection === "Relatórios"} />
+                        <NavLink title={"Estatísticas"} Icon={StatisticsIcon} href={"/dashboard/statistics"} isActualSection={actualSection === "Estatísticas"} />
+                        <NavLink title={"Blog"} Icon={BlogIcon} href={"/dashboard/blog"} isActualSection={actualSection === "Blog"} />
                     </ul>
+                </div>
+
+                <div className={styles.reportFrame}>
+                    <ReportIcon className={styles.reportIcon} />
+                    <h6>Encontrou algum problema?</h6>
+                    <p>Reporte o erro para que ele seja corrigido</p>
+                    <button>
+                        <FlagIcon className={styles.icon} />
+                        <span>REPORTAR</span>
+                    </button>
                 </div>
 
                 <footer className={styles.footer}>
@@ -90,7 +127,7 @@ export default function Sidebar() {
                                 <LightModeIcon className={`${styles.icon} ${styles.sun}`} />
                             </div>
                         </div>
-                        <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{theme === "light" ? "Modo Claro" : "Modo Escuro"}</p></div>
+                        <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{isDarkMode ? "Modo Escuro" : "Modo Claro"}</p></div>
                         <div className={styles.toggle_switch}>
                             <span onClick={switchTheme} className={styles.switch}></span>
                         </div>

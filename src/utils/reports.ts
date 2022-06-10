@@ -1,3 +1,6 @@
+import fs from 'fs'
+import path from 'path'
+
 import { Report } from "../@types/application";
 import { api } from "./api";
 

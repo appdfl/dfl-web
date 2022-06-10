@@ -20,7 +20,7 @@ export async function getStaticProps() {
 
 export default function Dashboard() {
     return (
-        <body className={styles.body}>
+        <body className={`dashboard`}>
             <Head>
                 <title>Dashboard</title>
             </Head>

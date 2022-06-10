@@ -26,7 +26,7 @@ export type Report = {
     createdAt: string,
     address: string,
     coordinates: Array<string>,
-    image_url: string,
+    images_urls: Array<string>,
     image_deleteHash: string,
     tags: string,
     suggestion: string,
@@ -41,6 +41,7 @@ export type Report = {
     note5: number,
 
     resolved: boolean,
+    approved: boolean,
     comments: Array<Comment>,
 }
 
