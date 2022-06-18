@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
 
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 
 import styles from "/src/styles/blog.module.css"
 import Date from '../../components/date';

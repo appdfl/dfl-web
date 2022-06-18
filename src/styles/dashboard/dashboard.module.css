@@ -1,0 +1,40 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+
+    position: absolute;
+    top: 0;
+    top: 0;
+    left: var(--sidebar-width);
+    height: 100vh;
+    width: calc(100vw - var(--sidebar-width));
+    margin-left: auto;
+
+    transition: var(--transition-05);
+
+    padding: 5rem 5rem;
+}
+
+.content input[type='checkbox'] {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.2rem;
+}
+
+[data-theme='dark'] .body p,
+[data-theme='dark'] .body a,
+[data-theme='dark'] .body span {
+    color: var(--font-color);
+}
+
+.profileImage {
+    border-radius: 99px;
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+.mapContainer {
+    height: 22.5rem;
+    border-radius: 0.5rem;
+}

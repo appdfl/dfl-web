@@ -10,12 +10,12 @@ import InfoIcon from '/public/icons/info_icon.svg'
 import { getReportsData } from '../utils/reports';
 import { getAboutData } from '../utils/about';
 
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
-import BackToTop from '../components/BackToTop/BackToTop';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import BackToTop from '../components/BackToTop';
 
 import styles from '../styles/landing.module.css';
-import Modal from '../components/Modal/Modal';
+import Modal from '../components/Modal';
 import { isScreenWide } from '../utils/isScreenWide';
 import { Report } from '../@types/application';
 import { getUsersData } from '../utils/users';
@@ -61,7 +61,7 @@ type Props = {
     usersAmount: number;
 }
 
-export default function Landing({ aboutData, reportsObject, usersAmount }: Props) {
+const Landing = ({ aboutData, reportsObject, usersAmount }: Props) => {
     const [modalOpen, setModalOpen] = useState(false);
 
     const [isMobile, setIsMobile] = useState(false);
@@ -430,3 +430,6 @@ export default function Landing({ aboutData, reportsObject, usersAmount }: Props
         </body>
     );
 }
+
+Landing.theme = "light"
+export default Landing;

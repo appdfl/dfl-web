@@ -4,7 +4,7 @@
 }
 
 .header {
-    background-color: var(--primary-color-02);
+    background-color: var(--color-1);
     padding: 1.5rem 2.5rem;
     border-radius: 1.5rem 1.5rem 0px 0px;
 }
@@ -16,7 +16,7 @@
     align-items: center;
     justify-content: space-between;
 
-    color: var(--text-color);
+    color: var(--font-color);
     font-size: 1.2rem;
 }
 
@@ -60,12 +60,21 @@
     gap: 1rem;
     isolation: isolate;
 
-    background: #212529;
+    background: var(--color-2);
     border-radius: 0px 0px 1.5rem 1.5rem;
     transition: var(--transition-05);
 }
 
 .list ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+
+    width: 100%;
+}
+
+.reportContainer {
     width: 100%;
 }
 
@@ -77,11 +86,34 @@
     justify-content: space-between;
 
     font-size: 1.2rem;
-    color: var(--text-color);
+    color: var(--font-color);
 
     cursor: pointer;
 }
 
+.reportContainer:not(:last-child):after {
+    content: '';
+
+    display: flex;
+    margin-top: 1.5rem;
+
+    border-bottom: 1px solid var(--border);
+
+    height: 1px;
+    width: 100%;
+}
+
+.reportContainer:last-child {
+    padding-bottom: 1rem;
+}
+
 .reportItem input {
     pointer-events: none;
+}
+
+.username {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 15rem;
 }

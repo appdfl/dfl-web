@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import { GetStaticProps, GetStaticPaths } from 'next';
 
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 
 import styles from "/src/styles/blog.module.css"
 

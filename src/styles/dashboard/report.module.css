@@ -1,71 +1,11 @@
-.content {
-    display: flex;
-    flex-direction: column;
-    gap: 3.5rem;
-
-    position: absolute;
-    top: 0;
-    top: 0;
-    left: var(--sidebar-width);
-    height: 100vh;
-    width: calc(100vw - var(--sidebar-width));
-    margin-left: auto;
-
-    transition: var(--transition-05);
-
-    padding: 5rem 5rem;
-}
-
-.content input[type='checkbox'] {
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 0.2rem;
-}
-
-body.dark .switch::before {
-    left: 20px;
-}
-
-.home {
-    position: absolute;
-    top: 0;
-    top: 0;
-    left: 250px;
-    height: 100vh;
-    width: calc(100% - 250px);
-    background-color: var(--body-color);
-    transition: var(--transition-05);
-}
-
-.body .text {
-    font-size: 30px;
-    font-weight: 500;
-    color: var(--text-color);
-    padding: 12px 60px;
-}
-
-.sidebar.close~.home {
-    left: 78px;
-    height: 100vh;
-    width: calc(100% - 78px);
-}
-
-body.dark .body p,
-body.dark .body a,
-body.dark .body span {
-    color: var(--text-color);
-}
-
-.profileImage {
-    border-radius: 99px;
-    width: 1.8rem;
-    height: 1.8rem;
-}
-
 /* Report Frame */
 .reportFrame {
-    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
     height: fit-content;
+    background-color: var(--background-02);
     border-radius: 1.5rem 1.5rem 0px 0px;
     /* border-radius: 1.5rem; */
     padding: 5rem;
@@ -74,32 +14,33 @@ body.dark .body span {
 .title {
     font-size: 2.8rem;
     text-align: left;
-    color: var(--text-color);
+    color: var(--font-color);
 }
 
 .holder {
     display: flex;
-
     flex-direction: row;
-    color: var(--text-color);
-
     gap: 0.5rem;
+
+    color: var(--font-color);
 }
 
-.holderAlign {
+.panel {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+    color: var(--font-color);
+}
+
+.align {
     text-align: left;
-
-    flex-direction: row;
-    color: var(--text-color);
-
-    gap: 0.5rem;
+    color: var(--font-color);
 }
 
 .subHeader {
     margin-top: 1.5rem;
-    margin-bottom: 2rem;
     gap: 1rem;
     font-size: 1.3rem;
 }
@@ -131,36 +72,41 @@ body.dark .body span {
     justify-content: space-between;
 }
 
-.arrowIcon {
+.images .arrowIcon {
     font-size: 2.4rem;
     cursor: pointer;
 }
 
-.mapContainer {
-    height: 22.5rem;
-    border-radius: 0.5rem;
-}
-
 .section2 {
-    margin-block: 2rem;
-    justify-content: space-between;
+    flex-direction: column;
     font-size: 1.3rem;
+    gap: 0.5rem;
 }
 
-.controlPanel {
-    color: var(--text-color);
-    text-align: left;
+.section2 header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.controlPanel .container {
+.section2 h4 {
+    flex: 0.75;
+}
+
+.section2 div {
+    flex: 0.25;
+}
+
+/* Painel de Controle */
+.container {
     padding: 1.5rem;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
 
-    border: 0.5px solid var(--primary-color-01);
     border-radius: 5px;
 }
 
@@ -174,6 +120,10 @@ body.dark .body span {
 .option {
     justify-content: space-between;
     width: 100%;
+}
+
+.optionText {
+    flex: 0.95;
 }
 
 .optionText h4 {
@@ -199,7 +149,7 @@ body.dark .body span {
     height: 2.2rem;
     width: 4rem;
     border-radius: 2.5rem;
-    background-color: var(--toggle-color);
+    background-color: var(--lighter-gray);
     transition: var(--transition-05);
 }
 
@@ -216,10 +166,60 @@ body.dark .body span {
     top: 50%;
     left: 0.5rem;
     transform: translateY(-50%);
-    background-color: var(--primary-color);
+    background-color: var(--background-modal);
     transition: var(--transition-04);
 }
 
 .switch.active::before {
     left: 2rem;
+}
+
+/* Painel de Avaliações */
+.ratingsNumbers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0.25;
+}
+
+.ratingTitle {
+    font-size: 4.8rem;
+    font-weight: 900;
+    color: var(--font-color);
+}
+
+.ratingDescription {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--font-color);
+}
+
+.ratingLines {
+    display: flex;
+    flex: 0.75;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ratingLine {
+    width: 100%;
+    height: 0.7rem;
+
+    background-color: var(--primary-color-03);
+    border-radius: 0.5rem
+}
+
+.ratingLineAbove {
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0.7rem;
+
+    background-color: var(--primary-color-01);
+    border-radius: 0.5rem;
+
+    transition: 1s;
 }

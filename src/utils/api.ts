@@ -8,7 +8,7 @@ const token = sign({
     user: {
         id: 123456,
     },
-}, process.env.JWT_SECRET, { subject: "9dd802f72331a2635d51b942548201ea", expiresIn: "30d", audience: "web" });
+}, `${process.env.JWT_SECRET}`, { subject: "9dd802f72331a2635d51b942548201ea", expiresIn: "30d", audience: "web" });
 
 /* axios.interceptors.request.use(
     config => {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-import dashboardStyles from "/src/styles/dashboard.module.css";
+import dashboardStyles from "/src/styles/dashboard/dashboard.module.css";
 import styles from './sidebar.module.css';
 
 import Logo from "/public/logo.svg";
@@ -24,26 +24,18 @@ import LogoutIcon from '@mui/icons-material/LogoutOutlined';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import NavLink from "./NavLink";
-
-/* type Props = {
-    actualSection: string;
-} */
+import { useTheme } from "next-themes";
 
 // if it's not set in localStorage value is null, then !! will set as false
 
+let lastSection = "Dashboard";
+
 export default function Sidebar(/* { actualSection }: Props */) {
 
-    const [isDarkMode, setIsDarkMode] = useState(true)
+    const { theme, setTheme } = useTheme()
 
-    function switchTheme(onlyCheck) {
-        setIsDarkMode(!isDarkMode)
-        localStorage.setItem('theme', JSON.stringify(isDarkMode))
-
-        const body = document.body.querySelector("body");
-        body.classList.toggle(`dark`)
-        body.classList.toggle(`${styles.dark}`)
-        document.body.classList.toggle(`dark`)
-        //document.body.classList.toggle(`${styles.dark}`)
+    const switchTheme = () => {
+        setTheme(theme === "dark" ? "light" : "dark")
     }
 
     const [sidebarOpened, setSidebarOpened] = useState(true)
@@ -61,27 +53,25 @@ export default function Sidebar(/* { actualSection }: Props */) {
         }
     }
 
-    const [actualSection, setActualSection] = useState("dashboard")
+    const [actualSection, setActualSection] = useState(lastSection)
     useEffect(() => {
-        setIsDarkMode(JSON.parse(localStorage.getItem('theme')))
-        const body = document.body.querySelector("body");
-        if (isDarkMode) {
-            body.classList.add(`dark`)
-            body.classList.add(`${styles.dark}`)
-            document.body.classList.add(`dark`)
-        } else {
-            body.classList.remove(`dark`)
-            body.classList.remove(`${styles.dark}`)
-            document.body.classList.remove(`dark`)
-        }
+        const isRegularSection = document.title === "Dashboard" || document.title === "Relatórios" || document.title === "Estatísticas" || document.title === "Blog";
+        console.log(isRegularSection, document.title, lastSection)
 
-        setActualSection(document.title)
+        if (isRegularSection) {
+            setActualSection(document.title)
+            lastSection = document.title
+        } else {
+            setActualSection(lastSection)
+        }
     }, [])
 
     return (
         <nav className={`${styles.sidebar} ${sidebarOpened ? "" : styles.close}`}>
             <header>
-                <Logo className={styles.logo} />
+                <Link href={`/dashboard`}>
+                    <Logo style={{ cursor: "pointer" }} className={styles.logo} />
+                </Link>
                 <Icon onClick={toggleSidebar} className={styles.menuIcon}>{sidebarOpened ? "segment" : "menu"}</Icon>
             </header>
 
@@ -127,7 +117,7 @@ export default function Sidebar(/* { actualSection }: Props */) {
                                 <LightModeIcon className={`${styles.icon} ${styles.sun}`} />
                             </div>
                         </div>
-                        <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{isDarkMode ? "Modo Escuro" : "Modo Claro"}</p></div>
+                        <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{theme === "dark" ? "Modo Escuro" : "Modo Claro"}</p></div>
                         <div className={styles.toggle_switch}>
                             <span onClick={switchTheme} className={styles.switch}></span>
                         </div>

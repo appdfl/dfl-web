@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
 
-import dashboardStyles from "/src/styles/dashboard.module.css"
+import dashboardStyles from "/src/styles/dashboard/dashboard.module.css"
 import Date from '../../../components/date';
 
-import Sidebar from '../../../components/Dashboard/Sidebar/Sidebar';
-import DashboardHeader from '../../../components/Dashboard/Header/Header';
+import Sidebar from '../../../components/Dashboard/Sidebar';
+import DashboardHeader from '../../../components/Dashboard/Header';
 import ReportsList from '../../../components/Dashboard/ReportsList';
 
 /* import { getSortedPostsData } from '../../utils/posts';

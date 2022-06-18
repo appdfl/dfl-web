@@ -1,0 +1,46 @@
+.commentContainer {
+    width: 100%;
+
+    text-align: left;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    margin-bottom: 1rem;
+}
+
+.profile_image {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 2rem;
+    margin-right: 1rem;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--secondary-color-01);
+    margin-bottom: 10;
+}
+
+.usernameText {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--primary-color-01);
+
+    text-decoration: dashed;
+    cursor: pointer;
+}
+
+.commentText {
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: var(--font-color);
+}
+
+.createdAtText {
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--primary-color-01);
+}

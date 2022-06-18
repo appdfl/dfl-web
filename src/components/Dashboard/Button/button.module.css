@@ -1,0 +1,26 @@
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    max-height: 3.2rem;
+
+    background-color: transparent;
+
+    border-radius: 0.5rem;
+
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.icon {
+    font-size: 1.5rem;
+    color: var(--light-gray);
+}

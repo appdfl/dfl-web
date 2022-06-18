@@ -23,33 +23,32 @@
     --background-modal: #F3F7F4;
 
     --font-dark: #212529;
+    --font-color: #707070;
     --font-light: #495057;
 
     --light-gray: #747474;
     --lighter-gray: #dbdbdb;
     --white: #FEFEFE;
 
-    --body-color: #E4E9F7;
-    --sidebar-color: #FFF;
-    --primary-color: var(--background-modal);
-    --primary-color-light: var(--primary-color-03);
-    --toggle-color: #DDD;
-    --text-color: #707070;
-
-    /* ====== Transition ====== */
     --transition-01: all 0.2s ease;
     --transition-03: all 0.3s ease;
     --transition-04: all 0.3s ease;
     --transition-05: all 0.3s ease;
 }
 
-body.dark {
-    --body-color: #18191a;
-    --primary-color: #242526;
-    --primary-color-02: #191C1F;
-    --primary-color-light: #3a3b3c;
-    --toggle-color: #fff;
-    --text-color: #ccc;
+[data-theme='dark'] {
+    --background-01: #18191a;
+    --background-02: #242526;
+
+    --color-1: #191C1F;
+    --color-2: #212529;
+    --border: #353739;
+
+    --primary-color-03: #3A3B3D;
+    --primary-color-04: #495057;
+
+    --background-modal: #191C1F;
+    --font-color: #CCCCCC;
 }
 
 * {
@@ -59,10 +58,10 @@ body.dark {
     /* As caixas agora passam a ser contadas a partir da borda, e não do conteúdo, evitando problemas com o "padding" */
 }
 
-::selection {
+/* ::selection {
     background-color: var(--primary-color);
     color: #fff;
-}
+} */
 
 html {
     scroll-behavior: smooth;
@@ -80,11 +79,12 @@ body {
     text-align: center;
 
     overflow: overlay;
-    background: linear-gradient(180deg, var(--body-color) 100%, var(--background-02) 100%);
+    background-color: var(--background-01);
+    /* background: linear-gradient(180deg, var(--body-color) 100%, var(--background-02) 100%); */
     transition: var(--transition-05);
 }
 
-body.dashboard {
+html.dashboard {
     background: var(--body-color);
 }
 

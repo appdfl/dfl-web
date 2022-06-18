@@ -1,7 +1,7 @@
-import { GoogleMap, useJsApiLoader, Marker, } from '@react-google-maps/api'
-import { useCallback, useMemo } from "react";
+import { GoogleMap, LoadScript, Marker, } from '@react-google-maps/api'
+import React, { useCallback, useMemo } from "react";
 
-import styles from "/src/styles/dashboard.module.css";
+import styles from "/src/styles/dashboard/dashboard.module.css";
 
 const options = {
     zoomControl: false
@@ -11,28 +11,23 @@ const options = {
     } */
 }
 
-export default function Map() {
-    const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
-
-    const { isLoaded, loadError } = useJsApiLoader({
-        googleMapsApiKey: process.env.MAPS_API_KEY // ,
-        // ...otherOptions
-    })
-
-    const renderMap = () => {
-        return <GoogleMap
-            mapContainerClassName={styles.mapContainer}
-            zoom={10}
-            options={options}
-            center={center}
+function Map({ latitude, longitude }) {
+    console.log(latitude, longitude)
+    const center = useMemo(() => ({ lat: latitude, lng: longitude }), []);
+    return (
+        <LoadScript
+            googleMapsApiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY}
         >
-            <Marker position={center} />
-        </GoogleMap>
-    }
-
-    if (loadError) {
-        return <div>O mapa não pôde ser carregado. Pedimos desculpas.</div>
-    }
-
-    return isLoaded ? renderMap() : null
+            <GoogleMap
+                mapContainerClassName={styles.mapContainer}
+                zoom={10}
+                options={options}
+                center={center}
+            >
+                <Marker position={center} />
+            </GoogleMap>
+        </LoadScript>
+    )
 }
+
+export default React.memo(Map)
