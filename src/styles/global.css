@@ -26,6 +26,9 @@
     --font-color: #707070;
     --font-light: #495057;
 
+    --color-1: #aeb5b0;
+    --color-2: #d2d2cb;
+
     --light-gray: #747474;
     --lighter-gray: #dbdbdb;
     --white: #FEFEFE;
@@ -43,6 +46,8 @@
     --color-1: #191C1F;
     --color-2: #212529;
     --border: #353739;
+
+    --font-dark: #0e1011;
 
     --primary-color-03: #3A3B3D;
     --primary-color-04: #495057;

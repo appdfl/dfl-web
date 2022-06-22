@@ -1,0 +1,74 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2.5rem;
+    gap: 1rem;
+
+    max-width: 27.5rem;
+    position: absolute;
+
+    text-align: left;
+
+    background-color: var(--background-02);
+    box-shadow: 2px 2px 25px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 1.5rem;
+}
+
+.container header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.container header h3 {}
+
+.container header h3 {}
+
+.container li {
+    height: 5rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.container li a {
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 0.6rem;
+    text-decoration: none;
+    transition: var(--transition-03);
+}
+
+.container li .icon,
+.container li .text {
+    color: var(--font-color);
+    transition: var(--transition-03);
+}
+
+.container li a:hover .icon,
+.container li a:hover .text {
+    color: var(--font-color);
+}
+
+.container li.selected a .icon,
+.container li.selected a .text {
+    color: var(--lighter-gray);
+}
+
+[data-theme='dark'] .container li a:hover .icon,
+[data-theme='dark'] .container li a:hover .text {
+    color: var(--font-color);
+}
+
+[data-theme='dark'] .container li.selected a .icon,
+[data-theme='dark'] .container li.selected a .text {
+    color: var(--font-color);
+}

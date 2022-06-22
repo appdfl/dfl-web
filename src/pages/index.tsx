@@ -12,44 +12,43 @@ import { getAboutData } from '../utils/about';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Modal from '../components/Modal';
 import BackToTop from '../components/BackToTop';
 
 import styles from '../styles/landing.module.css';
-import Modal from '../components/Modal';
-import { isScreenWide } from '../utils/isScreenWide';
+
 import { Report } from '../@types/application';
+
+import { isScreenWide } from '../utils/isScreenWide';
 import { getUsersData } from '../utils/users';
+
+import Head from 'next/head';
+import { api } from '../utils/api';
 
 const ANIMATION_TIME = 250 // 0.25 segundos
 
 export async function getStaticProps() {
     const aboutData = await getAboutData();
 
-    try {
-        const reportsData = await getReportsData("Maceió, AL") as Array<Report>;
-        const reportsAmount = reportsData.length
-        const resolvedReportsAmount = [...reportsData].filter(report => report.resolved === true).length
+    const reportsData = await (await api.get(`/report`)).data as Array<Report>;
+    const reportsAmount = reportsData.length
+    const resolvedReportsAmount = [...reportsData].filter(report => report.resolved === true).length
 
-        const reportsObject = {
-            "reportsAmount": reportsAmount,
-            "resolvedReportsAmount": resolvedReportsAmount,
-        }
-
-        /* const usersData = await getUsersData()
-        const usersAmount = await usersData.length */
-        const usersAmount = 0
-
-
-        return {
-            props: {
-                aboutData,
-                reportsObject,
-                usersAmount
-            },
-        };
-    } catch (error) {
-        console.log(error)
+    const reportsObject = {
+        "reportsAmount": reportsAmount,
+        "resolvedReportsAmount": resolvedReportsAmount,
     }
+
+    const usersData = await getUsersData()
+    const usersAmount = usersData.length
+
+    return {
+        props: {
+            aboutData,
+            reportsObject,
+            usersAmount
+        },
+    };
 }
 
 type Props = {
@@ -168,6 +167,11 @@ const Landing = ({ aboutData, reportsObject, usersAmount }: Props) => {
 
     return (
         <body>
+
+            <Head>
+                <title>DFL</title>
+            </Head>
+
             <Header isHome />
 
             <section id='home' className={styles.home}>
@@ -298,7 +302,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount }: Props) => {
                                         d="M24.5 24C22.3 24 20.5 22.2 20.5 20C20.5 17.8 22.3 16 24.5 16C26.7 16 28.5 17.8 28.5 20C28.5 22.2 26.7 24 24.5 24ZM36.5 20.4C36.5 13.14 31.2 8 24.5 8C17.8 8 12.5 13.14 12.5 20.4C12.5 25.08 16.4 31.28 24.5 38.68C32.6 31.28 36.5 25.08 36.5 20.4ZM24.5 4C32.9 4 40.5 10.44 40.5 20.4C40.5 27.04 35.16 34.9 24.5 44C13.84 34.9 8.5 27.04 8.5 20.4C8.5 10.44 16.1 4 24.5 4Z"
                                         fill="#7FB883" />
                                 </svg>
-                                <h3>em breve...</h3>
+                                <h3>0</h3>
                                 <p>ecopontos localizados</p>
                             </div>
                         </div>

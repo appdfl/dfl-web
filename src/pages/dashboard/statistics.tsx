@@ -2,26 +2,15 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 import styles from "/src/styles/dashboard/dashboard.module.css";
-import Date from '../../components/date';
 
 import Sidebar from '../../components/Dashboard/Sidebar';
 import DashboardHeader from '../../components/Dashboard/Header';
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 
-/* import { getSortedPostsData } from '../../utils/posts';
+import { motion, AnimatePresence } from "framer-motion";
 
-export async function getStaticProps() {
-    const allPostsData = getSortedPostsData();
-    return {
-        props: {
-            allPostsData,
-        },
-    };
-} */
-
-export default function Dashboard() {
-
+export default function DashboardStatistics() {
     const [mounted, setMounted] = useState(false)
     const { theme, setTheme } = useTheme()
 
@@ -34,17 +23,37 @@ export default function Dashboard() {
         return null
     }
 
+    const opacityVariants = {
+        open: {
+            opacity: 1
+        },
+        closed: {
+            opacity: 0
+        }
+    };
+
     return (
         <body className={`dashboard`}>
             <Head>
-                <title>Dashboard</title>
+                <title>Estatísticas</title>
             </Head>
 
             <Sidebar />
 
-            <div className={styles.content}>
-                <DashboardHeader title='Dashboard' />
-            </div>
+            <AnimatePresence>
+                <motion.div
+                    initial={"closed"}
+                    animate={"open"}
+                    exit={"closed"}
+                    key={"statistics"}
+                    variants={opacityVariants}
+                    className={styles.content}
+                >
+                    <DashboardHeader title='Estatísticas' />
+
+                </motion.div>
+            </AnimatePresence>
+
         </body>
     );
 }

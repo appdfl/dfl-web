@@ -120,7 +120,7 @@ export default function AboutPage() {
                             <h4>Sugestão de <strong>@{reportObject.profile.username}:</ strong></h4>
                             <div style={{ gap: "1.5rem", justifyContent: "space-between" }} className={`${styles.holder} `}>
                                 <p>O local possui lixeiras?</p>
-                                <input type="checkbox" name="hasTrashBins" readOnly checked={reportObject.resolved} />
+                                <input type="checkbox" name="hasTrashBins" readOnly checked={reportObject.hasTrashBins} />
                             </div>
                         </header>
                         <p>
@@ -197,7 +197,14 @@ export default function AboutPage() {
                                     <h4><strong>Denunciar relatório</strong> <br /></h4>
                                     <p>Este relatório será ocultado e arquivado automaticamente e o usuário que o postou sofrerá uma penalidade.</p>
                                 </div>
-                                <DashboardButton title={`Reportar Relatório`} Icon={ReportIcon} onClick={() => { }} width={`17.5rem`} />
+                                <DashboardButton
+                                    title={`Reportar Relatório`}
+                                    Icon={ReportIcon}
+                                    iconSize={"small"}
+                                    onClick={() => { }}
+                                    width={`20rem`}
+                                    fontSize={`1.2rem`}
+                                />
                             </div>
                             <div style={{ backgroundColor: "#D1351B" }} className={styles.line}></div>
                             <div className={`${styles.holder} ${styles.align} ${styles.option}`}>
@@ -205,7 +212,15 @@ export default function AboutPage() {
                                     <h4><strong>Deletar relatório</strong> <br /></h4>
                                     <p>Ao deletar um relatório, não há mais volta. Pense bem antes de fazer isso.</p>
                                 </div>
-                                <DashboardButton title={`Deletar Relatório`} Icon={DeleteIcon} onClick={() => { }} color={`#D1351B`} width={`17.5rem`} />
+                                <DashboardButton
+                                    title={`Deletar Relatório`}
+                                    Icon={DeleteIcon}
+                                    iconSize={"small"}
+                                    onClick={() => { }}
+                                    color={`#D1351B`}
+                                    width={`20rem`}
+                                    fontSize={`1.2rem`}
+                                />
                             </div>
                         </div>
                     </div>

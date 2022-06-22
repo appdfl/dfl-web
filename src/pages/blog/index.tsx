@@ -38,19 +38,18 @@ export default function Blog({ allPostsData }) {
 
             <section className={styles.blog}>
                 <div className={`wrapper ${styles.wrapper}`}>
-                    <h2>{`Opa! Parece que isso ainda não está funcionando :(`}</h2>
                     <ul className={styles.posts}>
                         {allPostsData.map(({ id, date, title, author, description }) => (
-                            <li className={styles.post} key={id}>
-                                <p>{description}</p>
-                                <Link href={`/blog/${id}`}>
+                            <Link href={`/blog/${id}`}>
+                                <li className={styles.post} key={id}>
+                                    <p>{description}</p>
                                     <a>{title}</a>
-                                </Link>
-                                <br />
-                                <small className={styles.postDate}>
-                                    <span className={styles.author}>{author + ` • `}</span> {<Date dateString={date} />}
-                                </small>
-                            </li>
+                                    <br />
+                                    <small className={styles.postDate}>
+                                        <span className={styles.author}>{author + ` • `}</span> {<Date dateString={date} />}
+                                    </small>
+                                </li>
+                            </Link>
                         ))}
                     </ul>
                 </div>

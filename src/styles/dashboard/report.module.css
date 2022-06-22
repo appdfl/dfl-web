@@ -115,6 +115,8 @@
     height: 0.1px;
     opacity: 0.5;
     background-color: var(--primary-color-01);
+
+    transition: var(--transition-05);
 }
 
 .option {

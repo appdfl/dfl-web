@@ -1,0 +1,25 @@
+.container {
+    margin-top: var(--nav-height);
+    padding-bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+
+
+    align-items: center;
+    justify-content: center;
+}
+
+.container h2 {
+    font-size: 3.6rem;
+    margin-bottom: 3.6rem;
+}
+
+.image {
+    display: block;
+    margin-inline: auto;
+
+    height: 25rem;
+    min-height: fit-content;
+    max-width: 75%;
+}

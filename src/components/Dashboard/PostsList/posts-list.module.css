@@ -20,11 +20,6 @@
     font-size: 1.2rem;
 }
 
-.header ul li {
-    cursor: pointer;
-    user-select: none;
-}
-
 .address {
     text-align: left;
     flex: 0.4;

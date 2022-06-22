@@ -20,7 +20,7 @@ export default function Header({ isHome, selected }: Props) {
     function updateNavLine(button) {
         // navLine.style.left = `${element.offsetLeft}px`;
         // navLine.style.width = `${element.offsetWidth}px`;
-        if (button) {
+        if (button && navLine && isHome) {
             navLine.current.style.left = `${button.offsetLeft + (button.offsetWidth / 2) - (navLine.current.offsetWidth / 2)}px`;
         } else {
             return console.warn("Um botão não foi encontrado para ser selecionado.")
@@ -81,7 +81,9 @@ export default function Header({ isHome, selected }: Props) {
                         const menuElement = document.querySelector(`.${styles.menu} a[title*=${sectionId}]`)
                         menuElement.classList.add(styles.active)
 
-                        updateNavLine(menuElement)
+                        if (!isMobile && isHome) {
+                            updateNavLine(menuElement)
+                        }
 
                         const lastMenuElement = document.querySelector(`.${styles.menu} a[title*=${lastSectionId}]`)
                         lastMenuElement.classList.remove(styles.active)
@@ -116,8 +118,6 @@ export default function Header({ isHome, selected }: Props) {
     }
 
     useEffect(() => {
-        navLine.current.style.display = "none"
-
         function updateMenuButtonsWidth() {
             const liList = document.querySelectorAll('.list') as NodeListOf<HTMLElement>;
 
@@ -159,8 +159,9 @@ export default function Header({ isHome, selected }: Props) {
                     </button>
                     <div className={styles.content}>
                         <ul className={styles.list}>
-                            <div ref={navLine} className={styles.navLine}></div>
-
+                            {
+                                !isMobile && isHome && <div ref={navLine} className={styles.navLine}></div>
+                            }
                             {
                                 isHome ?
                                     <>

@@ -3,10 +3,9 @@ import { api } from "./api";
 
 export async function getUsersData(location?: string) {
     try {
-        const reportsResponse = await api.post("/users/search", {
-            location: location && location,
-        })
-        return reportsResponse.data as Array<Report>;
+        const usersResponse = await api.get(`/profile${location ? `?location=${location}` : ""}`)
+        console.log(usersResponse)
+        return usersResponse.data as Array<Report>;
     } catch (error) {
         console.log(error)
         return []

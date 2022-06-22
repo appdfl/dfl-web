@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    font-size: 1.4rem;
+    color: var(--font-color);
+
+    width: 100%;
+}
+
+.input {
+    display: flex;
+    width: 100%;
+    margin-top: 0.5rem;
+
+    background-color: var(--color-2);
+    border-radius: 1.5rem;
+    box-sizing: border-box;
+    border: none;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+
+    padding: 0.8rem 1.25rem;
+}
+
+.input:focus {
+    outline: 1px solid var(--font-color);
+}

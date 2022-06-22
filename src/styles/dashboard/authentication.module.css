@@ -1,0 +1,94 @@
+.authenticationContent {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+
+    justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    padding: 5rem 0;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 3.6rem;
+    line-height: 4.4rem;
+    letter-spacing: 0.05rem;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding-inline: 3rem;
+
+    color: var(--font-color);
+}
+
+.click {
+    cursor: pointer;
+}
+
+.mainContainer {
+    background-color: var(--color-1);
+    color: var(--font-color);
+    border-radius: 1.5rem;
+
+    padding: 3.5rem 3.5rem;
+    min-width: 25rem;
+    width: 85%;
+    margin-inline: auto;
+
+    transition: var(--transition-05);
+}
+
+.mainContainerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 2.5rem;
+
+    transition: var(--transition-05);
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    align-items: center;
+    justify-content: center;
+
+    color: var(--font-color);
+
+    transition: var(--transition-05);
+    cursor: pointer;
+}
+
+.footer:hover {
+    color: var(--primary-color-04);
+}
+
+.image {
+    border-radius: 50%;
+    max-height: 12.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.mainContainer h3 {
+    font-size: 2.8rem;
+    font-weight: 700;
+}
+
+.mainContainer p {
+    font-size: 1.2rem;
+    text-decoration: underline;
+}
+
+@media (min-width: 1100px) {
+    .mainContainer {
+        max-width: 40%;
+    }
+}

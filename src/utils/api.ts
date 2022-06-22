@@ -23,7 +23,8 @@ const token = sign({
 export const api = axios.create({
     baseURL: 'https://dfl-api.herokuapp.com/',
     headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        AccessControlAllowOrigin: `*`,
     },
     timeout: 15 * 1000,
     timeoutErrorMessage: 'Timeout error',

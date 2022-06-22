@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Link from 'next/link';
+
 import { GetStaticProps, GetStaticPaths } from 'next';
 
 import Footer from "../../components/Footer";
@@ -8,7 +10,6 @@ import styles from "/src/styles/blog.module.css"
 
 import { getAllPostIds, getPostData } from '../../utils/posts';
 import Date from '../../components/date';
-import Link from 'next/link';
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const paths = getAllPostIds();
@@ -30,7 +31,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function Post({ postData }) {
     return (
         <body>
-
             <Head>
                 <title>{postData.title}</title>
             </Head>

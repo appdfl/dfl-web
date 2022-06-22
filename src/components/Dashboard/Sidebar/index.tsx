@@ -20,22 +20,24 @@ import ReportsIcon from '@mui/icons-material/TextSnippetOutlined';
 import StatisticsIcon from '@mui/icons-material/LeaderboardOutlined';
 import BlogIcon from '@mui/icons-material/TopicOutlined';
 
-import LogoutIcon from '@mui/icons-material/LogoutOutlined';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeIcon from '@mui/icons-material/LightModeOutlined';
+
 import NavLink from "./NavLink";
 import { useTheme } from "next-themes";
+
+import { useAuthContext } from "../../../context/AuthContext";
 
 // if it's not set in localStorage value is null, then !! will set as false
 
 let lastSection = "Dashboard";
 
 export default function Sidebar(/* { actualSection }: Props */) {
-
     const { theme, setTheme } = useTheme()
 
     const switchTheme = () => {
         setTheme(theme === "dark" ? "light" : "dark")
+        console.log(theme)
     }
 
     const [sidebarOpened, setSidebarOpened] = useState(true)
@@ -56,14 +58,12 @@ export default function Sidebar(/* { actualSection }: Props */) {
     const [actualSection, setActualSection] = useState(lastSection)
     useEffect(() => {
         const isRegularSection = document.title === "Dashboard" || document.title === "Relatórios" || document.title === "Estatísticas" || document.title === "Blog";
-        console.log(isRegularSection, document.title, lastSection)
-
         if (isRegularSection) {
             setActualSection(document.title)
-            lastSection = document.title
         } else {
             setActualSection(lastSection)
         }
+        lastSection = document.title
     }, [])
 
     return (
@@ -102,12 +102,6 @@ export default function Sidebar(/* { actualSection }: Props */) {
                 </div>
 
                 <footer className={styles.footer}>
-                    <li className={styles.click}>
-                        <a>
-                            <LogoutIcon className={styles.icon} />
-                            <span className={`${styles.text} ${styles.navText}`}>Log-out</span>
-                        </a>
-                    </li>
                     <li className={styles.mode}>
                         <div className={styles.moon_sun}>
                             <div className={styles.centralize}>

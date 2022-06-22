@@ -10,7 +10,7 @@
 
     background: var(--background-02);
     transition: var(--transition-05);
-    z-index: 100;
+    z-index: 15;
 
     display: flex;
     flex-direction: column;
@@ -50,7 +50,9 @@
 
 .sidebar header {
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+
+    margin-bottom: 3.5rem;
 }
 
 .sidebar header .logo {

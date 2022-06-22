@@ -125,7 +125,7 @@ export default function CommentsList({ comments }: Props) {
                 <p style={{
                     color: `var(--primary-color-01)`,
                     fontWeight: 700,
-                    fontSize: `1.8rem`,
+                    fontSize: `1.2rem`,
                     textAlign: "center",
                 }}>
                     Está um pouco vazio aqui...

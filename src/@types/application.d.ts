@@ -20,6 +20,27 @@ export type Profile = {
     ratings: any;
 }
 
+export type Post = {
+    title: string,
+    redactor: Admin,
+    content: string
+    createdAt: string,
+    views: number,
+    fixed: boolean,
+    draft: boolean
+}
+
+export type Admin = {
+    id: string,
+    email: string,
+    image_url: string,
+    first_name: string,
+    last_name: string,
+    role: string,
+
+    posts: Array<Post>
+}
+
 export type Report = {
     profile: Profile,
     id: number,
