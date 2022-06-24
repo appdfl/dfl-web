@@ -9,7 +9,7 @@ import styles from '../styles/404.module.css';
 
 export default function Custom404() {
     return (
-        <body>
+        <div>
             <Head>
                 <title>{`404 :(`}</title>
             </Head>
@@ -17,11 +17,12 @@ export default function Custom404() {
             <Header />
 
             <section className={`header ${styles.container}`}>
+                <h1>404</h1>
                 <h2>{`Opa! Parece que essa página não existe :(`}</h2>
                 <img src="/images/character/character_1.svg" alt="" className={styles.image} />
             </section>
 
             <Footer />
-        </body>
+        </div>
     )
 }

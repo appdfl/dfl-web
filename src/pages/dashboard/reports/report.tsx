@@ -10,7 +10,10 @@ import styles from "/src/styles/dashboard/report.module.css"
 import Sidebar from "../../../components/Dashboard/Sidebar";
 import DashboardHeader from "../../../components/Dashboard/Header";
 import DashboardButton from "../../../components/Dashboard/Button";
+import CommentsList from "../../../components/Dashboard/CommentsList";
+import DashboardModal from "../../../components/Dashboard/Modal";
 
+import SaveIcon from '@mui/icons-material/SaveOutlined';
 import ReportIcon from '@mui/icons-material/ReportOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteForeverOutlined';
 import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined';
@@ -20,25 +23,23 @@ import Right from '@mui/icons-material/ChevronRight';
 import Map from "../../../components/Dashboard/Map";
 
 import { GetRatingsAverage } from "../../../utils/reports";
-
 import { useResize } from "../../../utils/hooks/useResize";
-import CommentsList from "../../../components/Dashboard/CommentsList";
 
-export default function AboutPage() {
+import { api } from "../../../utils/api";
+import SuccessAndErrorModal from "../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal";
+
+export default function DashboardReport() {
     const router = useRouter()
-    const { id, report } = router.query
+    const { id, report, successUpdating } = router.query
 
-    useEffect(() => {
-        if (report === undefined) {
-            router.push('/dashboard/reports')
-        }
-    }, [])
+    const [isDeleteModalVisible, setDeleteModalVisible] = useState(false)
+    const [isReportModalVisible, setReportModalVisible] = useState(false)
 
     if (report === undefined) {
         return (
-            <body>
+            <div>
 
-            </body>
+            </div>
         )
     }
 
@@ -46,7 +47,40 @@ export default function AboutPage() {
 
     const date = new Date(reportObject.createdAt)
     const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate()
-    const month = date.getUTCMonth() < 10 ? `0${date.getUTCMonth()}` : date.getUTCMonth()
+    const month = date.getUTCMonth() < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth()
+
+    const [approved, setApproved] = useState(reportObject.approved)
+    const [resolved, setResolved] = useState(reportObject.resolved)
+
+    const [isLoading, setLoading] = useState(false)
+
+    async function updateReport() {
+        setLoading(true)
+        const response = await api.patch(`/report/${reportObject.id}`, {
+            approved: approved,
+            resolved: resolved
+        })
+        const responseObject = response.data;
+        console.log(responseObject, response.status)
+        if (response.status === 200) {
+            router.push(`/dashboard/reports/report?report=${JSON.stringify(responseObject)}&successUpdating=true`, `/dashboard/reports/report`)
+        } else {
+            setErrorOrSuccessMessage("Não foi possível atualizar o relatório. Tente novamente mais tarde :(")
+        }
+        setLoading(false)
+    }
+
+    const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal()
+
+    useEffect(() => {
+        if (report === undefined) {
+            router.push('/dashboard/reports')
+        }
+        console.log(successUpdating)
+        if (successUpdating === "true") {
+            setErrorOrSuccessMessage("Relatório atualizado com sucesso!")
+        }
+    }, [])
 
     const ratingLine = useRef(null);
     /* const [ratingLineWidth, setRatingLineWidth] = useState(0)
@@ -63,8 +97,10 @@ export default function AboutPage() {
     const note4Width = (reportObject.note4 * width) / totalRatings
     const note5Width = (reportObject.note5 * width) / totalRatings
 
+    const hasChanges = approved !== reportObject.approved || resolved !== reportObject.resolved ? true : false
+
     return (
-        <body className={`dashboard`}>
+        <div className={`dashboard`}>
             <Head>
                 <title>{reportObject.address}</title>
             </Head>
@@ -72,7 +108,7 @@ export default function AboutPage() {
             <Sidebar />
 
             <div className={dashboardStyles.content}>
-                <DashboardHeader returnButton title='Relatórios' />
+                <DashboardHeader returnButton title='Relatórios' subDirectory="/ Relatório" customDirectory={successUpdating && `/dashboard/reports?updateReports=true`} />
 
                 <div className={styles.reportFrame}>
                     <header>
@@ -105,7 +141,7 @@ export default function AboutPage() {
                             </div>
                             <ul className={styles.holder}>
                                 {
-                                    reportObject.images_urls.map((url) =>
+                                    reportObject.images_urls && reportObject.images_urls.map((url) =>
                                         <li>
                                             <img className={styles.picture} src={url} alt="Imagem de um foco de lixo" />
                                         </li>
@@ -132,7 +168,20 @@ export default function AboutPage() {
                     </div>
 
                     <div className={`${styles.panel} ${styles.align}`}>
-                        <h3 className={styles.header}>Painel de Controle</h3>
+                        <div className={`${styles.header} ${styles.controlPanel}`}>
+                            <h3>Painel de Controle</h3>
+                            <DashboardButton
+                                title={"Salvar Alterações"}
+                                Icon={SaveIcon}
+                                iconSize={"small"}
+                                fontSize={`1.3rem`}
+                                disabled={!hasChanges}
+                                isLoading={isLoading}
+                                padding={`0.5rem 1.25rem`}
+                                color={hasChanges ? `var(--primary-color-01)` : `var(--font-color)`}
+                                onClick={updateReport}
+                            />
+                        </div>
                         <div style={{ border: `0.5px solid var(--primary-color-01)` }} className={`${styles.container}`}>
                             <div className={`${styles.holder} ${styles.align} ${styles.option}`}>
                                 <div className={styles.optionText}>
@@ -140,7 +189,7 @@ export default function AboutPage() {
                                     <p>Este relatório será exibido para os usuários, tornando possível a interação por meio de comentários e avaliações.</p>
                                 </div>
                                 <div className={styles.toggle_switch}>
-                                    <span onClick={() => console.log("Alteração de estado.")} className={`${styles.switch} ${reportObject.approved && styles.active}`}></span>
+                                    <span onClick={() => setApproved(!approved)} className={`${styles.switch} ${approved && styles.active}`}></span>
                                 </div>
                             </div>
                             <div style={{ backgroundColor: "var(--primary-color-01)" }} className={styles.line}></div>
@@ -150,7 +199,7 @@ export default function AboutPage() {
                                     <p>Este relatório será arquivado, portanto, ele será marcado como “somente-visualização”.</p>
                                 </div>
                                 <div className={styles.toggle_switch}>
-                                    <span onClick={() => console.log("Alteração de estado.")} className={`${styles.switch} ${reportObject.resolved && styles.active}`}></span>
+                                    <span onClick={() => setResolved(!resolved)} className={`${styles.switch} ${resolved && styles.active}`}></span>
                                 </div>
                             </div>
                         </div>
@@ -184,9 +233,9 @@ export default function AboutPage() {
                     </div>
 
                     <div className={styles.panel}>
-                        <h3 className={styles.header}>{`Comentários (${reportObject.comments.length})`}</h3>
+                        <h3 className={styles.header}>{`Comentários (${reportObject.comments ? reportObject.comments.length : 0})`}</h3>
                         <div style={{ width: "100%" }} className={`${styles.holder} ${styles.align}`}></div>
-                        <CommentsList comments={reportObject.comments} />
+                        <CommentsList comments={reportObject.comments ? reportObject.comments : []} />
                     </div>
 
                     <div className={`${styles.panel} ${styles.align}`}>
@@ -198,10 +247,10 @@ export default function AboutPage() {
                                     <p>Este relatório será ocultado e arquivado automaticamente e o usuário que o postou sofrerá uma penalidade.</p>
                                 </div>
                                 <DashboardButton
-                                    title={`Reportar Relatório`}
+                                    title={`Denunciar Relatório`}
                                     Icon={ReportIcon}
                                     iconSize={"small"}
-                                    onClick={() => { }}
+                                    onClick={() => setReportModalVisible(true)}
                                     width={`20rem`}
                                     fontSize={`1.2rem`}
                                 />
@@ -216,7 +265,7 @@ export default function AboutPage() {
                                     title={`Deletar Relatório`}
                                     Icon={DeleteIcon}
                                     iconSize={"small"}
-                                    onClick={() => { }}
+                                    onClick={() => setDeleteModalVisible(true)}
                                     color={`#D1351B`}
                                     width={`20rem`}
                                     fontSize={`1.2rem`}
@@ -226,6 +275,29 @@ export default function AboutPage() {
                     </div>
                 </div>
             </div>
-        </body>
+
+            {SuccessModal}
+            {ErrorModal}
+
+            <DashboardModal
+                isVisible={isReportModalVisible}
+                setIsVisible={() => setReportModalVisible(!isReportModalVisible)}
+                color={`#747474`}
+                Icon={DeleteIcon}
+                title={"Você está prestes a denunciar esse relatório."}
+                description={<p>Este relatório será ocultado e arquivado automaticamente e o usuário que o postou sofrerá uma penalidade.</p>}
+                buttonText="Denunciar"
+            />
+
+            <DashboardModal
+                isVisible={isDeleteModalVisible}
+                setIsVisible={() => setDeleteModalVisible(!isDeleteModalVisible)}
+                color={`#D1351B`}
+                Icon={DeleteIcon}
+                title={"Você está prestes a deletar esse relatório."}
+                description={<p>Ao deletar um relatório, não há mais volta. Pense bem antes de fazer isso.</p>}
+                buttonText="Deletar"
+            />
+        </div>
     );
 }

@@ -56,7 +56,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             const responseToken = authResponseData.token
 
             if (responseToken && responseUser) {
-                sessionStorage.setItem('admin', JSON.stringify(admin));
+                sessionStorage.setItem('admin', JSON.stringify(responseUser));
                 await sessionStorage.setItem('token', responseToken);
                 setAdmin(responseUser);
                 setToken(responseToken)
@@ -84,6 +84,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     async function retrieveLogin() {
         const adminObject = JSON.parse(localStorage.getItem("admin"))
         const tokenObject = localStorage.getItem("token")
+
+        console.log("Verificando se há login salvo.")
+
         if (adminObject && tokenObject) {
             sessionStorage.setItem('admin', adminObject);
             sessionStorage.setItem('token', tokenObject);
@@ -93,11 +96,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
             api.defaults.headers.common['Authorization'] = `Bearer ${tokenObject}`;
 
             console.log("Login obtido do local storage com sucesso!")
+        } else {
+            const unparsedAdmin = sessionStorage.getItem("admin")
+            const adminObject = JSON.parse(unparsedAdmin)
+            console.log("indo aqui", adminObject)
+            const tokenObject = sessionStorage.getItem("token")
+
+            if (adminObject && tokenObject) {
+                sessionStorage.setItem('admin', unparsedAdmin);
+                sessionStorage.setItem('token', tokenObject);
+                setAdmin(adminObject);
+                setToken(tokenObject)
+
+                api.defaults.headers.common['Authorization'] = `Bearer ${tokenObject}`;
+
+                console.log("Login obtido do session storage com sucesso!")
+            }
         }
     }
 
     useEffect(() => {
-        console.log("Verificando se há login salvo.")
         retrieveLogin()
     }, [])
 

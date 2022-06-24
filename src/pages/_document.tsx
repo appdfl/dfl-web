@@ -12,10 +12,10 @@ export default function Document() {
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
                     rel="stylesheet"></link>
             </Head>
-            <body>
+            <div>
                 <Main />
                 <NextScript />
-            </body>
+            </div>
         </Html>
     )
 }

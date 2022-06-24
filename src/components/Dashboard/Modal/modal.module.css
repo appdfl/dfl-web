@@ -3,7 +3,7 @@
     height: 100vh;
 
     display: flex;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 
@@ -57,7 +57,7 @@
 }
 
 .container p {
-    text-align: left;
+    text-align: center;
     color: var(--font-color);
     width: 100%;
 }

@@ -86,37 +86,39 @@ export default function Sidebar(/* { actualSection }: Props */) {
                     <ul className="menuLinks">
                         <NavLink title={"Dashboard"} Icon={DashboardIcon} isActualSection={actualSection === "Dashboard"} />
                         <NavLink title={"Relatórios"} Icon={ReportsIcon} href={"/dashboard/reports"} isActualSection={actualSection === "Relatórios"} />
-                        <NavLink title={"Estatísticas"} Icon={StatisticsIcon} href={"/dashboard/statistics"} isActualSection={actualSection === "Estatísticas"} />
+                        <NavLink title={"Estatísticas"} Icon={StatisticsIcon} href={"/dashboard/statistics"} isActualSection={actualSection === "Estatísticas"} disabled />
                         <NavLink title={"Blog"} Icon={BlogIcon} href={"/dashboard/blog"} isActualSection={actualSection === "Blog"} />
                     </ul>
                 </div>
 
-                <div className={styles.reportFrame}>
-                    <ReportIcon className={styles.reportIcon} />
-                    <h6>Encontrou algum problema?</h6>
-                    <p>Reporte o erro para que ele seja corrigido</p>
-                    <button>
-                        <FlagIcon className={styles.icon} />
-                        <span>REPORTAR</span>
-                    </button>
-                </div>
+                <div>
+                    <div className={styles.reportFrame}>
+                        <ReportIcon className={styles.reportIcon} />
+                        <h6>Encontrou algum problema?</h6>
+                        <p>Reporte o erro para que ele seja corrigido</p>
+                        <button>
+                            <FlagIcon className={styles.icon} />
+                            <span>REPORTAR</span>
+                        </button>
+                    </div>
 
-                <footer className={styles.footer}>
-                    <li className={styles.mode}>
-                        <div className={styles.moon_sun}>
-                            <div className={styles.centralize}>
-                                <DarkModeIcon className={`${styles.icon} ${styles.moon}`} />
+                    <footer className={styles.footer}>
+                        <li className={styles.mode}>
+                            <div className={styles.moon_sun}>
+                                <div className={styles.centralize}>
+                                    <DarkModeIcon className={`${styles.icon} ${styles.moon}`} />
+                                </div>
+                                <div className={styles.centralize}>
+                                    <LightModeIcon className={`${styles.icon} ${styles.sun}`} />
+                                </div>
                             </div>
-                            <div className={styles.centralize}>
-                                <LightModeIcon className={`${styles.icon} ${styles.sun}`} />
+                            <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{theme === "dark" ? "Modo Escuro" : "Modo Claro"}</p></div>
+                            <div className={styles.toggle_switch}>
+                                <span onClick={switchTheme} className={styles.switch}></span>
                             </div>
-                        </div>
-                        <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{theme === "dark" ? "Modo Escuro" : "Modo Claro"}</p></div>
-                        <div className={styles.toggle_switch}>
-                            <span onClick={switchTheme} className={styles.switch}></span>
-                        </div>
-                    </li>
-                </footer>
+                        </li>
+                    </footer>
+                </div>
 
             </div>
         </nav>

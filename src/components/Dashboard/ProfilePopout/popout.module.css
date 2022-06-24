@@ -5,7 +5,7 @@
     padding: 2.5rem;
     gap: 1rem;
 
-    max-width: 27.5rem;
+    max-width: 30rem;
     position: absolute;
 
     text-align: left;
@@ -13,6 +13,12 @@
     background-color: var(--background-02);
     box-shadow: 2px 2px 25px 5px rgba(0, 0, 0, 0.25);
     border-radius: 1.5rem;
+
+    z-index: 10;
+}
+
+.buttons {
+    width: 100%;
 }
 
 .container header {
@@ -20,55 +26,77 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-}
-
-.container header h3 {}
-
-.container header h3 {}
-
-.container li {
-    height: 5rem;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin-top: 1rem;
-}
-
-.container li a {
-    list-style: none;
-    height: 100%;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
+    gap: 2.5rem;
     width: 100%;
-    border-radius: 0.6rem;
-    text-decoration: none;
-    transition: var(--transition-03);
 }
 
-.container li .icon,
-.container li .text {
-    color: var(--font-color);
-    transition: var(--transition-03);
-}
+.container header h3 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 2.2rem;
 
-.container li a:hover .icon,
-.container li a:hover .text {
-    color: var(--font-color);
-}
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.05rem;
 
-.container li.selected a .icon,
-.container li.selected a .text {
-    color: var(--lighter-gray);
-}
+    flex: 0.65;
+    line-break: anywhere;
 
-[data-theme='dark'] .container li a:hover .icon,
-[data-theme='dark'] .container li a:hover .text {
     color: var(--font-color);
 }
 
-[data-theme='dark'] .container li.selected a .icon,
-[data-theme='dark'] .container li.selected a .text {
-    color: var(--font-color);
+.container header div {
+    flex: 0.45;
+}
+
+.container header h5 {
+    font-family: 'Inter';
+
+    font-weight: 900;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.05rem;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    /* text-fill-color: transparent; */
+}
+
+.colector {
+    background: linear-gradient(270deg, #346259 0%, #7FB883 100%);
+}
+
+.redactor {
+    background: linear-gradient(270deg, #004A56 0%, #4274CB 100%);
+}
+
+.moderator {
+    background: linear-gradient(270deg, #EC8C6B 0%, #D1671B 100%);
+}
+
+.admin {
+    background: linear-gradient(270deg, #BF09B8 0%, #6726BC 100%);
+}
+
+.container header span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1rem;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.05rem;
+
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.35) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    /* text-fill-color: transparent; */
 }

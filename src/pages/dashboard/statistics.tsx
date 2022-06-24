@@ -33,7 +33,7 @@ export default function DashboardStatistics() {
     };
 
     return (
-        <body className={`dashboard`}>
+        <div className={`dashboard`}>
             <Head>
                 <title>Estatísticas</title>
             </Head>
@@ -54,6 +54,6 @@ export default function DashboardStatistics() {
                 </motion.div>
             </AnimatePresence>
 
-        </body>
+        </div>
     );
 }

@@ -11,10 +11,12 @@ import DashboardProfilePopout from '../ProfilePopout';
 
 type Props = {
     title: string;
+    subDirectory?: string;
     returnButton?: boolean;
+    customDirectory?: string;
 }
 
-export default function DashboardHeader({ title, returnButton }: Props) {
+export default function DashboardHeader({ title, subDirectory, returnButton, customDirectory }: Props) {
     const router = useRouter()
     const { admin } = useAuthContext();
 
@@ -29,9 +31,15 @@ export default function DashboardHeader({ title, returnButton }: Props) {
         <header className={styles.header}>
             {
                 returnButton ?
-                    <div onClick={() => router.back()} className={`${styles.titleHolder} ${styles.click}`}>
+                    <div className={`${styles.titleHolder}`}>
                         <ReturnIcon className={styles.returnIcon} />
-                        <h1 className={styles.title}>{title}</h1>
+                        <div className={styles.titleHolder} style={{ alignItems: "flex-end" }}>
+                            <h1 className={`${styles.title} ${styles.hoverClick} ${styles.click}`} onClick={customDirectory ?
+                                () => router.push(customDirectory) :
+                                () => router.back()}
+                            >{title}</h1>
+                            <h1 className={styles.directoryTitle}>{`${subDirectory && subDirectory}`}</h1>
+                        </div>
                     </div>
                     :
                     <div className={`${styles.titleHolder}`}>
@@ -39,7 +47,7 @@ export default function DashboardHeader({ title, returnButton }: Props) {
                     </div>
             }
 
-            <div onClick={toggleProfilePopout} className={styles.user}>
+            <div id='profile' onClick={toggleProfilePopout} className={styles.user}>
                 <div className={styles.user}>
                     <img className={styles.accountImage} src={admin.image_url} />
                     <ArrowDown className={styles.icon} />

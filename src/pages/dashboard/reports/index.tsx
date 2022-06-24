@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-
 import dashboardStyles from "/src/styles/dashboard/dashboard.module.css"
 
 import Sidebar from '../../../components/Dashboard/Sidebar';
@@ -12,9 +9,11 @@ import ReportsList from '../../../components/Dashboard/ReportsList';
 import { getReportsData } from '../../../utils/reports';
 
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from 'next/router';
 
 export default function Reports() {
-
+    const router = useRouter();
+    const updateReports = router.query.updateReports;
     const [reports, setReports] = useState([])
 
     useEffect(() => {
@@ -29,7 +28,7 @@ export default function Reports() {
         }
 
         const reportsFromSessionStorage = sessionStorage.getItem('reports')
-        if (reportsFromSessionStorage) {
+        if (reportsFromSessionStorage && !updateReports) {
             setReports(JSON.parse(reportsFromSessionStorage))
         } else {
             getReports()
@@ -47,7 +46,7 @@ export default function Reports() {
     };
 
     return (
-        <body suppressHydrationWarning className={`dashboard`}>
+        <div suppressHydrationWarning className={`dashboard`}>
             <Head>
                 <title>Relatórios</title>
             </Head>
@@ -64,18 +63,10 @@ export default function Reports() {
                 >
                     <DashboardHeader title='Relatórios' />
                     <div style={{ width: "100%" }}>
-                        {
-                            reports.length === 0 ?
-                                <Skeleton baseColor={`var(--background-02)`} highlightColor={`var(--primary-color-03)`} borderRadius={`1.5rem`} height={`15rem`} />
-                                :
-                                reports[0] === "error" ?
-                                    <p>error</p>
-                                    :
-                                    <ReportsList reports={reports} />
-                        }
+                        <ReportsList reports={reports} />
                     </div>
                 </motion.div>
             </AnimatePresence>
-        </body>
+        </div>
     );
 }

@@ -166,7 +166,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount }: Props) => {
     </div>
 
     return (
-        <body>
+        <div>
 
             <Head>
                 <title>DFL</title>
@@ -431,7 +431,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount }: Props) => {
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
             />
-        </body>
+        </div>
     );
 }
 

@@ -22,12 +22,13 @@ export type Profile = {
 
 export type Post = {
     title: string,
+    id: number,
     redactor: Admin,
     content: string
     createdAt: string,
     views: number,
-    fixed: boolean,
-    draft: boolean
+    pinned: boolean,
+    published: boolean
 }
 
 export type Admin = {

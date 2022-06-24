@@ -20,7 +20,7 @@ export async function getStaticProps() {
 
 export default function Blog({ allPostsData }) {
     return (
-        <body>
+        <div>
             <Head>
                 <title>Blog</title>
             </Head>
@@ -56,6 +56,6 @@ export default function Blog({ allPostsData }) {
             </section>
 
             <Footer />
-        </body>
+        </div>
     );
 }

@@ -23,7 +23,8 @@
     --background-modal: #F3F7F4;
 
     --font-dark: #212529;
-    --font-color: #707070;
+    --font-color: #565454;
+    /* --font-color: #707070; */
     --font-light: #495057;
 
     --color-1: #aeb5b0;
@@ -32,6 +33,10 @@
     --light-gray: #747474;
     --lighter-gray: #dbdbdb;
     --white: #FEFEFE;
+
+    --light-red: #D1351B;
+    --light-blue: #1F7EEE;
+    --yellow: #E1DA2D;
 
     --transition-01: all 0.2s ease;
     --transition-03: all 0.3s ease;

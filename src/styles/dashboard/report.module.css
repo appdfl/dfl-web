@@ -110,6 +110,14 @@
     border-radius: 5px;
 }
 
+.controlPanel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
 .line {
     width: 100%;
     height: 0.1px;
@@ -129,7 +137,7 @@
 }
 
 .optionText h4 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
 }
 
 .optionText p {
@@ -201,7 +209,6 @@
 .ratingLines {
     display: flex;
     flex: 0.75;
-    height: 100%;
     flex-direction: column;
     justify-content: space-between;
 }

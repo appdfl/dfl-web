@@ -6,13 +6,16 @@ import LogoutIcon from '@mui/icons-material/LogoutOutlined';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '../../../context/AuthContext';
 
-import { SetStateAction } from 'react';
+import { SetStateAction, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import NavLink from '../Sidebar/NavLink';
 
 type Props = {
     isOpen: boolean;
     toggleOpen: () => SetStateAction<void>;
 }
+
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function DashboardProfilePopout({ isOpen, toggleOpen }: Props) {
     const router = useRouter()
@@ -20,34 +23,67 @@ export default function DashboardProfilePopout({ isOpen, toggleOpen }: Props) {
 
     if (!admin) return <div></div>
 
+    const popout = useRef(null)
+
+    const onClick = (event) => {
+        const profileButton = document.querySelector("#profile")
+        if (isOpen === true && popout.current && popout.current?.contains(event.target) === false && profileButton.contains(event.target) === false) {
+            toggleOpen()
+            window.removeEventListener('click', onClick);
+        }
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            window.addEventListener('click', onClick);
+            return () => window.removeEventListener('click', onClick);
+        }, 500);
+    }, [isOpen]);
+
+    const formattedRole = admin.role === "admin" ? "Admin"
+        : admin.role === "moderator" ? "Moderad."
+            : admin.role === "redactor" ? "Redator" : "Coletor"
+
     return (
         isOpen &&
-        <div className={styles.container} style={{ top: 100, right: 50 }}>
-            <header>
-                <h3>Eduardo Maciel</h3>
-                <div>
-                    <h5>Coletor</h5>
-                    <span>desde 22 de outubro de 2022</span>
-                </div>
-            </header>
-            <div>
-                <ul>
-                    <Link href={`/dashboard/config`}>
-                        <li key={"config"} className={styles.click}>
-                            <a>
-                                <ConfigIcon className={styles.icon} />
-                                <span className={`${styles.text} ${styles.navText}`}>Configurações</span>
-                            </a>
-                        </li>
-                    </Link>
-                    <li key={"logout"} onClick={logoutAdmin} className={styles.click}>
-                        <a>
-                            <LogoutIcon className={styles.icon} />
-                            <span className={`${styles.text} ${styles.navText}`}>Log-out</span>
-                        </a>
-                    </li>
+        <AnimatePresence>
+            <motion.div
+                className={styles.container}
+                style={{ top: 100, right: 50 }}
+                initial={"closed"}
+                animate={"open"}
+                exit={"closed"}
+                key={"reports"}
+                ref={popout}
+                variants={{
+                    open: {
+                        opacity: 1,
+                        y: 0,
+                        transition: { ease: "easeOut", duration: 0.45 }
+                    },
+                    closed: {
+                        y: -35,
+                        opacity: 0
+                    },
+                    exit: {
+                        y: -35,
+                        opacity: 0
+                    }
+                }}
+            >
+                <header>
+                    <h3>{`${admin.first_name}`}<br />{`${admin.last_name}`}</h3>
+                    <div>
+                        <h5 className={styles[admin.role]}>{formattedRole}</h5>
+                        <span>desde 22 de outubro de 2022</span>
+                    </div>
+                </header>
+                <div style={{ backgroundColor: "var(--background-01)" }} className={styles.line}></div>
+                <ul className={styles.buttons}>
+                    <NavLink title='Configurações' Icon={ConfigIcon} defaultSvg href={`/dashboard/config`} />
+                    <NavLink title='Log-out' Icon={LogoutIcon} onClick={logoutAdmin} />
                 </ul>
-            </div>
-        </div>
+            </motion.div>
+        </AnimatePresence>
     );
 }

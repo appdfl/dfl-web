@@ -6,8 +6,11 @@ import Link from 'next/link';
 import { GetRatingsAverage } from '../../../utils/reports';
 import { useEffect, useState } from 'react';
 
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 type Props = {
-    reports: Array<Report>;
+    reports: Array<Report> | Array<string>;
 }
 
 import ArrowUpIcon from '@mui/icons-material/ArrowUpward';
@@ -78,7 +81,7 @@ export default function ReportsList({ reports }: Props) {
             const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate()
             const month = date.getUTCMonth() < 10 ? `0${date.getUTCMonth()}` : date.getUTCMonth()
             return (
-                <Link href={{ pathname: "/dashboard/reports/report", query: { report: JSON.stringify(report) } }} as="/dashboard/reports/report">
+                <Link href={{ pathname: "/dashboard/reports/report", query: { report: JSON.stringify(report) } }} as={`/dashboard/reports/report/`}>
                     <li className={styles.reportContainer} key={report.id}>
                         <div className={styles.reportItem}>
                             <h3 className={styles.address}>{report.address}</h3>
@@ -168,62 +171,66 @@ export default function ReportsList({ reports }: Props) {
     }, [reports])
 
     return (
-        <div className={styles.holder}>
-            <header className={styles.header}>
-                <ul>
-                    <li className={styles.address}>
-                        Endereço
-                    </li>
-                    <li className={styles.user}>
-                        Usuário
-                    </li>
-                    <li onClick={switchDateFilter} className={styles.date}>
-                        Data
-                        {/* {
+        reports.length === 0 ?
+            <Skeleton baseColor={`var(--background-02)`} highlightColor={`var(--primary-color-03)`} borderRadius={`1.5rem`} height={`15rem`} />
+            : reports[0] === "error" ?
+                <p>error</p> :
+                <div className={styles.holder}>
+                    <header className={styles.header}>
+                        <ul>
+                            <li className={styles.address}>
+                                Endereço
+                            </li>
+                            <li className={styles.user}>
+                                Usuário
+                            </li>
+                            <li onClick={switchDateFilter} className={styles.date}>
+                                Data
+                                {/* {
                             dateFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                    </li>
-                    <li onClick={switchRatingFilter} className={styles.rating}>
-                        Avaliação
-                        {/* {
+                            </li>
+                            <li onClick={switchRatingFilter} className={styles.rating}>
+                                Avaliação
+                                {/* {
                             ratingFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                    </li>
-                    <li onClick={switchTrashBinFilter} className={styles.hasTrashBins}>
-                        Possui lixeiras
-                        {/* {
+                            </li>
+                            <li onClick={switchTrashBinFilter} className={styles.hasTrashBins}>
+                                Possui lixeiras
+                                {/* {
                             hasTrashBinFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                    </li>
-                    <li onClick={switchResolvedFilter} className={styles.resolved}>
-                        Resolvido
-                        {/* {
+                            </li>
+                            <li onClick={switchResolvedFilter} className={styles.resolved}>
+                                Resolvido
+                                {/* {
                             resolvedFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                    </li>
-                    <li onClick={switchApprovedFilter} className={styles.approved}>
-                        Aprovado
-                        {/* {
+                            </li>
+                            <li onClick={switchApprovedFilter} className={styles.approved}>
+                                Aprovado
+                                {/* {
                             approvedFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                    </li>
-                </ul>
-            </header>
-            <div className={styles.list}>
-                <ul>
-                    {reportsItems}
-                </ul>
-            </div>
-        </div>
+                            </li>
+                        </ul>
+                    </header>
+                    <div className={styles.list}>
+                        <ul>
+                            {reportsItems}
+                        </ul>
+                    </div>
+                </div>
     );
 }

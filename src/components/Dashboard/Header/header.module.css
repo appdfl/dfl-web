@@ -12,6 +12,12 @@
     gap: 1rem;
 }
 
+.hoverClick:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    filter: brightness(1.5);
+}
+
 .header .returnIcon {
     font-size: 2.4rem;
     color: var(--font-color);
@@ -20,6 +26,12 @@
 
 .title {
     font-size: 3.6rem;
+    font-family: "Inter";
+    color: var(--font-color);
+}
+
+.directoryTitle {
+    font-size: 2.8rem;
     font-family: "Inter";
     color: var(--font-color);
 }

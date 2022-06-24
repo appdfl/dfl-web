@@ -123,7 +123,7 @@ export default function DashboardLogin() {
     }
 
     return (
-        <body >
+        <div >
             <Head>
                 <title>Login | Dashboard</title>
             </Head>
@@ -146,6 +146,6 @@ export default function DashboardLogin() {
                     </div>
                 </Link>
             </div>
-        </body >
+        </div >
     );
 }

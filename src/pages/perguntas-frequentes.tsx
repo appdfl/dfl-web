@@ -5,7 +5,7 @@ import styles from "/src/styles/perguntas-frequentes.module.css"
 
 export default function PerguntasFrequentes() {
     return (
-        <body>
+        <div>
             <Header selected="perguntas-frequentes" />
 
             <section className={"header"}>
@@ -67,6 +67,6 @@ export default function PerguntasFrequentes() {
             </section>
 
             <Footer />
-        </body>
+        </div>
     );
 }

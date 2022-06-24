@@ -18,6 +18,7 @@
     padding: 0.7rem;
 
     cursor: pointer;
+    z-index: 3;
 
     transition: 0.3s;
 }
@@ -25,4 +26,37 @@
 .icon {
     font-size: 1.5rem;
     color: var(--light-gray);
+}
+
+.loading {
+    cursor: progress;
+}
+
+.blocked {
+    cursor: not-allowed;
+}
+
+.buttonLoading::after {
+    content: "";
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+    from {
+        transform: rotate(0turn);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
 }

@@ -19,8 +19,6 @@ export default function Dashboard() {
     const [mounted, setMounted] = useState(false)
     const { theme, setTheme } = useTheme()
 
-    const [isDeleteModalVisible, setDeleteModalVisible] = useState(false)
-
     // useEffect only runs on the client, so now we can safely show the UI
     useEffect(() => {
         setMounted(true)
@@ -40,7 +38,7 @@ export default function Dashboard() {
     };
 
     return (
-        <body className={`dashboard`}>
+        <div className={`dashboard`}>
             <Head>
                 <title>Dashboard</title>
             </Head>
@@ -56,24 +54,13 @@ export default function Dashboard() {
                     className={styles.content}
                 >
                     <DashboardHeader title='Dashboard' />
-                    <DashboardButton title='ABRIR MODAL' onClick={() => {
+                    {/* <DashboardButton title='ABRIR MODAL' onClick={() => {
                         console.log("Exibindo modal")
                         setDeleteModalVisible(!isDeleteModalVisible)
-                    }} />
+                    }} /> */}
 
                 </motion.div>
             </AnimatePresence>
-
-
-            <DashboardModal
-                isVisible={isDeleteModalVisible}
-                setIsVisible={() => setDeleteModalVisible(!isDeleteModalVisible)}
-                color={`#D1351B`}
-                Icon={DeleteIcon}
-                title={"Você está prestes a deletar esse relatório."}
-                description={<p>Ao deletar um relatório, não há mais volta. Pense bem antes de fazer isso.</p>}
-                buttonText="Deletar"
-            />
-        </body>
+        </div>
     );
 }

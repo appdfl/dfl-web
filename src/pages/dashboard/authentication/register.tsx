@@ -166,7 +166,7 @@ export default function DashboardRegister() {
     }
 
     return (
-        <body >
+        <div >
             <Head>
                 <title>Register | Dashboard</title>
             </Head>
@@ -203,6 +203,6 @@ export default function DashboardRegister() {
                         </Link>
                 }
             </div>
-        </body>
+        </div>
     );
 }
