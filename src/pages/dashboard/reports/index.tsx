@@ -20,19 +20,24 @@ export default function Reports() {
         async function getReports() {
             const reportsData = await getReportsData(null, null, true)
             if (reportsData) {
+                console.log("Conseguimos os reports")
                 setReports(reportsData)
                 sessionStorage.setItem('reports', JSON.stringify(reportsData))
             } else {
+                console.log("Error getting reports")
                 setReports(["error"])
             }
         }
 
         const reportsFromSessionStorage = sessionStorage.getItem('reports')
-        if (reportsFromSessionStorage && !updateReports) {
+        const parsedReportsFromSessionStorage = JSON.parse(reportsFromSessionStorage)
+        console.log(parsedReportsFromSessionStorage.length)
+        if (parsedReportsFromSessionStorage && parsedReportsFromSessionStorage.length > 0 && !updateReports) {
+            console.log("Já há relatórios salvos no armazenamento do navegador.")
             setReports(JSON.parse(reportsFromSessionStorage))
         } else {
+            console.log("Obtendo relatórios no servidor.")
             getReports()
-
         }
     }, [])
 

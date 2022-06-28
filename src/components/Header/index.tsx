@@ -20,7 +20,7 @@ export default function Header({ isHome, selected }: Props) {
     function updateNavLine(button) {
         // navLine.style.left = `${element.offsetLeft}px`;
         // navLine.style.width = `${element.offsetWidth}px`;
-        if (button && navLine && isHome) {
+        if (button && navLine.current && isHome) {
             navLine.current.style.left = `${button.offsetLeft + (button.offsetWidth / 2) - (navLine.current.offsetWidth / 2)}px`;
         } else {
             return console.warn("Um botão não foi encontrado para ser selecionado.")

@@ -19,6 +19,14 @@ import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import PinIcon from '@mui/icons-material/PushPinOutlined';
 import RemovePinIcon from '@mui/icons-material/RemoveCircleOutline';
 
+import { NewspaperOutlined, PhoneAndroidOutlined, ErrorOutlineOutlined, ForumOutlined, CategoryOutlined } from "@mui/icons-material";
+const categoryIcons = {
+    "Novidade": <NewspaperOutlined />, // news
+    "Tecnologia": <PhoneAndroidOutlined />, //tech
+    "Aviso": <ErrorOutlineOutlined />, // warning
+    "Discussão": <ForumOutlined />, // discussion
+}
+
 import TurnDraftIcon from '@mui/icons-material/FileDownloadOffOutlined';
 import PublishDraftIcon from "@mui/icons-material/FileUploadOutlined"
 
@@ -134,7 +142,16 @@ export default function PreviewPost() {
 
                 <div style={{ padding: `5rem` }} className={styles.postFrame}>
                     <header>
-                        <h2 className={styles.title}>{postObject.title}</h2>
+                        <div className={styles.topHeader}>
+                            <h2 className={styles.title}>{postObject.title}</h2>
+                            {
+                                postObject.category !== "general" &&
+                                <div className={styles.holder}>
+                                    {categoryIcons[postObject.category]}
+                                    <span className={styles.category}>{postObject.category}</span>
+                                </div>
+                            }
+                        </div>
                         <div className={`${styles.holder} ${styles.subHeader}`}>
                             <div className={styles.holder}>
                                 <CalendarIcon />

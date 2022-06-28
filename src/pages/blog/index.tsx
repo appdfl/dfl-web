@@ -5,12 +5,12 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 
 import styles from "/src/styles/blog.module.css"
-import Date from '../../components/date';
 
-import { getSortedPostsData } from '../../utils/posts';
+import { getPostsDataFormatted } from '../../utils/posts';
 
 export async function getStaticProps() {
-    const allPostsData = getSortedPostsData();
+    const allPostsData = await getPostsDataFormatted();
+    console.log(allPostsData)
     return {
         props: {
             allPostsData,
@@ -39,14 +39,17 @@ export default function Blog({ allPostsData }) {
             <section className={styles.blog}>
                 <div className={`wrapper ${styles.wrapper}`}>
                     <ul className={styles.posts}>
-                        {allPostsData.map(({ id, date, title, author, description }) => (
-                            <Link href={`/blog/${id}`}>
-                                <li className={styles.post} key={id}>
-                                    <p>{description}</p>
-                                    <a>{title}</a>
+                        {allPostsData.map(({ post, date, contentHtml }) => (
+                            <Link href={`/blog/${post.id}`}>
+                                <li className={styles.post} key={post.id}>
+                                    {
+                                        post.category !== "general" &&
+                                        <p>{post.category}</p>
+                                    }
+                                    <a>{post.title}</a>
                                     <br />
                                     <small className={styles.postDate}>
-                                        <span className={styles.author}>{author + ` • `}</span> {<Date dateString={date} />}
+                                        <span className={styles.author}>{`${post.redactor.first_name} ${post.redactor.last_name}` + ` • `}</span> {date}
                                     </small>
                                 </li>
                             </Link>

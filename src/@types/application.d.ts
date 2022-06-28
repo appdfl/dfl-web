@@ -25,6 +25,7 @@ export type Post = {
     id: number,
     redactor: Admin,
     content: string
+    category: string,
     createdAt: string,
     views: number,
     pinned: boolean,

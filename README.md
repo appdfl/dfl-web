@@ -25,8 +25,9 @@ Um aplicativo que irá lhe ajudar a reportar focos de lixo e encontrar pontos de
 -   [ ] JavaScript
 -   [ ] React
 -   [ ] Next.js
+-   [ ] Remark
+-   [ ] Framer Motion
 -   [ ] Material Icons
--   [ ] Express
 -   [ ] Axios
 
 

@@ -213,20 +213,35 @@ export default function DashboardReport() {
                                 <p className={styles.ratingDescription}>{`(${reportObject.note1 + reportObject.note2 + reportObject.note3 + reportObject.note4 + reportObject.note5})`}</p>
                             </div>
                             <div className={styles.ratingLines}>
-                                <div ref={ratingLine} className={styles.ratingLine}>
-                                    <div style={{ width: note1Width }} className={styles.ratingLineAbove}></div>
+                                <div className={styles.holderRating}>
+                                    <span>1{/* {reportObject.note1} */}</span>
+                                    <div ref={ratingLine} className={styles.ratingLine}>
+                                        <div style={{ width: note1Width }} className={styles.ratingLineAbove}></div>
+                                    </div>
                                 </div>
-                                <div className={styles.ratingLine}>
-                                    <div style={{ width: note2Width }} className={styles.ratingLineAbove}></div>
+                                <div className={styles.holderRating}>
+                                    <span>2{/* {reportObject.note2} */}</span>
+                                    <div className={styles.ratingLine}>
+                                        <div style={{ width: note2Width }} className={styles.ratingLineAbove}></div>
+                                    </div>
                                 </div>
-                                <div className={styles.ratingLine}>
-                                    <div style={{ width: note3Width }} className={styles.ratingLineAbove}></div>
+                                <div className={styles.holderRating}>
+                                    <span>3{/* {reportObject.note3} */}</span>
+                                    <div className={styles.ratingLine}>
+                                        <div style={{ width: note3Width }} className={styles.ratingLineAbove}></div>
+                                    </div>
                                 </div>
-                                <div className={styles.ratingLine}>
-                                    <div style={{ width: note4Width }} className={styles.ratingLineAbove}></div>
+                                <div className={styles.holderRating}>
+                                    <span>4{/* {reportObject.note4} */}</span>
+                                    <div className={styles.ratingLine}>
+                                        <div style={{ width: note4Width }} className={styles.ratingLineAbove}></div>
+                                    </div>
                                 </div>
-                                <div className={styles.ratingLine}>
-                                    <div style={{ width: note5Width }} className={styles.ratingLineAbove}></div>
+                                <div className={styles.holderRating}>
+                                    <span>5{/* {reportObject.note5} */}</span>
+                                    <div className={styles.ratingLine}>
+                                        <div style={{ width: note5Width }} className={styles.ratingLineAbove}></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

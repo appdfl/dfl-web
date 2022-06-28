@@ -13,6 +13,14 @@ import DashboardButton from "../../../../components/Dashboard/Button";
 
 import SaveIcon from '@mui/icons-material/SaveOutlined';
 
+import { CategoryOutlined, NewspaperOutlined, PhoneAndroidOutlined, ErrorOutlineOutlined, ForumOutlined } from "@mui/icons-material";
+const categoryIcons = {
+    "Novidade": NewspaperOutlined, // news
+    "Tecnologia": PhoneAndroidOutlined, //tech
+    "Aviso": ErrorOutlineOutlined, // warning
+    "Discussão": ForumOutlined, // discussion
+}
+
 import SuccessIcon from '@mui/icons-material/CheckCircleOutlined';
 import ReportIcon from '@mui/icons-material/ReportOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
@@ -26,6 +34,9 @@ import { useAuthContext } from "../../../../context/AuthContext";
 
 import SuccessAndErrorModal from "../../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal";
 
+import { AnimatePresence, motion } from "framer-motion";
+import NavLink from "../../../../components/Dashboard/Sidebar/NavLink";
+
 export default function CreatePost() {
     const router = useRouter()
     const { admin } = useAuthContext();
@@ -36,6 +47,9 @@ export default function CreatePost() {
 
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
+
+    const [categoryPopoutOpen, setCategoryPopoutOpen] = useState(false)
+    const [category, setCategory] = useState("")
 
     const [convertedContent, setConvertedContent] = useState("")
 
@@ -89,6 +103,7 @@ export default function CreatePost() {
             const sendPost = await api.post(`/post`, {
                 title: title,
                 content: content,
+                category: category,
                 redactor_id: admin.id,
             })
             const postResponseData = sendPost.data;
@@ -154,6 +169,95 @@ export default function CreatePost() {
                                 padding={`0.7rem 1.5rem`}
                                 onClick={toggleVisualizeMode}
                             />
+
+                            <DashboardButton
+                                title={category !== "" ? `Categoria: ${category}` : "Selecionar Categoria"}
+                                Icon={category !== "" ? categoryIcons[category] : CategoryOutlined}
+                                iconSize={`medium`}
+                                fontSize={`1.2rem`}
+                                color={`#BF09B8`}
+                                selected={category !== ""}
+                                padding={`0.7rem 1.5rem`}
+                                onClick={() => setCategoryPopoutOpen(!categoryPopoutOpen)}
+                            />
+                            {
+                                categoryPopoutOpen &&
+                                <AnimatePresence>
+                                    <motion.div
+                                        /* className={styles.popoutWrap} */
+                                        initial={"closed"}
+                                        animate={"open"}
+                                        exit={"closed"}
+                                        key={"reports"}
+                                        variants={{
+                                            open: {
+                                                opacity: 1,
+                                                y: 0,
+                                                transition: { ease: "easeOut", duration: 0.45 }
+                                            },
+                                            closed: {
+                                                y: -35,
+                                                opacity: 0
+                                            },
+                                            exit: {
+                                                y: -35,
+                                                opacity: 0
+                                            }
+                                        }}
+                                    >
+                                        <div className={styles.categoryPopoutContainer}>
+                                            <div style={{ backgroundColor: "var(--background-01)" }} className={styles.line}></div>
+                                            <ul className={styles.categoryButtons}>
+                                                <NavLink
+                                                    title='Novidade'
+                                                    Icon={NewspaperOutlined}
+                                                    iconGap={`1rem`}
+                                                    accentColor={`var(--pink)`}
+                                                    onClick={() => {
+                                                        setCategory("Novidade")
+                                                        setCategoryPopoutOpen(!categoryPopoutOpen)
+                                                    }}
+                                                    upperCase
+                                                />
+                                                <NavLink
+                                                    title='Tecnologia'
+                                                    Icon={PhoneAndroidOutlined}
+                                                    iconGap={`1rem`}
+                                                    accentColor={`var(--pink)`}
+                                                    onClick={() => {
+                                                        setCategory("Tecnologia")
+                                                        setCategoryPopoutOpen(!categoryPopoutOpen)
+                                                    }}
+                                                    upperCase
+                                                />
+                                                <NavLink
+                                                    title='Aviso'
+                                                    Icon={ErrorOutlineOutlined}
+                                                    iconGap={`1rem`}
+                                                    accentColor={`var(--pink)`}
+                                                    onClick={() => {
+                                                        setCategory("Aviso")
+                                                        setCategoryPopoutOpen(!categoryPopoutOpen)
+                                                    }}
+                                                    upperCase
+                                                />
+                                                <NavLink
+                                                    title='Discussão'
+                                                    Icon={ForumOutlined}
+                                                    iconGap={`1rem`}
+                                                    accentColor={`var(--pink)`}
+                                                    onClick={() => {
+                                                        setCategory("Discussão")
+                                                        setCategoryPopoutOpen(!categoryPopoutOpen)
+                                                    }}
+                                                    upperCase
+                                                />
+                                                <p>Cuidado! Não será possível alterar a categoria após salvar o rascunho!</p>
+                                            </ul>
+                                        </div>
+                                    </motion.div>
+                                </AnimatePresence>
+                            }
                         </div>
                     </header>
 
@@ -176,6 +280,8 @@ export default function CreatePost() {
                 description={<p>Ao deletar um artigo, não há mais volta. Pense bem antes de fazer isso.</p>}
                 buttonText="Deletar"
             />
+
+
 
             {ErrorModal}
             {SuccessModal}

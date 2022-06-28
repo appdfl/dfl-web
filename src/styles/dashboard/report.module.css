@@ -25,6 +25,18 @@
     color: var(--font-color);
 }
 
+.holderRating {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+
+    color: var(--font-color);
+}
+
+.holderRating span {
+    font-size: 1rem;
+}
+
 .panel {
     display: flex;
     flex-direction: column;

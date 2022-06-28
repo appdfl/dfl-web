@@ -22,6 +22,8 @@
     --background-02: #E6EADA;
     --background-modal: #F3F7F4;
 
+    --accent-color: #a0e1a2;
+
     --font-dark: #212529;
     --font-color: #565454;
     /* --font-color: #707070; */
@@ -37,6 +39,7 @@
     --light-red: #D1351B;
     --light-blue: #1F7EEE;
     --yellow: #E1DA2D;
+    --pink: #BF09B8;
 
     --transition-01: all 0.2s ease;
     --transition-03: all 0.3s ease;
@@ -47,18 +50,15 @@
 [data-theme='dark'] {
     --background-01: #18191a;
     --background-02: #242526;
+    --background-modal: #191C1F;
 
+    --accent-color: #3A3B3D;
     --color-1: #191C1F;
     --color-2: #212529;
     --border: #353739;
 
-    --font-dark: #0e1011;
-
-    --primary-color-03: #3A3B3D;
-    --primary-color-04: #495057;
-
-    --background-modal: #191C1F;
     --font-color: #CCCCCC;
+    --font-dark: #0e1011;
 }
 
 * {
@@ -138,6 +138,20 @@ button {
 
 .underlined {
     text-decoration: underline;
+}
+
+.profileImage {
+    border-radius: 50%;
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+.holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 0.5rem;
 }
 
 ul {

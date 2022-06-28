@@ -125,8 +125,8 @@ export default function ReportsList({ reports }: Props) {
             const dateFromA = Date.parse(a.createdAt)
             const dateFromB = Date.parse(b.createdAt)
 
-            const ratingFromA = GetRatingsAverage(a)
-            const ratingFromB = GetRatingsAverage(b)
+            const ratingFromA = parseFloat(GetRatingsAverage(a));
+            const ratingFromB = parseFloat(GetRatingsAverage(b));
 
             return (dateFilter === 1 ? dateFromB - dateFromA : dateFromA - dateFromB) ||
                 (ratingFilter === 1 ? ratingFromB - ratingFromA : ratingFromA - ratingFromB) ||
@@ -172,7 +172,7 @@ export default function ReportsList({ reports }: Props) {
 
     return (
         reports.length === 0 ?
-            <Skeleton baseColor={`var(--background-02)`} highlightColor={`var(--primary-color-03)`} borderRadius={`1.5rem`} height={`15rem`} />
+            <Skeleton baseColor={`var(--background-02)`} highlightColor={`var(--border)`} borderRadius={`1.5rem`} height={`15rem`} />
             : reports[0] === "error" ?
                 <p>error</p> :
                 <div className={styles.holder}>

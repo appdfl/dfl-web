@@ -19,10 +19,14 @@ type Props = {
     width?: string;
     fontSize?: string;
     borderWidth?: string;
+    selected?: boolean;
 }
 
-export default function DashboardButton({ title, onClick, Icon, color, contentColor, borderWidth, backgroundColor, isLoading, disabled, iconSize, width, padding, fontSize }: Props) {
+export default function DashboardButton({ title, onClick, Icon, selected, color, contentColor, borderWidth, backgroundColor, isLoading, disabled, iconSize, width, padding, fontSize }: Props) {
     const iconFontSize = iconSize === "small" ? "1.6rem" : iconSize === "medium" ? "1.8rem" : "2.4rem"
+    const backgroundColorStyle = backgroundColor || selected ? `${backgroundColor ? backgroundColor : color}` : "transparent"
+    const colorStyle = selected || contentColor ? `${contentColor ? contentColor : "var(--background-01)"}` : `${color ? color : "var(--light-gray)"}`
+
     return (
         <button
             onClick={onClick}
@@ -39,8 +43,8 @@ export default function DashboardButton({ title, onClick, Icon, color, contentCo
             <style jsx>{`
             button {
                 border: ${borderWidth ? borderWidth : "1px"} solid ${color ? color : `var(--light-gray)`};
-                background: ${backgroundColor ? backgroundColor : "transparent"};
-                color: ${contentColor ? contentColor : color ? color : `var(--light-gray)`};
+                background: ${backgroundColorStyle};
+                color: ${colorStyle};
                 padding: ${padding ? padding : `0.75rem 1.5rem`};
             }
 

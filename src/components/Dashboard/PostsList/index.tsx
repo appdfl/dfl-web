@@ -157,7 +157,7 @@ export default function PostsList({ posts, drafts, completeList, skeletonHeight 
 
     return (
         posts === null ?
-            <Skeleton baseColor={`var(--background-02)`} highlightColor={`var(--primary-color-03)`} borderRadius={`1.5rem`} height={skeletonHeight} />
+            <Skeleton baseColor={`var(--background-02)`} highlightColor={`var(--border`} borderRadius={`1.5rem`} height={skeletonHeight} />
             :
             posts.length === 0 ?
                 <EmptyItem />

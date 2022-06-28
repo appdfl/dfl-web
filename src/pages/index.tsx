@@ -17,13 +17,17 @@ import BackToTop from '../components/BackToTop';
 
 import styles from '../styles/landing.module.css';
 
-import { Report } from '../@types/application';
+import { Post, Report } from '../@types/application';
 
 import { isScreenWide } from '../utils/isScreenWide';
 import { getUsersData } from '../utils/users';
 
+import PinIcon from '@mui/icons-material/PushPinOutlined';
+import RecentIcon from '@mui/icons-material/ScheduleOutlined';
+
 import Head from 'next/head';
 import { api } from '../utils/api';
+import { getPostsData } from '../utils/posts';
 
 const ANIMATION_TIME = 250 // 0.25 segundos
 
@@ -42,11 +46,21 @@ export async function getStaticProps() {
     const usersData = await getUsersData()
     const usersAmount = usersData.length
 
+    const blogData = await getPostsData()
+    const pinnedPost = blogData.find(post => post.pinned === true)
+    const lastPost = blogData.sort(function (postA, postB) { return postA.createdAt - postB.createdAt }).reverse()[0]
+
+    const blogObject = {
+        "pinnedPost": pinnedPost,
+        "lastPost": lastPost,
+    }
+
     return {
         props: {
             aboutData,
             reportsObject,
-            usersAmount
+            usersAmount,
+            blogObject
         },
     };
 }
@@ -57,10 +71,14 @@ type Props = {
         "reportsAmount": number,
         "resolvedReportsAmount": number
     };
+    blogObject: {
+        "pinnedPost": Post,
+        "lastPost": Post,
+    };
     usersAmount: number;
 }
 
-const Landing = ({ aboutData, reportsObject, usersAmount }: Props) => {
+const Landing = ({ aboutData, reportsObject, usersAmount, blogObject }: Props) => {
     const [modalOpen, setModalOpen] = useState(false);
 
     const [isMobile, setIsMobile] = useState(false);
@@ -164,6 +182,12 @@ const Landing = ({ aboutData, reportsObject, usersAmount }: Props) => {
         <img className={`${styles["app-overlay"]}`} src={"/images/screens/ReportScreen_2.png"}
             alt='Tela da seção "Comunidade" do aplicativo móvel.' />
     </div>
+
+    const lastPost = blogObject.lastPost;
+    const pinnedPost = blogObject.pinnedPost;
+
+    const lastPostDate = new Date(lastPost.createdAt).toLocaleDateString('pt-BR')
+    const pinnedPostDate = new Date(pinnedPost.createdAt).toLocaleDateString('pt-BR')
 
     return (
         <div>
@@ -324,6 +348,55 @@ const Landing = ({ aboutData, reportsObject, usersAmount }: Props) => {
                         <p>Junte-se a <span className="big">{usersAmount}</span> outras pessoas que decidiram tornar suas cidades mais
                             limpas.</p>
                     </div>
+                </div>
+            </section>
+
+            <section id='blog' className={`${styles.blog}`}>
+                <div className={`wrapper ${styles.blogWrapper}`}>
+                    <Link href={`/blog/${pinnedPost.id}`}>
+                        <div className={styles.blogCardContainer}>
+                            <header className={`${styles.holder}`}>
+                                <PinIcon className={styles.blogIcon} />
+                                <h4 className={styles.cardTitle}>Artigo fixado</h4>
+                            </header>
+                            <div className={styles.blogCard}>
+                                <h3 className={styles.postTitle}>{pinnedPost.title}</h3>
+                                <div className={styles.blogPostInfo}>
+                                    <div className={styles.holder}>
+                                        <Icon className={styles.info}>calendar_today</Icon>
+                                        <p>{pinnedPostDate}</p>
+                                    </div>
+                                    <span>•</span>
+                                    <div className={styles.holder}>
+                                        <img className={"profileImage"} src={pinnedPost.redactor.image_url} alt="Imagem do perfil do usuário que escreveu o artigo do blog." />
+                                        <p>artigo por <strong>{`${pinnedPost.redactor.first_name}`}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link href={`/blog/${lastPost.id}`}>
+                        <div className={styles.blogCardContainer}>
+                            <header className={`${styles.holder}`}>
+                                <RecentIcon className={`${styles.blogIcon} ${styles.light}`} />
+                                <h4 className={`${styles.cardTitle} ${styles.light}`}>Último artigo</h4>
+                            </header>
+                            <div className={`${styles.blogCard} ${styles.light}`}>
+                                <h3 className={styles.postTitle}>{lastPost.title}</h3>
+                                <div className={styles.blogPostInfo}>
+                                    <div className={styles.holder}>
+                                        <Icon className={styles.info}>calendar_today</Icon>
+                                        <p>{lastPostDate}</p>
+                                    </div>
+                                    <span>•</span>
+                                    <div className={styles.holder}>
+                                        <img className={"profileImage"} src={lastPost.redactor.image_url} alt="Imagem do perfil do usuário que escreveu o artigo do blog." />
+                                        <p>artigo por <strong>{`${lastPost.redactor.first_name}`}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
                 </div>
             </section>
 
