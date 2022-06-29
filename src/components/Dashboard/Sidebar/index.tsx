@@ -46,7 +46,7 @@ export default function Sidebar(/* { actualSection }: Props */) {
         setSidebarOpened(!sidebarOpened)
 
         const content = document.body.querySelector(`.${dashboardStyles.content}`) as HTMLElement;
-        if (sidebarOpened) {
+        if (sidebarOpened && content) {
             content.style.left = `var(--collapsed-sidebar-width)`;
             content.style.width = `calc(100vw - var(--collapsed-sidebar-width))`;
         } else {

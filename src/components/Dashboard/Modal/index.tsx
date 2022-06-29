@@ -37,38 +37,41 @@ export default function DashboardModal({ isVisible, setIsVisible, actionFunction
     };
 
     return (
-        isVisible &&
         <AnimatePresence exitBeforeEnter>
-            <motion.div
-                className={styles.background}
-                key="modal"
-                initial={"closed"}
-                animate={isVisible ? "open" : "closed"}
-                exit={"closed"}
-                variants={backdropVariants}
-                style={{ zIndex: zIndex }}
-            >
-                <div className={styles.container}>
-                    <div style={{ backgroundColor: color }} className={styles.iconHolder}>
-                        <Icon style={{ fontSize: "4.8rem", color: "var(--background-02)" }} />
-                    </div>
+            {
+                isVisible && (
+                    <motion.div
+                        className={styles.background}
+                        key="modal"
+                        initial={"closed"}
+                        animate={isVisible ? "open" : "closed"}
+                        exit={"closed"}
+                        variants={backdropVariants}
+                        style={{ zIndex: zIndex }}
+                    >
+                        <div className={styles.container}>
+                            <div style={{ backgroundColor: color }} className={styles.iconHolder}>
+                                <Icon style={{ fontSize: "4.8rem", color: "var(--background-02)" }} />
+                            </div>
 
-                    <h2>{title}</h2>
-                    {description}
+                            <h2>{title}</h2>
+                            {description}
 
-                    <div className={styles.buttonsHolder}>
-                        {
-                            !suppressReturnButton &&
-                            <DashboardButton onClick={() => setIsVisible(!isVisible)} title={actionFunction ? `CANCELAR` : "RETORNAR"} Icon={actionFunction ? CloseIcon : ReturnIcon} color={`var(--font-color)`} padding={`0.7rem 1.5rem`} />
+                            <div className={styles.buttonsHolder}>
+                                {
+                                    !suppressReturnButton &&
+                                    <DashboardButton onClick={() => setIsVisible(!isVisible)} title={actionFunction ? `CANCELAR` : "RETORNAR"} Icon={actionFunction ? CloseIcon : ReturnIcon} color={`var(--font-color)`} padding={`0.7rem 1.5rem`} />
 
-                        }
-                        {
-                            actionFunction &&
-                            <DashboardButton isLoading={isLoading} onClick={actionFunction} title={buttonText} Icon={Icon} iconSize={`medium`} color={color} padding={`0.7rem 1.5rem`} />
-                        }
-                    </div>
-                </div>
-            </motion.div>
+                                }
+                                {
+                                    actionFunction &&
+                                    <DashboardButton isLoading={isLoading} onClick={actionFunction} title={buttonText} Icon={Icon} iconSize={`medium`} color={color} padding={`0.7rem 1.5rem`} />
+                                }
+                            </div>
+                        </div>
+                    </motion.div>
+                )
+            }
         </AnimatePresence>
     );
 }

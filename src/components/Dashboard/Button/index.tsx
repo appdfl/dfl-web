@@ -8,7 +8,7 @@ import { SvgIconComponent } from '@mui/icons-material';
 type Props = {
     title?: string;
     Icon?: SvgIconComponent;
-    iconSize?: string;
+    iconSize?: 'small' | 'medium' | 'large';
     onClick?: () => void;
     isLoading?: boolean;
     disabled?: boolean;

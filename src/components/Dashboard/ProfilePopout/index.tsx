@@ -44,46 +44,55 @@ export default function DashboardProfilePopout({ isOpen, toggleOpen }: Props) {
         : admin.role === "moderator" ? "Moderad."
             : admin.role === "redactor" ? "Redator" : "Coletor"
 
+    const date = new Date(admin.createdAt)
+    const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate()
+    const month = date.getMonth() < 10 ? `0${date.getUTCMonth() + 1}` : date.getMonth()
+
+    const meses = [null, "Janeiro", 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+
     return (
-        isOpen &&
         <AnimatePresence>
-            <motion.div
-                className={styles.container}
-                style={{ top: 100, right: 50 }}
-                initial={"closed"}
-                animate={"open"}
-                exit={"closed"}
-                key={"reports"}
-                ref={popout}
-                variants={{
-                    open: {
-                        opacity: 1,
-                        y: 0,
-                        transition: { ease: "easeOut", duration: 0.45 }
-                    },
-                    closed: {
-                        y: -35,
-                        opacity: 0
-                    },
-                    exit: {
-                        y: -35,
-                        opacity: 0
-                    }
-                }}
-            >
-                <header>
-                    <h3>{`${admin.first_name}`}<br />{`${admin.last_name}`}</h3>
-                    <div>
-                        <h5 className={styles[admin.role]}>{formattedRole}</h5>
-                        <span>desde 22 de outubro de 2022</span>
-                    </div>
-                </header>
-                <div style={{ backgroundColor: "var(--background-01)" }} className={styles.line}></div>
-                <ul className={styles.buttons}>
-                    <NavLink title='Configurações' Icon={ConfigIcon} defaultSvg href={`/dashboard/config`} />
-                    <NavLink title='Log-out' Icon={LogoutIcon} onClick={logoutAdmin} />
-                </ul>
-            </motion.div>
+            {
+                isOpen && (
+                    <motion.div
+                        className={styles.container}
+                        style={{ top: 100, right: 50 }}
+                        initial={"closed"}
+                        animate={"open"}
+                        exit={"closed"}
+                        key={"reports"}
+                        ref={popout}
+                        variants={{
+                            open: {
+                                opacity: 1,
+                                y: 0,
+                                transition: { ease: "backOut", duration: 0.45 }
+                            },
+                            closed: {
+                                y: -35,
+                                opacity: 0
+                            },
+                            exit: {
+                                y: -35,
+                                opacity: 0
+                            }
+                        }}
+                    >
+                        <header>
+                            <h3>{`${admin.first_name}`}<br />{`${admin.last_name}`}</h3>
+                            <div>
+                                <h5 className={styles[admin.role]}>{formattedRole}</h5>
+                                <span>{`desde ${day} de ${meses[parseInt(month)]} de ${date.getUTCFullYear()}`}</span>
+                            </div>
+                        </header>
+                        <div style={{ backgroundColor: "var(--background-01)" }} className={styles.line}></div>
+                        <ul className={styles.buttons}>
+                            <NavLink title='Configurações' Icon={ConfigIcon} defaultSvg href={`/dashboard/config`} />
+                            <NavLink title='Log-out' Icon={LogoutIcon} onClick={logoutAdmin} />
+                        </ul>
+                    </motion.div>
+                )
+            }
         </AnimatePresence>
     );
 }

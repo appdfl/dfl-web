@@ -7,7 +7,7 @@ export type User = {
     last_name: string;
     email: string;
     profile: Profile;
-    createdAt: string;
+    createdAt: Date;
 }
 
 export type Profile = {
@@ -26,7 +26,7 @@ export type Post = {
     redactor: Admin,
     content: string
     category: string,
-    createdAt: string,
+    createdAt: Date,
     views: number,
     pinned: boolean,
     published: boolean
@@ -34,6 +34,7 @@ export type Post = {
 
 export type Admin = {
     id: string,
+    createdAt: Date,
     email: string,
     image_url: string,
     first_name: string,
@@ -46,7 +47,7 @@ export type Admin = {
 export type Report = {
     profile: Profile,
     id: number,
-    createdAt: string,
+    createdAt: Date,
     address: string,
     coordinates: Array<string>,
     images_urls: Array<string>,
@@ -73,7 +74,7 @@ export type Comment = {
     content: string;
     profile: Profile;
     Report: Report;
-    createdAt: string;
+    createdAt: Date;
 }
 
 export type Region = {

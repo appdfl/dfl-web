@@ -8,7 +8,6 @@ import LinkIcon from '/public/icons/link_icon.svg'
 import InfoIcon from '/public/icons/info_icon.svg'
 
 import { getReportsData } from '../utils/reports';
-import { getAboutData } from '../utils/about';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -31,9 +30,9 @@ import { getPostsData } from '../utils/posts';
 
 const ANIMATION_TIME = 250 // 0.25 segundos
 
-export async function getStaticProps() {
-    const aboutData = await getAboutData();
+import { aboutData } from '../utils/data/about_data';
 
+export async function getStaticProps() {
     const reportsData = await (await api.get(`/report`)).data as Array<Report>;
     const reportsAmount = reportsData.length
     const resolvedReportsAmount = [...reportsData].filter(report => report.resolved === true).length

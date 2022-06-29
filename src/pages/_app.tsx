@@ -8,14 +8,21 @@ import { RouteGuard } from '../components/RouteGuard';
 
 import { AnimatePresence } from "framer-motion";
 
+function handleExitComplete() {
+    if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0 })
+    }
+}
+
+
 export default function App({ Component, pageProps, router }) {
     return (
         <AuthProvider>
             <RouteGuard>
                 <ThemeProvider defaultTheme='light'>
-                    {/* <AnimatePresence exitBeforeEnter initial={false} onExitComplete={() => window.scrollTo(0, 0)}> */}
-                    <Component {...pageProps} key={router.asPath} />
-                    {/* </AnimatePresence> */}
+                    <AnimatePresence exitBeforeEnter onExitComplete={handleExitComplete} >
+                        <Component {...pageProps} key={router.route} />
+                    </AnimatePresence>
                 </ThemeProvider>
             </RouteGuard>
         </AuthProvider>

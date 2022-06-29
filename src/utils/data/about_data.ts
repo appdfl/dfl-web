@@ -1,4 +1,4 @@
-{
+export const aboutData = {
     "community": [
         {
             "icon": "apartment",
