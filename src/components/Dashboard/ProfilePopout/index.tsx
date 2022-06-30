@@ -82,7 +82,7 @@ export default function DashboardProfilePopout({ isOpen, toggleOpen }: Props) {
                             <h3>{`${admin.first_name}`}<br />{`${admin.last_name}`}</h3>
                             <div>
                                 <h5 className={styles[admin.role]}>{formattedRole}</h5>
-                                <span>{`desde ${day} de ${meses[parseInt(month)]} de ${date.getUTCFullYear()}`}</span>
+                                <span>{`desde ${day} de ${meses[parseInt(month as string)]} de ${date.getUTCFullYear()}`}</span>
                             </div>
                         </header>
                         <div style={{ backgroundColor: "var(--background-01)" }} className={styles.line}></div>

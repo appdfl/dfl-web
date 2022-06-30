@@ -50,7 +50,7 @@ export default function Header({ isHome, selected }: Props) {
         showNavOnScroll()
 
         function changeMenuSection() {
-            const sections = [document.querySelector("#home"), document.querySelector("#about"), document.querySelector("#reports"), document.querySelector("#community")]
+            const sections = [document.querySelector("#home"), document.querySelector("#about"), document.querySelector("#reports"), document.querySelector("#community"), document.querySelector("#blog")]
             const middleLine = scrollY + (innerHeight / 2)
 
             function getCurrentSection(section) {
@@ -73,7 +73,7 @@ export default function Header({ isHome, selected }: Props) {
 
             sections.forEach(section => {
                 const lastSection = document.querySelector(`#${lastSectionId}`)
-                if (section !== lastSection) {
+                if (section && section !== lastSection) {
                     const sectionIsInBoundaries = getCurrentSection(section)
                     if (sectionIsInBoundaries) {
                         const sectionId = section.getAttribute("id")
@@ -173,6 +173,7 @@ export default function Header({ isHome, selected }: Props) {
                                         <li className='list'><a onClick={(event) => closeMenu(event.target)} title="about" href="/#about">Sobre</a></li>
                                         <li className='list'><a onClick={(event) => closeMenu(event.target)} title="reports" href="/#reports">Relatórios</a></li>
                                         <li className='list'><a onClick={(event) => closeMenu(event.target)} title="community" href="/#community">Comunidade</a></li>
+                                        <li className='list'><a onClick={(event) => closeMenu(event.target)} title="blog" href="/#blog">Blog</a></li>
                                     </>
                                     : null
                             }
@@ -184,14 +185,9 @@ export default function Header({ isHome, selected }: Props) {
                                     </Link>
                                 </li>
                             } */}
-                            <li className='list'>
+                            {/* <li className='list'>
                                 <Link href="/perguntas-frequentes">
                                     <a className={selected === "perguntas-frequentes" && styles.active} onClick={closeMenu}>F.A.Q</a>
-                                </Link>
-                            </li>
-                            {/* <li className='list'>
-                                <Link href="/blog">
-                                    <a className={selected === "blog" && styles.active} onClick={closeMenu}>Blog</a>
                                 </Link>
                             </li> */}
                         </ul>

@@ -36,6 +36,7 @@ export default function DashboardReport() {
     const [isReportModalVisible, setReportModalVisible] = useState(false)
 
     if (report === undefined) {
+        router.push('/dashboard/reports')
         return (
             <div>
 
@@ -54,7 +55,7 @@ export default function DashboardReport() {
 
     const [isLoading, setLoading] = useState(false)
 
-    async function updateReport() {
+    async function updateReport(returnToHome?: boolean) {
         setLoading(true)
         const response = await api.patch(`/report/${reportObject.id}`, {
             approved: approved,
@@ -63,9 +64,26 @@ export default function DashboardReport() {
         const responseObject = response.data;
         console.log(responseObject, response.status)
         if (response.status === 200) {
-            router.push(`/dashboard/reports/report?report=${JSON.stringify(responseObject)}&successUpdating=true`, `/dashboard/reports/report`)
+            if (returnToHome) {
+                router.push("/dashboard/reports?updateReports=true")
+            } else {
+                router.push(`/dashboard/reports/report?report=${JSON.stringify(responseObject)}&successUpdating=true`, `/dashboard/reports/report`)
+            }
         } else {
             setErrorOrSuccessMessage("Não foi possível atualizar o relatório. Tente novamente mais tarde :(")
+        }
+        setLoading(false)
+    }
+
+    async function deleteReport() {
+        setLoading(true)
+        const response = await api.delete(`/report/${reportObject.id}`)
+        const responseObject = response.data;
+        console.log(responseObject, response.status)
+        if (response.status === 200) {
+            router.push(`/dashboard/reports?successDeleting=true`)
+        } else {
+            setErrorOrSuccessMessage("Não foi possível deletar o relatório. Tente novamente mais tarde :(")
         }
         setLoading(false)
     }
@@ -73,10 +91,6 @@ export default function DashboardReport() {
     const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal()
 
     useEffect(() => {
-        if (report === undefined) {
-            router.push('/dashboard/reports')
-        }
-        console.log(successUpdating)
         if (successUpdating === "true") {
             setErrorOrSuccessMessage("Relatório atualizado com sucesso!")
         }
@@ -298,10 +312,14 @@ export default function DashboardReport() {
                 isVisible={isReportModalVisible}
                 setIsVisible={() => setReportModalVisible(!isReportModalVisible)}
                 color={`#747474`}
-                Icon={DeleteIcon}
+                Icon={ReportIcon}
                 title={"Você está prestes a denunciar esse relatório."}
                 description={<p>Este relatório será ocultado e arquivado automaticamente e o usuário que o postou sofrerá uma penalidade.</p>}
                 buttonText="Denunciar"
+                actionFunction={async () => {
+                    await setApproved(false)
+                    updateReport(true)
+                }}
             />
 
             <DashboardModal
@@ -312,6 +330,7 @@ export default function DashboardReport() {
                 title={"Você está prestes a deletar esse relatório."}
                 description={<p>Ao deletar um relatório, não há mais volta. Pense bem antes de fazer isso.</p>}
                 buttonText="Deletar"
+                actionFunction={deleteReport}
             />
         </div>
     );

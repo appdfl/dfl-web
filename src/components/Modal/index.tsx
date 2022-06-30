@@ -1,7 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './modal.module.css';
 
-export default function Modal({ title, content, modalOpen, setModalOpen }) {
+type Props = {
+    title: string;
+    content: React.ReactNode;
+    footerContent?: React.ReactNode;
+    modalOpen: boolean;
+    setModalOpen: (modalOpen: boolean) => void;
+}
+
+export default function Modal({ title, content, modalOpen, setModalOpen, footerContent }: Props) {
     const modal = useRef(null);
 
     function closeModal() {
@@ -44,6 +52,12 @@ export default function Modal({ title, content, modalOpen, setModalOpen }) {
                 <div className={styles.modalContent}>
                     {content}
                 </div>
+                {
+                    footerContent &&
+                    <div className={styles.modalFooter}>
+                        {footerContent}
+                    </div>
+                }
             </div>
         </div>
     );

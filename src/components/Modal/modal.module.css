@@ -117,3 +117,23 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.modalFooter {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    min-width: 75vw;
+    width: 100%;
+    padding-inline: 2.5rem;
+    padding-block: 1rem;
+    background-color: var(--background-modal);
+    filter: brightness(-0.1);
+    border-top: 1px solid var(--lighter-gray);
+}
+
+.modalFooter h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+}

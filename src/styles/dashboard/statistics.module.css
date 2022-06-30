@@ -37,7 +37,7 @@
 .legend span {
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.4rem;
     line-height: 1.5rem;
 
@@ -104,8 +104,20 @@
 
     border-radius: 1.5rem;
 
-    border: 1px solid #D1351B;
+    border: 1px solid #FFCB00;
     color: white;
+}
+
+.warning {
+    border: 1px solid #D1351B;
+}
+
+.attention {
+    border: 1px solid #FFCB00;
+}
+
+.ok {
+    border: 1px solid var(--primary-color-01);
 }
 
 .reportsWarning2 {

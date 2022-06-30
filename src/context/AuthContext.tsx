@@ -99,7 +99,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         } else {
             const unparsedAdmin = sessionStorage.getItem("admin")
             const adminObject = JSON.parse(unparsedAdmin)
-            console.log("indo aqui", adminObject)
+            /* console.log("indo aqui", adminObject) */
             const tokenObject = sessionStorage.getItem("token")
 
             if (adminObject && tokenObject) {
@@ -126,9 +126,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         sessionStorage.removeItem("admin")
         sessionStorage.removeItem("token")
 
+        router.push(`/dashboard/authentication/login`)
+
+        // É necessário voltar para o login primeiro para que o usuário seja des-logado e não haja erro de renderização
         setAdmin(null)
         setToken(null)
-        router.push(`/dashboard/authentication/login`)
     }
 
     const sharedState = {

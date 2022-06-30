@@ -34,6 +34,7 @@ let lastSection = "Dashboard";
 
 export default function Sidebar(/* { actualSection }: Props */) {
     const { theme, setTheme } = useTheme()
+    const { admin } = useAuthContext();
 
     const switchTheme = () => {
         setTheme(theme === "dark" ? "light" : "dark")
@@ -84,10 +85,10 @@ export default function Sidebar(/* { actualSection }: Props */) {
                     </li> */}
 
                     <ul className="menuLinks">
-                        <NavLink title={"Dashboard"} Icon={DashboardIcon} isActualSection={actualSection === "Dashboard"} />
+                        <NavLink title={"Dashboard"} href={"/dashboard"} Icon={DashboardIcon} isActualSection={actualSection === "Dashboard"} />
                         <NavLink title={"Relatórios"} Icon={ReportsIcon} href={"/dashboard/reports"} isActualSection={actualSection === "Relatórios"} />
-                        <NavLink title={"Estatísticas"} Icon={StatisticsIcon} href={"/dashboard/statistics"} isActualSection={actualSection === "Estatísticas"} disabled />
-                        <NavLink title={"Blog"} Icon={BlogIcon} href={"/dashboard/blog"} isActualSection={actualSection === "Blog"} />
+                        <NavLink title={"Estatísticas"} Icon={StatisticsIcon} href={"/dashboard/statistics"} isActualSection={actualSection === "Estatísticas"} />
+                        <NavLink title={"Blog"} Icon={BlogIcon} href={"/dashboard/blog"} isActualSection={actualSection === "Blog"} disabled={admin.role !== "redactor" && admin.role !== "admin" ? true : false} />
                     </ul>
                 </div>
 

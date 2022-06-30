@@ -423,6 +423,7 @@
     justify-content: space-between;
     gap: 1.5rem;
     flex-wrap: wrap;
+    margin-top: 2rem;
 }
 
 .blogCardContainer {
@@ -521,6 +522,53 @@
 .blogPostInfo p {
     color: var(--background-modal);
 
+}
+
+/* Modal Footer */
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+}
+
+.footer p {
+    font-size: 1.2rem;
+    color: var(--font-color);
+    margin-bottom: 1rem;
+}
+
+.footer div {
+    background-color: var(--primary-color-04);
+    padding: 0.5rem 1.5rem;
+    border-radius: 1.5rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--primary-color-01);
+}
+
+.footer input {
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    border: none;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+
+    font-size: 1.2 rem;
+
+    font-family: "Roboto";
+    font-weight: 500;
+    color: var(--primary-color-01);
 }
 
 @media (min-width: 1024px) {
@@ -738,5 +786,11 @@
 
     .blogCardContainer {
         flex: 0.5;
+    }
+
+    /* Modal Footer */
+
+    .footer p {
+        margin-bottom: 0;
     }
 }

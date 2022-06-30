@@ -27,6 +27,9 @@ export default function Blog() {
     const [posts, setPosts] = useState(null)
 
     useEffect(() => {
+        if (admin.role !== "redactor" && admin.role !== "admin") {
+            router.push(`/dashboard`)
+        }
         async function getPosts() {
             const postsData = await getPostsData(admin.id)
             if (postsData) {

@@ -10,13 +10,20 @@ import { getReportsData } from '../../../utils/reports';
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from 'next/router';
+import SuccessAndErrorModal from '../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal';
 
 export default function Reports() {
     const router = useRouter();
     const updateReports = router.query.updateReports;
+    const successDeleting = router.query.successDeleting;
     const [reports, setReports] = useState([])
 
+    const { SuccessModal, setErrorOrSuccessMessage } = SuccessAndErrorModal()
+
     useEffect(() => {
+        if (successDeleting) {
+            setErrorOrSuccessMessage("O relatório foi deletado com sucesso!")
+        }
         async function getReports() {
             const reportsData = await getReportsData(null, null, true)
             if (reportsData) {
@@ -31,8 +38,7 @@ export default function Reports() {
 
         const reportsFromSessionStorage = sessionStorage.getItem('reports')
         const parsedReportsFromSessionStorage = JSON.parse(reportsFromSessionStorage)
-        console.log(parsedReportsFromSessionStorage.length)
-        if (parsedReportsFromSessionStorage && parsedReportsFromSessionStorage.length > 0 && !updateReports) {
+        if (parsedReportsFromSessionStorage && parsedReportsFromSessionStorage.length > 0 && !updateReports && !successDeleting) {
             console.log("Já há relatórios salvos no armazenamento do navegador.")
             setReports(JSON.parse(reportsFromSessionStorage))
         } else {
@@ -72,6 +78,8 @@ export default function Reports() {
                     </div>
                 </motion.div>
             </AnimatePresence>
+
+            {SuccessModal}
         </div>
     );
 }

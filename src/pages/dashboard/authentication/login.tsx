@@ -51,6 +51,8 @@ export default function DashboardLogin() {
             const adminResponseData = adminResponse.data;
             if (adminResponseData) {
                 setAccountToCheck(adminResponseData)
+            } else {
+                setErrorMessage("Não foi possível encontrar um usuário com este e-mail.")
             }
             setLoading(false)
         } catch (error) {

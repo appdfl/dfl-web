@@ -41,6 +41,10 @@
     --yellow: #E1DA2D;
     --pink: #BF09B8;
 
+    --ok-gradient: linear-gradient(90deg, #26413C 0%, #4F9D69 100%);
+    --attention-gradient: linear-gradient(90deg, #AA2B2B 0%, #D17D1B 100%);
+    --warning-gradient: linear-gradient(90deg, #D1351B 0%, #ff3c00 100%);
+
     --transition-01: all 0.2s ease;
     --transition-03: all 0.3s ease;
     --transition-04: all 0.3s ease;
@@ -72,6 +76,18 @@
     background-color: var(--primary-color);
     color: #fff;
 } */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
 
 html {
     scroll-behavior: smooth;

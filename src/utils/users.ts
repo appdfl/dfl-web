@@ -1,10 +1,10 @@
-import { Report } from "../@types/application";
+import { Profile } from "../@types/application";
 import { api } from "./api";
 
 export async function getUsersData(location?: string) {
     try {
         const usersResponse = await api.get(`/profile${location ? `?location=${location}` : ""}`)
-        return usersResponse.data as Array<Report>;
+        return usersResponse.data as Array<Profile>;
     } catch (error) {
         console.log(error)
         return []

@@ -20,18 +20,93 @@ const data = [
 import { motion, AnimatePresence } from "framer-motion";
 import StatFrame from '../../components/Dashboard/Statistics/StatFrame';
 import { VictoryArea, VictoryAxis, VictoryChart, VictoryLabel, VictoryLegend, VictoryScatter, VictoryStack, VictoryTooltip, VictoryVoronoiContainer } from 'victory';
+import { useAuthContext } from '../../context/AuthContext';
+import { getReportsData } from '../../utils/reports';
+import { Profile, Report } from '../../@types/application';
+import { getUsersData } from '../../utils/users';
 
 export default function DashboardStatistics() {
-    const [mounted, setMounted] = useState(false)
+    const { admin } = useAuthContext();
 
-    // useEffect only runs on the client, so now we can safely show the UI
+    const [stats, setStats] = useState({
+        reports: {
+            reports: [] as any,
+            today: 0,
+            needApproval: 0,
+            total: 0,
+        },
+        users: {
+            today: 0,
+            total: 0
+        }
+    })
+
     useEffect(() => {
-        setMounted(true)
+        async function getStats() {
+            const reports = await getReportsData() as Array<Report>;
+            const users = await getUsersData() as Array<Profile>;
+
+            if (reports && users) {
+                const newStats = {
+                    reports: {
+                        reports: reports,
+                        today: reports.filter(report => new Date(report.createdAt).getDate() === new Date().getDate()).length,
+                        needApproval: reports.filter(report => report.approved === false).length,
+                        total: reports.length
+                    },
+                    users: {
+                        today: 0/* users.filter(user => user.createdAt.getDate() === new Date().getDate()).length */,
+                        total: users.length,
+                    }
+                }
+                setStats(newStats)
+                sessionStorage.setItem('stats', JSON.stringify(newStats))
+            } else {
+                console.log("Não foi possível obter os relatórios e perfis de usuários.")
+            }
+        }
+        const statsFromSessionStorage = sessionStorage.getItem('stats')
+        const parsedStatsFromSessionStorage = JSON.parse(statsFromSessionStorage)
+        if (parsedStatsFromSessionStorage && parsedStatsFromSessionStorage.length > 0) {
+            console.log("Já há relatórios salvos no armazenamento do navegador.")
+            setStats({
+                reports: {
+                    reports: parsedStatsFromSessionStorage.reports.reports,
+                    today: parsedStatsFromSessionStorage.reports.today,
+                    needApproval: parsedStatsFromSessionStorage.reports.needApproval,
+                    total: parsedStatsFromSessionStorage.reports.total,
+                },
+                users: {
+                    today: parsedStatsFromSessionStorage.users.today,
+                    total: parsedStatsFromSessionStorage.users.total,
+                }
+            })
+        } else {
+            console.log("Obtendo relatórios no servidor.")
+            getStats()
+        }
     }, [])
 
-    if (!mounted) {
-        return null
-    }
+    const reportsWarning = <div className={`${styles.reportsWarning} ${styles.warning}`}>
+        <h4>Atenção!</h4>
+        <p><span>Já são mais de 500 relatórios não aprovados!</span>
+            <br /> Os relatórios não param de chegar e esse número está muito alto! Vai ser difícil abaixá-lo, mas eu confio em você {`:)`}</p>
+    </div>
+
+    const reportsAdvise = <div className={styles.reportsWarning}>
+        <h4>Cuidado!</h4>
+        <p><span>Já são mais de 200 relatórios não aprovados.</span>
+            <br /> Se esse número aumentar, um possível efeito bola de neve ocorrerá, dificultando a aprovação de relatórios mais recentes!</p>
+    </div>
+
+    const reportsOk = <div className={`${styles.reportsWarning} ${styles.ok}`}>
+        <h4>De boa...</h4>
+        <p><span>São menos de 50 relatórios não aprovados.</span>
+            <br /> Abaixar esse número é fácil, já que ele é bem pequeno, mas não permita que ele aumente! Pode complicar as coisas...</p>
+    </div>
+
+    const monthTotal = stats.reports.reports.filter(report => new Date(report.createdAt).getMonth() === new Date().getMonth()).length;
+    const monthApproved = stats.reports.reports.filter(report => report.approved === true && new Date(report.createdAt).getMonth() === new Date().getMonth()).length
 
     const opacityVariants = {
         open: {
@@ -43,36 +118,101 @@ export default function DashboardStatistics() {
     };
 
     const colors = {
-        'Recebidos': '#00bcd4',
-        'Aprovados': '#4caf50',
-        'Resolvidos': '#ff9800',
+        'recebidos': '#00bcd4',
+        'aprovados': '#4caf50',
+        'resolvidos': '#ff9800',
     }
-    const placeholderData = [
+
+    const recebidos = [
         {
-            Mês: 'Janeiro',
-            y: {
-                Recebidos: 423,
-                Aprovados: 543,
-                Resolvidos: 654
-            }
+            x: 'Janeiro',
+            y: 423
         },
         {
-            Mês: 'Fevereiro',
-            y: {
-                Recebidos: 531,
-                Aprovados: 24,
-                Resolvidos: 123
-            }
+            x: 'Fevereiro',
+            y: 67
         },
         {
-            Mês: 'Março',
-            y: {
-                Recebidos: 12,
-                Aprovados: 321,
-                Resolvidos: 45
-            }
+            x: 'Março',
+            y: 224
+        },
+        {
+            x: 'Abril',
+            y: 23
+        },
+        /* {
+            x: 'Maio',
+            y: 125
+        },
+        {
+            x: 'Junho',
+            y: 325
+        },
+        {
+            x: 'Julho',
+            y: 43
+        },
+        {
+            x: 'Agosto',
+            y: 198
+        },
+        {
+            x: 'Setembro',
+            y: 54
+        },
+        {
+            x: 'Outubro',
+            y: 222
+        },
+        {
+            x: 'Novembro',
+            y: 856
+        },
+        {
+            x: 'Dezembro',
+            y: 123
+        }, */
+    ]
+
+    const aprovados = [
+        {
+            x: 'Janeiro',
+            y: 450
+        },
+        {
+            x: 'Fevereiro',
+            y: 240
+        },
+        {
+            x: 'Março',
+            y: 164
+        },
+        {
+            x: 'Abril',
+            y: 378
         },
     ]
+
+    const resolvidos = [
+        {
+            x: 'Janeiro',
+            y: 45
+        },
+        {
+            x: 'Fevereiro',
+            y: 24
+        },
+        {
+            x: 'Março',
+            y: 64
+        },
+        {
+            x: 'Abril',
+            y: 178
+        },
+    ]
+
+    const [selected, setSelected] = useState("");
 
     const tooltip = <VictoryTooltip cornerRadius={5} flyoutPadding={{ top: 5, bottom: 5, left: 10, right: 10 }}/* flyoutWidth={100} */
         flyoutStyle={{
@@ -86,7 +226,24 @@ export default function DashboardStatistics() {
         }}
     />
 
-    const [selected, setSelected] = useState("");
+    function LegendButton({ legend }) {
+        const text = legend.charAt(0).toUpperCase() + legend.slice(1);
+        return <div onClick={() => selected === legend ? setSelected("") : setSelected(legend)} className={`${styles.sectionHolder} ${styles.legend}`}>
+            <div className={styles.square} style={{ backgroundColor: colors[legend] }} />
+            <span style={{ fontWeight: selected === legend ? 700 : 500 }}>{text}</span>
+        </div>
+    }
+
+    const [mounted, setMounted] = useState(false)
+
+    // useEffect only runs on the client, so now we can safely show the UI
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if (!mounted) {
+        return null
+    }
 
     return (
         <div className={`dashboard`}>
@@ -107,28 +264,65 @@ export default function DashboardStatistics() {
                 >
                     <DashboardHeader title='Estatísticas' />
 
-                    <div className={styles.section}>
-                        <DashboardSectionTitle title='Usuários' />
-                        <div className={styles.sectionHolder}>
-                            <div className={styles.userFramesHolder}>
-                                <StatFrame children={
-                                    <>
-                                        <span>Usuários cadastrados hoje</span>
-                                        <h4>+27</h4>
-                                    </>
-                                } />
-                                <StatFrame children={
-                                    <>
-                                        <span>Usuários cadastrados</span>
-                                        <h4>2500 no total</h4>
-                                    </>
-                                } />
-                            </div>
-                            <div style={{ flex: 1, height: `100%` }}>
-
+                    {
+                        admin.role === 'admin' &&
+                        <div className={styles.section}>
+                            <DashboardSectionTitle title='Usuários' />
+                            <div className={styles.sectionHolder}>
+                                <div className={styles.userFramesHolder}>
+                                    <StatFrame children={
+                                        <>
+                                            <span>Usuários cadastrados hoje</span>
+                                            <h4>{`+${stats.users.today}`}</h4>
+                                        </>
+                                    } />
+                                    <StatFrame children={
+                                        <>
+                                            <span>Usuários cadastrados</span>
+                                            <h4>{`${stats.users.total} no total`}</h4>
+                                        </>
+                                    } />
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <VictoryChart
+                                        containerComponent={<VictoryVoronoiContainer />}
+                                        width={775}
+                                        height={200}
+                                        /* domainPadding={{ y: 5 }} */
+                                        domain={{ y: [0, 1000] }}
+                                        padding={{ top: 5, bottom: 25, left: 50, right: 25 }}
+                                    >
+                                        <VictoryArea
+                                            data={recebidos}
+                                            animate={{ easing: "cubicInOut", duration: 4000 }}
+                                            x={'x'}
+                                            y={'y'}
+                                            style={{ data: { fill: "url(#white)", fillOpacity: 0.5 } }}
+                                            labels={({ datum }) => Math.floor(datum.y)}
+                                            labelComponent={tooltip}
+                                            interpolation="cardinal"
+                                        />
+                                        <VictoryAxis style={{
+                                            axis: {
+                                                stroke: "transparent"
+                                            },
+                                            tickLabels: {
+                                                fill: `var(--font-color)`
+                                            }
+                                        }} /* label="Meses" */ />
+                                        <VictoryAxis domain={[0, 1000]} style={{
+                                            axis: {
+                                                stroke: "transparent"
+                                            },
+                                            tickLabels: {
+                                                fill: `var(--font-color)`
+                                            }
+                                        }} dependentAxis /* label="Usuários" */ />
+                                    </VictoryChart>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                     <div className={styles.section}>
                         <DashboardSectionTitle title='Relatórios' />
                         <div className={`${styles.sectionHolder} ${styles.reportsSection}`}>
@@ -136,100 +330,74 @@ export default function DashboardStatistics() {
                                 <StatFrame minWidth='24rem' children={
                                     <>
                                         <span>Relatórios cadastrados hoje</span>
-                                        <h4>+35</h4>
+                                        <h4>{`+${stats.reports.today}`}</h4>
                                     </>
                                 } />
-                                <StatFrame minWidth='22.5rem' backgroundGradient='linear-gradient(90deg, #AA2B2B 0%, #D17D1B 100%)' children={
+                                <StatFrame minWidth='22.5rem' backgroundGradient='var(--attention-gradient)' children={
                                     <>
-                                        <h4>232 relatórios</h4>
+                                        <h4>{`${stats.reports.needApproval} relatórios`}</h4>
                                         <span>requerem aprovação</span>
                                     </>
                                 } />
-
-                                <div className={styles.reportsWarning}>
-                                    <h4>Cuidado!</h4>
-                                    <p><span>Já são mais de 200 relatórios não aprovados.</span>
-                                        <br /> Se esse número aumentar, um possível efeito bola de neve ocorrerá, dificultando a aprovação de relatórios mais recentes!</p>
-                                </div>
+                                {stats.reports.needApproval > 50 ? stats.reports.needApproval > 200 ? reportsWarning : reportsAdvise : reportsOk}
                             </div>
                             <div className={styles.sectionHolder}>
                                 <div className={`${styles.section} ${styles.legend}`}>
-                                    <div onClick={() => setSelected("")} className={`${styles.sectionHolder} ${styles.legend}`}>
-                                        <div className={styles.square} style={{ backgroundColor: colors.Recebidos }} />
-                                        <span>Recebidos</span>
-                                    </div>
-                                    <div className={`${styles.sectionHolder} ${styles.legend}`}>
-                                        <div className={styles.square} style={{ backgroundColor: colors.Aprovados }} />
-                                        <span>Aprovados</span>
-                                    </div>
-                                    <div className={`${styles.sectionHolder} ${styles.legend}`}>
-                                        <div className={styles.square} style={{ backgroundColor: colors.Resolvidos }} />
-                                        <span>Resolvidos</span>
-                                    </div>
+                                    <LegendButton legend="recebidos" />
+                                    <LegendButton legend="aprovados" />
+                                    <LegendButton legend="resolvidos" />
                                 </div>
-                                <div style={{ height: "100%" }}>
+                                <div style={{ flex: 1 }}>
                                     <VictoryChart
                                         containerComponent={<VictoryVoronoiContainer />}
                                         width={825}
-                                        height={150}
+                                        height={135}
                                         /* domainPadding={{ y: 5 }} */
                                         padding={{ top: 5, bottom: 25, left: 25, right: 25 }}
                                     >
                                         <VictoryScatter
-                                            data={placeholderData}
-                                            x="Mês"
-                                            y={(datum: any) => datum.y.Recebidos}
+                                            data={recebidos}
                                             size={3}
-                                            style={{ data: { fill: colors.Recebidos } }}
+                                            style={{ data: { fill: selected === "recebidos" || selected === "" ? colors.recebidos : "transparent" } }}
                                         />
                                         <VictoryScatter
-                                            data={placeholderData}
-                                            x="Mês"
-                                            y={(datum: any) => datum.y.Aprovados}
+                                            data={aprovados}
                                             size={3}
-                                            style={{ data: { fill: colors.Aprovados } }}
+                                            style={{ data: { fill: selected === "aprovados" || selected === "" ? colors.aprovados : "transparent" } }}
                                         />
                                         <VictoryScatter
-                                            data={placeholderData}
-                                            x="Mês"
-                                            y={(datum: any) => datum.y.Resolvidos}
+                                            data={resolvidos}
                                             size={3}
-                                            style={{ data: { fill: colors.Resolvidos } }}
+                                            style={{ data: { fill: selected === "resolvidos" || selected === "" ? colors.resolvidos : "transparent" } }}
                                         />
                                         <VictoryArea
-                                            data={placeholderData}
+                                            data={recebidos}
                                             animate={{ easing: "cubicInOut", duration: 4000 }}
-                                            x={'Mês'}
-                                            y={'y.Recebidos'}
+                                            x={'x'}
+                                            y={'y'}
                                             style={{ data: { fill: "url(#recebidos)", fillOpacity: 0.5 } }}
-                                            labels={({ datum }) => `Recebidos: ${datum.y.Recebidos}`}
-                                            labelComponent={
-                                                tooltip
-                                            }
+                                            labels={({ datum }) => `Recebidos: ${Math.floor(datum.y)}`}
+                                            labelComponent={selected === "recebidos" || selected === "" ? tooltip : <div></div>}
                                             interpolation="cardinal"
                                         />
                                         <VictoryArea
-                                            data={placeholderData}
+                                            data={aprovados}
                                             animate={{ easing: "cubicInOut", duration: 4000 }}
-                                            x={'Mês'}
-                                            y={'y.Aprovados'}
+                                            x={'x'}
+                                            y={'y'}
                                             style={{ data: { fill: "url(#aprovados)", fillOpacity: 0.5 } }}
-                                            labels={({ datum }) => `Aprovados: ${datum.y.Aprovados}`}
-                                            labelComponent={
-                                                tooltip
-                                            }
+                                            labels={({ datum }) => `Aprovados: ${Math.floor(datum.y)}`}
+                                            labelComponent={selected === "aprovados" || selected === "" ? tooltip : <div></div>}
                                             interpolation="cardinal"
                                         />
                                         <VictoryArea
-                                            data={placeholderData}
+                                            data={resolvidos}
                                             animate={{ easing: "cubicInOut", duration: 4000 }}
-                                            x={'Mês'}
-                                            y={'y.Resolvidos'}
+                                            x={'x'}
+                                            y={'y'}
                                             style={{ data: { fill: "url(#resolvidos)", fillOpacity: 0.5 } }}
-                                            labels={({ datum }) => `Resolvidos: ${datum.y.Resolvidos}`}
-                                            labelComponent={
-                                                tooltip
-                                            }
+                                            labels={({ datum }) => `Resolvidos: ${Math.floor(datum.y)}`}
+                                            labelComponent={selected === "resolvidos" || selected === "" ? tooltip : <div></div>}
                                             interpolation="cardinal"
                                         />
                                         <VictoryAxis
@@ -248,22 +416,30 @@ export default function DashboardStatistics() {
                             <div className={styles.sectionHolder}>
                                 <div className={`${styles.reportsWarning} ${styles.reportsWarning2}`}>
                                     <CheckCircleOutlined />
-                                    <p>Sossego... Neste mês, estamos com + de 500 focos de lixo resolvidos, em comparação a 12 não resolvidos!</p>
+                                    {
+                                        monthApproved > (monthTotal - monthApproved) ?
+                                            <p>Sossego... Neste mês, estamos com + de {monthApproved} focos de lixo resolvidos, em comparação a {monthTotal - monthApproved} não resolvidos!</p>
+                                            : <p>Cuidado! Neste mês, estamos com mais de {monthTotal - monthApproved} focos de lixo não resolvidos, em comparação a {monthApproved} resolvidos!</p>
+                                    }
                                 </div>
                             </div>
                             <svg style={{ height: 0 }}>
                                 <defs>
+                                    <linearGradient x1="0%" x2="0%" y1="0%" y2="100%" id="white">
+                                        <stop offset="0%" stopColor={"var(--font-color)"} stopOpacity={0.75} />
+                                        <stop offset="100%" stopColor={"var(--font-color)"} stopOpacity={0} />
+                                    </linearGradient>
                                     <linearGradient x1="0%" x2="0%" y1="0%" y2="100%" id="recebidos">
-                                        <stop offset="0%" stopColor={colors.Recebidos} stopOpacity={0.65} />
-                                        <stop offset="100%" stopColor={colors.Recebidos} stopOpacity={0} />
+                                        <stop offset="0%" stopColor={colors.recebidos} stopOpacity={0.65} />
+                                        <stop offset="100%" stopColor={colors.recebidos} stopOpacity={selected === "recebidos" ? 1 : 0} />
                                     </linearGradient>
                                     <linearGradient x1="0%" x2="0%" y1="0%" y2="100%" id="aprovados">
-                                        <stop offset="0%" stopColor={colors.Aprovados} stopOpacity={0.65} />
-                                        <stop offset="100%" stopColor={colors.Aprovados} stopOpacity={0} />
+                                        <stop offset="0%" stopColor={colors.aprovados} stopOpacity={0.65} />
+                                        <stop offset="100%" stopColor={colors.aprovados} stopOpacity={selected === "aprovados" ? 1 : 0} />
                                     </linearGradient>
                                     <linearGradient x1="0%" x2="0%" y1="0%" y2="100%" id="resolvidos">
-                                        <stop offset="0%" stopColor={colors.Resolvidos} stopOpacity={0.65} />
-                                        <stop offset="100%" stopColor={colors.Resolvidos} stopOpacity={0} />
+                                        <stop offset="0%" stopColor={colors.resolvidos} stopOpacity={0.65} />
+                                        <stop offset="100%" stopColor={colors.resolvidos} stopOpacity={selected === "resolvidos" ? 1 : 0} />
                                     </linearGradient>
                                 </defs>
                             </svg>
