@@ -9,9 +9,10 @@ import PublishDraft from "@mui/icons-material/FileUploadOutlined"
 import { Post } from '../../../../@types/application';
 import { api } from '../../../../utils/api';
 
-export default function PublishPostModal(post: Post, setErrorMessage: (message: string) => SetStateAction<void>) {
-    const router = useRouter();
+export const publishedMessage = "O artigo foi publicado com sucesso!"
+export const turnedDraftMessage = "O artigo tornou-se um rascunho com sucesso!"
 
+export default function PublishPostModal(post: Post, setErrorMessage: (message: string) => SetStateAction<void>, setReportObject?: (object: Post) => SetStateAction<void>) {
     const [isToggleDraftModalVisible, setToggleDraftModalVisible] = useState(false)
     const [isLoading, setLoading] = useState(false)
 
@@ -26,7 +27,11 @@ export default function PublishPostModal(post: Post, setErrorMessage: (message: 
             if (postResponseData) {
                 console.log("Visibilidade do post alterada com sucesso!")
                 setToggleDraftModalVisible(false)
-                setErrorMessage(postResponseData.published ? "O artigo foi publicado com sucesso!" : "O artigo tornou-se um rascunho com sucesso!")
+
+                if (setReportObject) {
+                    setReportObject(postResponseData)
+                }
+                setErrorMessage(postResponseData.published ? publishedMessage : turnedDraftMessage)
                 setLoading(false)
             }
             //router.push(`/dashboard/blog/post/preview?post=${JSON.stringify(postResponseData)}&successUpdating=true`)

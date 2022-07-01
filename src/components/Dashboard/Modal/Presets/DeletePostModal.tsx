@@ -6,6 +6,8 @@ import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import { Post } from '../../../../@types/application';
 import { api } from '../../../../utils/api';
 
+export const deleteMessage = "O post foi excluído com sucesso!"
+
 export default function DeletePostModal(post: Post, setErrorMessage: (message: string) => SetStateAction<void>) {
     const [isDeleteModalVisible, setDeleteModalVisible] = useState(false)
     const [isLoading, setLoading] = useState(false)
@@ -18,7 +20,7 @@ export default function DeletePostModal(post: Post, setErrorMessage: (message: s
 
             if (typeof postResponseData !== "object") {
                 setDeleteModalVisible(false)
-                setErrorMessage("deleteSuccess")
+                setErrorMessage(deleteMessage)
             }
         } catch (error) {
             console.log(error.response)

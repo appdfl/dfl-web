@@ -41,6 +41,8 @@ export default function CreatePost() {
     const router = useRouter()
     const { admin } = useAuthContext();
 
+    if (!admin) return <div></div>
+
     const [isDeleteModalVisible, setDeleteModalVisible] = useState(false)
 
     const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal(() => router.push('/dashboard/blog?updatePosts=true'))

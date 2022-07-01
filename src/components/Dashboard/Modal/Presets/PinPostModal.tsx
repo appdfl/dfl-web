@@ -9,7 +9,10 @@ import { Post } from '../../../../@types/application';
 import { api } from '../../../../utils/api';
 import { getPostsData } from '../../../../utils/posts';
 
-export default function PinPostModal(post: Post, setErrorMessage: (message: string) => SetStateAction<void>) {
+export const pinnedMessage = "O post foi fixado com sucesso!"
+export const unpinnedMessage = "O post foi removido dos fixados com sucesso!"
+
+export default function PinPostModal(post: Post, setErrorMessage: (message: string) => SetStateAction<void>, setReportObject?: (object: Post) => SetStateAction<void>) {
     const [isPinModalVisible, setPinModalVisible] = useState(false)
     const [isLoading, setLoading] = useState(false)
 
@@ -21,7 +24,11 @@ export default function PinPostModal(post: Post, setErrorMessage: (message: stri
             const postResponseData = sendPost.data;
             if (postResponseData) {
                 setPinModalVisible(false)
-                setErrorMessage(postResponseData.pinned ? "O post foi fixado com sucesso!" : "O post foi removido dos fixados com sucesso!")
+
+                if (setReportObject) {
+                    setReportObject(postResponseData)
+                }
+                setErrorMessage(postResponseData.pinned ? pinnedMessage : unpinnedMessage)
                 setLoading(false)
                 console.log("Estado 'fixado' do post alterada com sucesso!")
             }

@@ -37,31 +37,25 @@ import { formatPostContent } from "../../../../utils/posts";
 import DeletePostModal from "../../../../components/Dashboard/Modal/Presets/DeletePostModal";
 import PinPostModal from "../../../../components/Dashboard/Modal/Presets/PinPostModal";
 import PublishPostModal from "../../../../components/Dashboard/Modal/Presets/PublishPostModal";
+import SuccessAndErrorModal from "../../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal";
 
 export default function PreviewPost() {
     const router = useRouter()
     const { post, successUpdating } = router.query
 
-    useEffect(() => {
-        if (post === undefined) {
-            router.push('/dashboard/blog')
-        }
-    }, [])
+    const postParsed = JSON.parse(post.toString()) as Post;
+    const [postObject, setPostObject] = useState(postParsed);
 
-    if (post === undefined) {
-        return (
-            <div>
-
-            </div>
-        )
+    if (postObject === undefined) {
+        router.push('/dashboard/blog')
+        return <div></div>;
     }
 
-    const postObject = JSON.parse(post.toString()) as Post;
-    const [errorMessage, setErrorMessage] = useState(successUpdating === "true" ? "success" : "")
+    const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal();
 
-    const { DeleteModal, setDeleteModalVisible } = DeletePostModal(postObject, setErrorMessage)
-    const { PinModal, setPinModalVisible } = PinPostModal(postObject, setErrorMessage)
-    const { PublishModal, setPublishDraftModalVisible } = PublishPostModal(postObject, setErrorMessage)
+    const { DeleteModal, setDeleteModalVisible } = DeletePostModal(postObject, setErrorOrSuccessMessage)
+    const { PinModal, setPinModalVisible } = PinPostModal(postObject, setErrorOrSuccessMessage, setPostObject)
+    const { PublishModal, setPublishDraftModalVisible } = PublishPostModal(postObject, setErrorOrSuccessMessage, setPostObject)
 
     const [content, setContent] = useState("")
 
@@ -198,26 +192,9 @@ export default function PreviewPost() {
             {PublishModal}
             {PinModal}
 
-            <DashboardModal
-                isVisible={errorMessage !== "" && !errorMessage.includes("!")}
-                setIsVisible={() => setErrorMessage("")}
-                color={`#E1DA2D`}
-                Icon={ReportIcon}
-                title={"Opa! Parece que algo deu errado."}
-                description={<p>{errorMessage}</p>}
-            />
+            {SuccessModal}
+            {ErrorModal}
 
-            <DashboardModal
-                isVisible={errorMessage !== "" && errorMessage.includes("!")}
-                setIsVisible={() => setErrorMessage("")}
-                color={`var(--primary-color-01)`}
-                Icon={SuccessIcon}
-                title={"Eba! Deu tudo certo!"}
-                description={<p>{errorMessage}</p>}
-                buttonText={"Ok"}
-                suppressReturnButton
-                actionFunction={returnToHome}
-            />
         </div>
     );
 }

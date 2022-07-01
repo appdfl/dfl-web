@@ -4,10 +4,14 @@ import ReportIcon from '@mui/icons-material/ReportOutlined';
 import SuccessIcon from '@mui/icons-material/CheckCircleOutlined';
 
 import DashboardModal from '..';
+import { deleteMessage } from './DeletePostModal';
+import { useRouter } from 'next/router';
 
 export default function SuccessAndErrorModal(actionFunction?: () => void) {
+    const router = useRouter()
     const [errorMessage, setErrorMessage] = useState("")
 
+    const backToPosts = () => router.push('/dashboard/posts?updatePosts=true')
     const defaultFunction = () => { setErrorMessage("") }
 
     return {
@@ -28,7 +32,8 @@ export default function SuccessAndErrorModal(actionFunction?: () => void) {
             description={<p>{errorMessage}</p>}
             buttonText={"Ok"}
             suppressReturnButton
-            actionFunction={actionFunction ? actionFunction : defaultFunction}
+            actionFunction={actionFunction ? actionFunction :
+                errorMessage === deleteMessage ? backToPosts : defaultFunction}
         />,
         setErrorOrSuccessMessage: setErrorMessage,
     }

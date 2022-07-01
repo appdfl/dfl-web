@@ -26,10 +26,13 @@ export default function Blog() {
     const { admin } = useAuthContext();
     const [posts, setPosts] = useState(null)
 
+    if (!admin) return <div></div>
+
+    if (admin.role !== "redactor" && admin.role !== "admin") {
+        router.push(`/dashboard`)
+    }
+
     useEffect(() => {
-        if (admin.role !== "redactor" && admin.role !== "admin") {
-            router.push(`/dashboard`)
-        }
         async function getPosts() {
             const postsData = await getPostsData(admin.id)
             if (postsData) {
@@ -49,7 +52,6 @@ export default function Blog() {
         } else {
             console.log("Obtendo posts do servidor.")
             getPosts()
-
         }
     }, [])
 

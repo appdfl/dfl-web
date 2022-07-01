@@ -30,21 +30,18 @@ import SuccessAndErrorModal from "../../../components/Dashboard/Modal/Presets/Su
 
 export default function DashboardReport() {
     const router = useRouter()
-    const { id, report, successUpdating } = router.query
+    const { id, report } = router.query
 
     const [isDeleteModalVisible, setDeleteModalVisible] = useState(false)
     const [isReportModalVisible, setReportModalVisible] = useState(false)
 
-    if (report === undefined) {
+    const reportParsed = report ? JSON.parse(report.toString()) as Report : null;
+    const [reportObject, setReportObject] = useState(reportParsed);
+
+    if (!reportObject) {
         router.push('/dashboard/reports')
-        return (
-            <div>
-
-            </div>
-        )
+        return <div></div>
     }
-
-    const reportObject = JSON.parse(report.toString()) as Report;
 
     const date = new Date(reportObject.createdAt)
     const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate()
@@ -64,37 +61,39 @@ export default function DashboardReport() {
         const responseObject = response.data;
         console.log(responseObject, response.status)
         if (response.status === 200) {
-            if (returnToHome) {
+            if (returnToHome === true) {
+                console.log("Entrou aqui")
                 router.push("/dashboard/reports?updateReports=true")
             } else {
-                router.push(`/dashboard/reports/report?report=${JSON.stringify(responseObject)}&successUpdating=true`, `/dashboard/reports/report`)
+                console.log("Passou reto")
+                setLoading(false)
+                setReportObject(responseObject)
+                setErrorOrSuccessMessage("Relatório atualizado com sucesso!")
+                /* router.push(`/dashboard/reports/report?report=${JSON.stringify(responseObject)}&successUpdating=true`, `/dashboard/reports/report`) */
             }
         } else {
+            setLoading(false)
             setErrorOrSuccessMessage("Não foi possível atualizar o relatório. Tente novamente mais tarde :(")
         }
-        setLoading(false)
     }
 
     async function deleteReport() {
         setLoading(true)
         const response = await api.delete(`/report/${reportObject.id}`)
         const responseObject = response.data;
-        console.log(responseObject, response.status)
+        console.log("Relatório deletado com sucesso.", response.status)
         if (response.status === 200) {
-            router.push(`/dashboard/reports?successDeleting=true`)
+            setErrorOrSuccessMessage("Relatório deletado com sucesso!")
         } else {
             setErrorOrSuccessMessage("Não foi possível deletar o relatório. Tente novamente mais tarde :(")
         }
-        setLoading(false)
     }
 
-    const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal()
+    function goToHome() {
+        router.push(`/dashboard/reports?successDeleting=true`)
+    }
 
-    useEffect(() => {
-        if (successUpdating === "true") {
-            setErrorOrSuccessMessage("Relatório atualizado com sucesso!")
-        }
-    }, [])
+    const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal(isLoading && goToHome)
 
     const ratingLine = useRef(null);
     /* const [ratingLineWidth, setRatingLineWidth] = useState(0)
@@ -122,7 +121,7 @@ export default function DashboardReport() {
             <Sidebar />
 
             <div className={dashboardStyles.content}>
-                <DashboardHeader returnButton title='Relatórios' subDirectory="/ Relatório" customDirectory={successUpdating && `/dashboard/reports?updateReports=true`} />
+                <DashboardHeader returnButton title='Relatórios' subDirectory="/ Relatório" customDirectory={report === null && `/dashboard/reports?updateReports=true`} />
 
                 <div className={styles.reportFrame}>
                     <header>

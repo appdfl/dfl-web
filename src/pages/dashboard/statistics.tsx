@@ -28,6 +28,8 @@ import { getUsersData } from '../../utils/users';
 export default function DashboardStatistics() {
     const { admin } = useAuthContext();
 
+    if (!admin) return <div></div>
+
     const [stats, setStats] = useState({
         reports: {
             reports: [] as any,

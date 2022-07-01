@@ -36,6 +36,8 @@ export default function Sidebar(/* { actualSection }: Props */) {
     const { theme, setTheme } = useTheme()
     const { admin } = useAuthContext();
 
+    if (!admin) return <div></div>
+
     const switchTheme = () => {
         setTheme(theme === "dark" ? "light" : "dark")
         console.log(theme)

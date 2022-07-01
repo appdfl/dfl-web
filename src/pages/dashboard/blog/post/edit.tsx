@@ -33,21 +33,14 @@ export default function EditPost() {
     const router = useRouter()
     const { post } = router.query
 
-    useEffect(() => {
-        if (post === undefined) {
-            router.push('/dashboard/blog')
-        }
-    }, [])
-
     if (post === undefined) {
-        return (
-            <div>
-
-            </div>
-        )
+        router.push('/dashboard/blog')
     }
 
-    const postObject = JSON.parse(post.toString()) as Post;
+    if (post === undefined) return <div></div>;
+
+    const postParsed = JSON.parse(post.toString()) as Post;
+    const [postObject, setPostObject] = useState(postParsed);
 
     const [title, setTitle] = useState(postObject.title)
     const [content, setContent] = useState(postObject.content)
@@ -90,7 +83,7 @@ export default function EditPost() {
         setPreviewMode(!previewMode)
     }
 
-    const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal(() => router.push('/dashboard/blog?updatePosts=true'))
+    const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal()
 
     const containerRef = useRef(null);
 
@@ -114,6 +107,8 @@ export default function EditPost() {
             const postResponseData = updatePost.data as Post;
             if (postResponseData) {
                 console.log("Conteúdo do post editado com sucesso!")
+
+                setPostObject(postResponseData)
                 setErrorOrSuccessMessage("O artigo foi editado com sucesso!")
                 setLoading(false)
             }
