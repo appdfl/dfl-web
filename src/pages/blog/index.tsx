@@ -25,7 +25,7 @@ export default function Blog({ allPostsData }) {
                 <title>Blog</title>
             </Head>
 
-            <Header selected='blog' />
+            <Header />
 
             <section className={`header ${styles.header}`}>
                 <div className="wrapper">

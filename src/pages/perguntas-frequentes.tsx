@@ -6,7 +6,7 @@ import styles from "/src/styles/perguntas-frequentes.module.css"
 export default function PerguntasFrequentes() {
     return (
         <div>
-            <Header selected="perguntas-frequentes" />
+            <Header />
 
             <section className={"header"}>
                 <div className="wrapper">

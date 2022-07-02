@@ -35,7 +35,7 @@ export default function Post({ postData }) {
                 <title>{postData.title}</title>
             </Head>
 
-            <Header selected='blog' />
+            <Header />
 
             <section className={`header`}>
                 <div className="wrapper">

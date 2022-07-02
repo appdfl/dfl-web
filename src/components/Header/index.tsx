@@ -176,19 +176,6 @@ export default function Header() {
                                     </>
                                     : null
                             }
-                            {/* {
-                                isMobile || !isHome &&
-                                <li className='list'>
-                                    <Link href="/perguntas-frequentes">
-                                        <a className={selected === "perguntas-frequentes" && styles.active} onClick={closeMenu}>F.A.Q</a>
-                                    </Link>
-                                </li>
-                            } */}
-                            {/* <li className='list'>
-                                <Link href="/perguntas-frequentes">
-                                    <a className={selected === "perguntas-frequentes" && styles.active} onClick={closeMenu}>F.A.Q</a>
-                                </Link>
-                            </li> */}
                         </ul>
                         <div>
                             <Link href="/#download">
