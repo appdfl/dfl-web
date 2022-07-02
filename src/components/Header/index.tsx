@@ -9,12 +9,12 @@ import InstagramIcon from '/public/icons/instagram_icon.svg'
 import FacebookIcon from '/public/icons/facebook_icon.svg'
 import TwitterIcon from '/public/icons/twitter_icon.svg'
 
-type Props = {
-    isHome?: boolean;
-    selected?: string;
-}
+import { useRouter } from 'next/router';
 
-export default function Header({ isHome, selected }: Props) {
+export default function Header() {
+    const router = useRouter();
+
+    const isHome = router.asPath === '/';
 
     const navLine = useRef(null);
     function updateNavLine(button) {
@@ -87,7 +87,6 @@ export default function Header({ isHome, selected }: Props) {
 
                         const lastMenuElement = document.querySelector(`.${styles.menu} a[title*=${lastSectionId}]`)
                         lastMenuElement.classList.remove(styles.active)
-                        console.log("Removeu de", lastSectionId)
 
                         setLastSectionId(sectionId)
                     }
@@ -123,7 +122,7 @@ export default function Header({ isHome, selected }: Props) {
 
             liList.forEach(list => {
                 console.log(list.offsetWidth)
-                list.style.width = `${list.offsetWidth + 15}px`;
+                list.style.width = `${list.offsetWidth + 5}px`;
             })
             console.log("Tamanhos atualizados!")
 

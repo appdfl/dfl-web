@@ -568,7 +568,7 @@
 
     font-family: "Roboto";
     font-weight: 500;
-    color: var(--primary-color-01);
+    color: var(--background-color-01);
 }
 
 @media (min-width: 1024px) {

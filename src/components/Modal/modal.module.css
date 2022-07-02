@@ -131,6 +131,8 @@
     background-color: var(--background-modal);
     filter: brightness(-0.1);
     border-top: 1px solid var(--lighter-gray);
+
+    border-radius: 0px 0px 1rem 1rem;
 }
 
 .modalFooter h2 {

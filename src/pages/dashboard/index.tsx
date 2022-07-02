@@ -127,7 +127,7 @@ export default function Dashboard() {
                                     <Map latitude={-14.235004} longitude={-51.92528} />
                                 </div>
                                 <div style={{ flex: 0.5, height: "100%" }}>
-                                    <ReportsList reports={stats.reports.reports} />
+                                    <ReportsList reports={stats.reports.reports} simpleLayout />
                                 </div>
                             </div>
                         </div>

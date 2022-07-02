@@ -11,6 +11,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 type Props = {
     reports: Array<Report> | Array<string>;
+    simpleLayout?: boolean;
 }
 
 import ArrowUpIcon from '@mui/icons-material/ArrowUpward';
@@ -74,7 +75,7 @@ import ArrowDownIcon from '@mui/icons-material/ArrowDownward';
     ] */
 /* as={`/dashboard/reports/report_${report.id}`} */
 
-export default function ReportsList({ reports }: Props) {
+export default function ReportsList({ reports, simpleLayout }: Props) {
     function renderItems() {
         const items = reports.map((report) => {
             const date = new Date(report.createdAt)
@@ -93,13 +94,12 @@ export default function ReportsList({ reports }: Props) {
                             <p className={styles.date}>{`${day}/${month}/${date.getUTCFullYear()}`}</p>
                             <p className={styles.rating}>{GetRatingsAverage(report)}</p>
                             {
-                                <input type="checkbox" className={styles.hasTrashBins} name="hasTrashBins" readOnly checked={report.hasTrashBins} />
-                            }
-                            {
-                                <input type="checkbox" className={styles.resolved} name="resolved" readOnly checked={report.resolved} />
-                            }
-                            {
-                                <input type="checkbox" className={styles.approved} name="approved" readOnly checked={report.approved} />
+                                !simpleLayout &&
+                                <>
+                                    <input type="checkbox" className={styles.hasTrashBins} name="hasTrashBins" readOnly checked={report.hasTrashBins} />
+                                    <input type="checkbox" className={styles.resolved} name="resolved" readOnly checked={report.resolved} />
+                                    <input type="checkbox" className={styles.approved} name="approved" readOnly checked={report.approved} />
+                                </>
                             }
                         </div>
                     </li>
@@ -200,30 +200,35 @@ export default function ReportsList({ reports }: Props) {
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
                             </li>
-                            <li onClick={switchTrashBinFilter} className={styles.hasTrashBins}>
-                                Possui lixeiras
-                                {/* {
+                            {
+                                !simpleLayout &&
+                                <>
+                                    <li onClick={switchTrashBinFilter} className={styles.hasTrashBins}>
+                                        Possui lixeiras
+                                        {/* {
                             hasTrashBinFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                            </li>
-                            <li onClick={switchResolvedFilter} className={styles.resolved}>
-                                Resolvido
-                                {/* {
+                                    </li>
+                                    <li onClick={switchResolvedFilter} className={styles.resolved}>
+                                        Resolvido
+                                        {/* {
                             resolvedFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                            </li>
-                            <li onClick={switchApprovedFilter} className={styles.approved}>
-                                Aprovado
-                                {/* {
+                                    </li>
+                                    <li onClick={switchApprovedFilter} className={styles.approved}>
+                                        Aprovado
+                                        {/* {
                             approvedFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                            </li>
+                                    </li>
+                                </>
+                            }
                         </ul>
                     </header>
                     <div className={styles.list}>

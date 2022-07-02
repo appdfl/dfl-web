@@ -195,7 +195,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                 <title>DFL</title>
             </Head>
 
-            <Header isHome />
+            <Header />
 
             <section id='home' className={styles.home}>
                 <div className={`wrapper ${styles.wrapper}`}>
@@ -509,7 +509,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                     <p>Possui um código de <strong>acesso antecipado</strong>?</p>
                     <div>
                         <input value={code} onChange={(event) => setCode(event.target.value)} spellCheck={false} maxLength={16} type="text" name="" id="" />
-                        <Send onClick={checkBetaCode} style={{ cursor: "pointer" }} />
+                        <Send onClick={checkBetaCode} style={{ cursor: "pointer", color: "var(--background-color-01)" }} />
                     </div>
                 </div>}
                 modalOpen={modalOpen}

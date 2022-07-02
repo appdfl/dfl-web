@@ -27,12 +27,14 @@ import NavLink from "./NavLink";
 import { useTheme } from "next-themes";
 
 import { useAuthContext } from "../../../context/AuthContext";
+import { useRouter } from "next/router";
 
 // if it's not set in localStorage value is null, then !! will set as false
 
 let lastSection = "Dashboard";
 
 export default function Sidebar(/* { actualSection }: Props */) {
+    const router = useRouter();
     const { theme, setTheme } = useTheme()
     const { admin } = useAuthContext();
 
@@ -60,13 +62,16 @@ export default function Sidebar(/* { actualSection }: Props */) {
 
     const [actualSection, setActualSection] = useState(lastSection)
     useEffect(() => {
-        const isRegularSection = document.title === "Dashboard" || document.title === "Relatórios" || document.title === "Estatísticas" || document.title === "Blog";
-        if (isRegularSection) {
-            setActualSection(document.title)
+        const url = router.asPath;
+        if (url.includes("reports")) {
+            setActualSection("reports")
+        } else if (url.includes("statistics")) {
+            setActualSection("statistics")
+        } else if (url.includes("blog")) {
+            setActualSection("blog")
         } else {
-            setActualSection(lastSection)
+            setActualSection("dashboard")
         }
-        lastSection = document.title
     }, [])
 
     return (
@@ -80,17 +85,28 @@ export default function Sidebar(/* { actualSection }: Props */) {
 
             <div className={styles.menuBar}>
                 <div className={styles.menu}>
-
                     {/* <li className={styles.searchBox}>
                         <SearchIcon className={styles.icon} />
                         <input type="text" placeholder="Pesquisar" onClick={() => setSidebarOpened(true)} />
                     </li> */}
-
                     <ul className="menuLinks">
-                        <NavLink title={"Dashboard"} href={"/dashboard"} Icon={DashboardIcon} isActualSection={actualSection === "Dashboard"} />
-                        <NavLink title={"Relatórios"} Icon={ReportsIcon} href={"/dashboard/reports"} isActualSection={actualSection === "Relatórios"} />
-                        <NavLink title={"Estatísticas"} Icon={StatisticsIcon} href={"/dashboard/statistics"} isActualSection={actualSection === "Estatísticas"} />
-                        <NavLink title={"Blog"} Icon={BlogIcon} href={"/dashboard/blog"} isActualSection={actualSection === "Blog"} disabled={admin.role !== "redactor" && admin.role !== "admin" ? true : false} />
+                        <NavLink title={"Dashboard"} href={"/dashboard"}
+                            Icon={DashboardIcon}
+                            isActualSection={actualSection === "dashboard"}
+                        />
+                        <NavLink title={"Relatórios"} href={"/dashboard/reports"}
+                            Icon={ReportsIcon}
+                            isActualSection={actualSection === "reports"}
+                        />
+                        <NavLink title={"Estatísticas"} href={"/dashboard/statistics"}
+                            Icon={StatisticsIcon}
+                            isActualSection={actualSection === "statistics"}
+                        />
+                        <NavLink title={"Blog"} href={"/dashboard/blog"}
+                            Icon={BlogIcon}
+                            isActualSection={actualSection === "blog"}
+                            disabled={admin.role !== "redactor" && admin.role !== "admin" ? true : false}
+                        />
                     </ul>
                 </div>
 
