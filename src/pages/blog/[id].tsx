@@ -24,44 +24,47 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const postData = await getPostDataFormatted(params.id as string);
     return {
         props: { postData },
-        revalidate: 86400,
+        revalidate: 10,
     };
 }
 
 export default function Post({ postData }) {
     return (
-        <div>
+        <div style={{ backgroundColor: "var(--background-02)" }}>
             <Head>
                 <title>{postData.title}</title>
             </Head>
 
             <Header />
 
-            <section className={`header`}>
-                <div className="wrapper">
-                    <header>
-                        <div className='holder'>
-                            <CalendarIcon />
-
-                            <h4>{postData.date}</h4>
-                        </div>
+            <section style={{ paddingBottom: "5rem" }} className={`header`}>
+                <div className={`wrapper`}>
+                    <header className={styles.header}>
+                        <h4>{postData.category}</h4>
                         <h1>{postData.title}</h1>
+
                         <div className={styles.blogPostInfo}>
+                            <div className={`${styles.headerColor} holder`}>
+                                <CalendarIcon className={styles.headerColor} />
+                                <h4 className={styles.headerColor}>{postData.date}</h4>
+                            </div>
+                            <span>•</span>
                             <div className={"holder"}>
                                 <img className={"profileImage"} src={postData.redactor.image_url} alt="Imagem do perfil do usuário que escreveu o artigo do blog." />
-                                <p>artigo por <strong>{`${postData.redactor.first_name} ${postData.redactor.last_name}`}</strong></p>
+                                <p>redigido por <strong>{`${postData.redactor.first_name} ${postData.redactor.last_name}`}</strong></p>
                             </div>
                         </div>
-                        <div className={styles.backToHome}>
-                            <Link href="/blog">
-                                <a>← Voltar ao Início</a>
-                            </Link>
-                        </div>
+
                     </header>
+                    <div className={styles.backToHome}>
+                        <Link href="/blog">
+                            <a>← Voltar ao Blog</a>
+                        </Link>
+                    </div>
                 </div>
             </section>
 
-            <article className={styles.article}>
+            <article className={`${styles.article} wrapper`}>
                 <div className={`wrapper ${styles.content}`} dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
             </article>
 

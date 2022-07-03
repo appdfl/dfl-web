@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './modal.module.css';
 
 type Props = {
-    title: string;
+    title?: string;
     content: React.ReactNode;
     footerContent?: React.ReactNode;
     modalOpen: boolean;
@@ -45,10 +45,13 @@ export default function Modal({ title, content, modalOpen, setModalOpen, footerC
     return (
         <div ref={modal} className={styles["modal-backdrop"]}>
             <div className={styles.modal}>
-                <div className={styles.modalHeader}>
-                    <h2 className={styles.modalTitle}>{title}</h2>
-                    <span onClick={closeModal} className={styles.close}>&times;</span>
-                </div>
+                {
+                    title &&
+                    <div className={styles.modalHeader}>
+                        <h2 className={styles.modalTitle}>{title}</h2>
+                        <span onClick={closeModal} className={styles.close}>&times;</span>
+                    </div>
+                }
                 <div className={styles.modalContent}>
                     {content}
                 </div>

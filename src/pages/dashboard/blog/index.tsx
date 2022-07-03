@@ -34,7 +34,7 @@ export default function Blog() {
 
     useEffect(() => {
         async function getPosts() {
-            const postsData = await getPostsData(admin.id)
+            const postsData = await getPostsData(admin.role === "admin" ? null : admin.id)
             if (postsData) {
                 setPosts(postsData)
                 sessionStorage.setItem('posts', JSON.stringify(postsData))
@@ -55,9 +55,9 @@ export default function Blog() {
         }
     }, [])
 
-    const draftsPosts = posts ? posts.filter(post => post.published === false) : null
+    const draftsPosts = posts ? posts.filter(post => post.published === false && post.redactor.first_name === admin.first_name) : null
 
-    const publishedPosts = posts ? posts.filter(post => post.published === true).sort((x, y) => {
+    const publishedPosts = posts ? posts.filter(post => post.published === true && post.redactor.first_name === admin.first_name).sort((x, y) => {
         return x.pinned ? -1 : y.pinned ? 1 : 0
     }) : null
 
@@ -126,6 +126,19 @@ export default function Blog() {
                             <PostsList posts={publishedPosts} skeletonHeight={`15rem`} />
                         </div>
                     </div>
+
+                    {
+                        admin.role === "admin" && posts &&
+                        <>
+                            <div className={styles.header}>
+                                <DashboardSectionTitle title='Todos os posts' />
+                                <p>Essa área somente é visível para administradores.</p>
+                            </div>
+                            <div style={{ width: "100%" }}>
+                                <PostsList completeList posts={posts.filter(post => post.redactor.first_name !== admin.first_name)} skeletonHeight={`15rem`} />
+                            </div>
+                        </>
+                    }
                 </motion.div>
             </AnimatePresence>
         </div>

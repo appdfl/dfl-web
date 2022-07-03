@@ -167,7 +167,7 @@ button {
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    gap: 0.5rem;
+    gap: 0.65rem;
 }
 
 ul {

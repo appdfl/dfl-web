@@ -552,7 +552,7 @@
     align-items: center;
     justify-content: center;
 
-    color: var(--primary-color-01);
+    color: var(--primary-color-02);
 }
 
 .footer input {
@@ -569,6 +569,64 @@
     font-family: "Roboto";
     font-weight: 500;
     color: var(--background-color-01);
+}
+
+.downloadModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    justify-content: space-between;
+
+    gap: 1.5rem;
+}
+
+.downloadModal span {
+    font-weight: 900;
+    text-align: center;
+    color: var(--font-dark);
+}
+
+.downloadModal h1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 3.5rem;
+    /* or 139% */
+
+    text-align: center;
+    letter-spacing: 0.05em;
+
+    color: var(--font-dark);
+}
+
+.downloadModal h6 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--font-light);
+}
+
+.downloadModal header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.downloadModal p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 150%;
+    /* or 27px */
+
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.05em;
+
+    color: var(--font-light);
 }
 
 @media (min-width: 1024px) {

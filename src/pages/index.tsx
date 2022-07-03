@@ -55,6 +55,7 @@ export async function getStaticProps() {
             usersAmount,
             blogData
         },
+        revalidate: 60,
     };
 }
 
@@ -70,6 +71,7 @@ type Props = {
 
 const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => {
     const [modalOpen, setModalOpen] = useState(false);
+    const [downloadModalOpen, setDownloadModalOpen] = useState(false);
 
     const [isMobile, setIsMobile] = useState(false);
     // Determinamos o padrão como sendo falso já que a exibição da seção "about" também funciona normalmente no telefone
@@ -180,6 +182,8 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
     function checkBetaCode() {
         if (code === "dflbetaterceirao") {
             console.log("Código de beta aceito.")
+            setModalOpen(false)
+            setDownloadModalOpen(true)
         } else {
             setCode("Código inválido.")
             setTimeout(() => {
@@ -514,6 +518,43 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                 </div>}
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
+            />
+            <Modal
+                content={<>
+                    <div className={styles.downloadModal}>
+                        <header>
+                            <h1>Você está prestes a baixar uma <span>versão de acesso antecipado</span> do aplicativo.</h1>
+                            <h6>Isso significa que, ao baixar o aplicativo, você entende que ele pode apresentar falhas, instabilidades e problemas.</h6>
+                        </header>
+
+                        <p>Nada deve divergir de maneira exagerada do esperado, mas alguns problemas incluem: <br />
+                            • Ter que relogar no aplicativo constantemente, por conta de autenticação <br />
+                            • Ter que reabrir o aplicativo constantemente, por conta de crashes <br />
+                            • Ter que esperar mais que o normal para que o servidor responda a suas ações <br />
+                            Ou seja, mesmo que já estejamos cientes de alguns problemas, pedimos que compartilhem conosco por meio de nosso Instagram qualquer falha identificada no aplicativo.
+                        </p>
+                        <p>Agora que o estado do app foi explicado, precisamos deixar claro que, por enquanto, só é possível baixar o aplicativo em dispositivos Android. Por fora da PlayStore.</p>
+                        <p>
+                            Esperamos que os motivos tenham ficado explícitos no nosso F.A.Q.
+                            Um guia detalhado de como instalar o aplicativo em seu dispositivo está disponível logo atrás dessa mensagem.
+                        </p>
+
+                        <span>Tendo isso dito, esperamos que você aproveite o app!</span>
+
+                        <button onClick={() => setModalOpen(true)} className={`button ${styles.button}`}>
+                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M17.4166 8.70825H13.75V3.20825H8.24998V8.70825H4.58331L11 15.1249L17.4166 8.70825ZM10.0833 10.5416V5.04159H11.9166V10.5416H12.9891L11 12.5308L9.01081 10.5416H10.0833ZM4.58331 16.9583H17.4166V18.7916H4.58331V16.9583Z"
+                                    fill="#F3F7F4" />
+                            </svg>
+                            Baixar o Aplicativo
+                        </button>
+                        <a target="_blank"
+                            href="https://instagram.com/appdfl">Instagram</a>
+                    </div>
+                </>}
+                modalOpen={downloadModalOpen}
+                setModalOpen={setDownloadModalOpen}
             />
         </div>
     );

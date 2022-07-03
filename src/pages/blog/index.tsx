@@ -27,7 +27,7 @@ export default function Blog({ allPostsData }) {
 
             <Header />
 
-            <section className={`header ${styles.header}`}>
+            <section className={`header`}>
                 <div className="wrapper">
                     <header>
                         <h4>Blog</h4>
