@@ -11,7 +11,7 @@ export default function SuccessAndErrorModal(actionFunction?: () => void) {
     const router = useRouter()
     const [errorMessage, setErrorMessage] = useState("")
 
-    const backToPosts = () => router.push('/dashboard/posts?updatePosts=true')
+    const backToPosts = () => router.push('/dashboard/blog?updatePosts=true')
     const defaultFunction = () => { setErrorMessage("") }
 
     return {

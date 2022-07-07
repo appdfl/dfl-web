@@ -10,7 +10,6 @@ import { getReportsData } from '../../../utils/reports';
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from 'next/router';
-import SuccessAndErrorModal from '../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal';
 
 export default function Reports() {
     const router = useRouter();

@@ -13,6 +13,8 @@ import DashboardButton from "../../../components/Dashboard/Button";
 import CommentsList from "../../../components/Dashboard/CommentsList";
 import DashboardModal from "../../../components/Dashboard/Modal";
 
+import CheckIcon from '@mui/icons-material/Done';
+
 import SaveIcon from '@mui/icons-material/SaveOutlined';
 import ReportIcon from '@mui/icons-material/ReportOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteForeverOutlined';
@@ -30,7 +32,7 @@ import SuccessAndErrorModal from "../../../components/Dashboard/Modal/Presets/Su
 
 export default function DashboardReport() {
     const router = useRouter()
-    const { id, report } = router.query
+    const { report } = router.query
 
     const [isDeleteModalVisible, setDeleteModalVisible] = useState(false)
     const [isReportModalVisible, setReportModalVisible] = useState(false)
@@ -80,7 +82,6 @@ export default function DashboardReport() {
     async function deleteReport() {
         setLoading(true)
         const response = await api.delete(`/report/${reportObject.id}`)
-        const responseObject = response.data;
         console.log("Relatório deletado com sucesso.", response.status)
         if (response.status === 200) {
             setErrorOrSuccessMessage("Relatório deletado com sucesso!")
@@ -96,11 +97,6 @@ export default function DashboardReport() {
     const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal(isLoading && goToHome)
 
     const ratingLine = useRef(null);
-    /* const [ratingLineWidth, setRatingLineWidth] = useState(0)
-
-    useEffect(() => {
-        setRatingLineWidth(ratingLine.current?.offsetWidth)
-    }, [ratingLine]) */
     const { width } = useResize(ratingLine)
 
     const totalRatings = reportObject.note1 + reportObject.note2 + reportObject.note3 + reportObject.note4 + reportObject.note5
@@ -111,6 +107,18 @@ export default function DashboardReport() {
     const note5Width = (reportObject.note5 * width) / totalRatings
 
     const hasChanges = approved !== reportObject.approved || resolved !== reportObject.resolved ? true : false
+
+    const tagGroups = JSON.parse(reportObject.tags);
+    const tags = Object.entries(tagGroups).map((tagGroup: [string, any]) =>
+        // [0] = groupTitle
+        // [1] = tags
+        tagGroup[1].map((tag) =>
+            <li key={tag.id.toString()} className={styles.tag}>
+                <p className={styles.tagText}>{tag.title}</p>
+                <CheckIcon style={{ fontSize: "1.8rem", color: "var(--white)" }} />
+            </li>
+        )
+    );
 
     return (
         <div className={`dashboard`}>
@@ -179,6 +187,16 @@ export default function DashboardReport() {
                             }
                         </p>
                     </div>
+
+                    {
+                        Object.entries(tagGroups).length > 0 &&
+                        <div className={styles.panel}>
+                            <h3 className={styles.header}>{`Tags`}</h3>
+                            <ul style={{ border: `0.5px solid var(--primary-color-01)` }} className={`${styles.container} ${styles.tagsContainer}`}>
+                                {tags}
+                            </ul>
+                        </div>
+                    }
 
                     <div className={`${styles.panel} ${styles.align}`}>
                         <div className={`${styles.header} ${styles.controlPanel}`}>
