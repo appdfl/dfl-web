@@ -43,7 +43,7 @@ export default function PreviewPost() {
     const router = useRouter()
     const { post, successUpdating } = router.query
 
-    const postParsed = JSON.parse(post.toString()) as Post;
+    const postParsed = JSON.parse(`${post}`) as Post;
     const [postObject, setPostObject] = useState(postParsed);
 
     if (postObject === undefined) {
@@ -72,6 +72,7 @@ export default function PreviewPost() {
     useLayoutEffect(() => {
         if (containerRef.current) {
             containerRef.current.classList.add(`${styles.postContainer}`);
+            containerRef.current.classList.add(`article`);
         }
     });
 
@@ -106,7 +107,13 @@ export default function PreviewPost() {
         fontSize={`1.2rem`}
         color={`var(--light-blue)`}
         padding={`0.7rem 1.5rem`}
-        onClick={() => router.push(`/dashboard/blog/post/edit?post=${post}`, `/dashboard/blog/post/edit`)}
+        onClick={() => router.push({
+            pathname: `/dashboard/blog/post/edit`,
+            query: {
+                post: post,
+                fromPreview: true
+            }
+        }, `/dashboard/blog/post/edit`)}
     />
 
     const deleteButton = <DashboardButton
@@ -132,7 +139,7 @@ export default function PreviewPost() {
             <Sidebar />
 
             <div style={{ paddingBottom: 0, height: "100%" }} className={dashboardStyles.content}>
-                <DashboardHeader returnButton title='Blog' subDirectory="/ Visualizar" customDirectory={successUpdating && `/dashboard/blog?updatePosts=true`} />
+                <DashboardHeader returnButton title='Blog' subDirectory="/ Visualizar" customDirectory={successUpdating ? `/dashboard/blog?updatePosts=true` : `/dashboard/blog`} />
 
                 <div style={{ padding: `5rem` }} className={styles.postFrame}>
                     <header>

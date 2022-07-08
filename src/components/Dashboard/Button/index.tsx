@@ -33,7 +33,7 @@ export default function DashboardButton({ title, onClick, Icon, selected, color,
             disabled={isLoading || disabled}
             style={{ width: width && width, padding: padding && padding, fontSize: fontSize }}
             //className={`${styles.button} ${isLoading ? styles.loading : disabled ? styles.blocked : ""} ${isLoading ? styles.buttonLoading : ""}`}
-            className={`${styles.button} ${isLoading || disabled ? styles.blocked : ""} ${isLoading ? styles.buttonLoading : ""}`}
+            className={`${styles.button} ${isLoading || disabled ? styles.blocked : ""} ${isLoading ? "spinner" : ""}`}
         >
             {
                 Icon &&

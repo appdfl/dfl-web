@@ -18,12 +18,17 @@ const data = [
 ];
 
 import { motion, AnimatePresence } from "framer-motion";
+
 import StatFrame from '../../components/Dashboard/Statistics/StatFrame';
-import { VictoryArea, VictoryAxis, VictoryChart, VictoryLabel, VictoryLegend, VictoryScatter, VictoryStack, VictoryTooltip, VictoryVoronoiContainer } from 'victory';
+
+import { VictoryArea, VictoryAxis, VictoryChart, VictoryScatter, VictoryTooltip, VictoryVoronoiContainer } from 'victory';
+
 import { useAuthContext } from '../../context/AuthContext';
 import { getReportsData } from '../../utils/reports';
 import { Profile, Report } from '../../@types/application';
 import { getUsersData } from '../../utils/users';
+
+import Layout from '../../components/Dashboard/Layout';
 
 export default function DashboardStatistics() {
     const { admin } = useAuthContext();
@@ -42,6 +47,8 @@ export default function DashboardStatistics() {
             total: 0
         }
     })
+
+    // DEIXAR AVISADO QUE ATUALIZAÇÕES EM STATES REINICIAM A ANIMAÇÃO DO GRÁFICO E TRAVAM-A
 
     useEffect(() => {
         async function getStats() {
@@ -69,7 +76,7 @@ export default function DashboardStatistics() {
         }
         const statsFromSessionStorage = sessionStorage.getItem('stats')
         const parsedStatsFromSessionStorage = JSON.parse(statsFromSessionStorage)
-        if (parsedStatsFromSessionStorage && parsedStatsFromSessionStorage.length > 0) {
+        if (parsedStatsFromSessionStorage) {
             console.log("Já há relatórios salvos no armazenamento do navegador.")
             setStats({
                 reports: {
@@ -112,10 +119,18 @@ export default function DashboardStatistics() {
 
     const opacityVariants = {
         open: {
-            opacity: 1
+            opacity: 1,
+            transition: {
+                duration: 0.35,
+                ease: "easeInOut"
+            }
         },
         closed: {
-            opacity: 0
+            opacity: 0,
+            transition: {
+                duration: 0.15,
+                ease: "easeInOut"
+            }
         }
     };
 
@@ -248,13 +263,10 @@ export default function DashboardStatistics() {
     }
 
     return (
-        <div className={`dashboard`}>
+        <>
             <Head>
                 <title>Estatísticas</title>
             </Head>
-
-            <Sidebar />
-
             <AnimatePresence>
                 <motion.div
                     initial={"closed"}
@@ -449,7 +461,14 @@ export default function DashboardStatistics() {
                     </div>
                 </motion.div>
             </AnimatePresence>
-
-        </div>
+        </>
     );
+}
+
+DashboardStatistics.getLayout = function getLayout(page) {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
 }

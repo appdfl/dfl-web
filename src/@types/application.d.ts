@@ -29,7 +29,8 @@ export type Post = {
     createdAt: Date,
     views: number,
     pinned: boolean,
-    published: boolean
+    published: boolean,
+    lastEditedAt: string | Date,
 }
 
 export type Admin = {

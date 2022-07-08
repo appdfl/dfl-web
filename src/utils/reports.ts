@@ -33,9 +33,13 @@ export function GetRatingsAverage(actualReport) {
     const somaDasNotasComOsPesos = note1Medium + note2Medium + note3Medium + note4Medium + note5Medium
     const mediaPonderada = (somaDasNotasComOsPesos) / (actualReport.note1 + actualReport.note2 + actualReport.note3 + actualReport.note4 + actualReport.note5)
     const string = mediaPonderada.toString().split(".")
-    if (string.length > 1) {
-        return `${string[0]}.${string[1].substring(0, 2)}`
+    if (mediaPonderada.toString() !== "NaN") {
+        if (string.length > 1) {
+            return `${string[0]}.${string[1].substring(0, 2)}`
+        } else {
+            return `${mediaPonderada}.0`
+        }
     } else {
-        return `${mediaPonderada}.0`
+        return `0`
     }
 }

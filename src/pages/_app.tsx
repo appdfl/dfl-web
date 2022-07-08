@@ -1,4 +1,7 @@
 import { AppProps } from 'next/app';
+import type { ReactElement, ReactNode } from 'react'
+import type { NextPage } from 'next'
+
 import { ThemeProvider } from 'next-themes'
 
 import '../styles/global.css';
@@ -14,17 +17,32 @@ function handleExitComplete() {
     }
 }
 
+export type NextPageWithLayout = NextPage & {
+    getLayout?: (page: ReactElement) => ReactNode
+}
 
-export default function App({ Component, pageProps, router }) {
+type AppPropsWithLayout = AppProps & {
+    Component: NextPageWithLayout
+}
+
+export default function App({ Component, pageProps, router }: AppPropsWithLayout) {
     return (
         <AuthProvider>
             <RouteGuard>
                 <ThemeProvider defaultTheme='light'>
                     <AnimatePresence exitBeforeEnter onExitComplete={handleExitComplete} >
-                        <Component {...pageProps} key={router.route} />
+                        <Layout Component={Component} pageProps={pageProps} key={router.route} />
                     </AnimatePresence>
                 </ThemeProvider>
             </RouteGuard>
         </AuthProvider>
     )
 }
+
+const Layout = ({ Component, pageProps }) => {
+    if (Component.getLayout) {
+        return Component.getLayout(<Component {...pageProps} />);
+    } else {
+        return <Component {...pageProps} />;
+    }
+};

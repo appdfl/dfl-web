@@ -155,15 +155,15 @@ export default function DashboardReport() {
                         <div className={styles.images}>
                             <div className={`${styles.header}`}>
                                 <h3>Imagens</h3>
-                                <div className={styles.holder}>
+                                {/* <div className={styles.holder}>
                                     <Left className={styles.arrowIcon} />
                                     <Right className={styles.arrowIcon} />
-                                </div>
+                                </div> */}
                             </div>
                             <ul className={styles.holder}>
                                 {
                                     reportObject.images_urls && reportObject.images_urls.map((url) =>
-                                        <li>
+                                        <li style={{ display: "flex", flex: 1 }}>
                                             <img className={styles.picture} src={url} alt="Imagem de um foco de lixo" />
                                         </li>
                                     )

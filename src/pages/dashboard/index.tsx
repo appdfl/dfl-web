@@ -20,6 +20,8 @@ import StatFrame from '../../components/Dashboard/Statistics/StatFrame';
 import { getReportsData } from '../../utils/reports';
 import { Profile, Report } from '../../@types/application';
 import { getUsersData } from '../../utils/users';
+import Layout from '../../components/Dashboard/Layout';
+
 
 export default function Dashboard() {
 
@@ -62,7 +64,7 @@ export default function Dashboard() {
         }
         const statsFromSessionStorage = sessionStorage.getItem('stats')
         const parsedStatsFromSessionStorage = JSON.parse(statsFromSessionStorage)
-        if (parsedStatsFromSessionStorage && parsedStatsFromSessionStorage.length > 0) {
+        if (parsedStatsFromSessionStorage) {
             console.log("Já há relatórios salvos no armazenamento do navegador.")
             setStats({
                 reports: {
@@ -101,14 +103,19 @@ export default function Dashboard() {
         }
     };
 
+    /* (
+       <div className={`dashboard`}>
+           <Head>
+               <title>Dashboard</title>
+           </Head>
+
+           <Sidebar /> */
+
     return (
-        <div className={`dashboard`}>
+        <>
             <Head>
                 <title>Dashboard</title>
             </Head>
-
-            <Sidebar />
-
             <AnimatePresence>
                 <motion.div
                     style={{ height: "100vh", paddingBottom: "7rem" }}
@@ -124,10 +131,10 @@ export default function Dashboard() {
                             <DashboardSectionTitle title='Relatórios' />
                             <div className={styles.holder}>
                                 <div style={{ flex: 0.5 }}>
-                                    <Map latitude={-14.235004} longitude={-51.92528} />
+                                    <Map height='27.5rem' latitude={-14.235004} longitude={-51.92528} />
                                 </div>
                                 <div style={{ flex: 0.5, height: "100%" }}>
-                                    <ReportsList reports={stats.reports.reports} simpleLayout />
+                                    <ReportsList height='27.5rem' reports={stats.reports.reports} simpleLayout />
                                 </div>
                             </div>
                         </div>
@@ -173,6 +180,16 @@ export default function Dashboard() {
                     </div>
                 </motion.div>
             </AnimatePresence>
-        </div>
-    );
+        </>
+    )
+    /* </div>
+); */
+}
+
+Dashboard.getLayout = function getLayout(page) {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
 }

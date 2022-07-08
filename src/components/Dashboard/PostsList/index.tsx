@@ -104,9 +104,12 @@ export default function PostsList({ posts, drafts, completeList, skeletonHeight 
             setPublishDraftModalVisible(true)
         }} Icon={PublishIcon} color={`var(--primary-color-01)`} iconSize={`medium`} borderWidth={`2px`} padding={`1rem 0.55rem`} />
 
-        const editButton = <DashboardButton onClick={() => {
-            router.push(`/dashboard/blog/post/edit?post=${JSON.stringify(post)}`, `/dashboard/blog/post/edit`)
-        }} Icon={EditIcon} color={`var(--light-blue)`} iconSize={`medium`} borderWidth={`2px`} padding={`1rem 0.55rem`} />
+        const editButton = <DashboardButton onClick={() => router.push({
+            pathname: `/dashboard/blog/post/edit`,
+            query: {
+                post: JSON.stringify(post)
+            }
+        }, `/dashboard/blog/post/edit`)} Icon={EditIcon} color={`var(--light-blue)`} iconSize={`medium`} borderWidth={`2px`} padding={`1rem 0.55rem`} />
 
         const deleteButton = <DashboardButton onClick={() => {
             setSelectedPost(post)

@@ -24,14 +24,14 @@ import TurnDraftIcon from '@mui/icons-material/FileDownloadOffOutlined';
 import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined';
 import CloudIcon from '@mui/icons-material/CloudOutlined';
 
-import DashboardModal from "../../../../components/Dashboard/Modal";
 import { api } from "../../../../utils/api";
 import { formatPostContent } from "../../../../utils/posts";
 import SuccessAndErrorModal from "../../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal";
 
 export default function EditPost() {
     const router = useRouter()
-    const { post } = router.query
+    const post = router.query.post
+    const fromPreview = router.query.fromPreview === "true"
 
     if (post === undefined) {
         router.push('/dashboard/blog')
@@ -39,7 +39,7 @@ export default function EditPost() {
 
     if (post === undefined) return <div></div>;
 
-    const postParsed = JSON.parse(post.toString()) as Post;
+    const postParsed = JSON.parse(`${post}`) as Post;
     const [postObject, setPostObject] = useState(postParsed);
 
     const [title, setTitle] = useState(postObject.title)
@@ -49,6 +49,8 @@ export default function EditPost() {
 
     const [previewMode, setPreviewMode] = useState(false)
     const [loading, setLoading] = useState(false)
+
+    const hasEdited = content !== postObject.content || title !== postObject.title
 
     function handleTextChange(text) {
         setContent(text)
@@ -83,17 +85,24 @@ export default function EditPost() {
         setPreviewMode(!previewMode)
     }
 
-    const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal()
+    const { SuccessModal, ErrorModal, setErrorOrSuccessMessage } = SuccessAndErrorModal(() => {
+        if (fromPreview) {
+            router.push({ pathname: `/dashboard/blog/post/preview`, query: { post: JSON.stringify(postObject) } }, `/dashboard/blog/post/preview`)
+        } else {
+            router.push('/dashboard/blog')
+        }
+    })
 
     const containerRef = useRef(null);
 
     useLayoutEffect(() => {
         if (containerRef.current) {
             containerRef.current.classList.add(`${styles.postContainer}`);
+            containerRef.current.classList.add(`article`);
         }
     });
 
-    const date = new Date(postObject.createdAt)
+    const date = new Date(postObject.lastEditedAt ? postObject.lastEditedAt : postObject.createdAt)
     const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate()
     const month = date.getUTCMonth() < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth()
 
@@ -102,7 +111,8 @@ export default function EditPost() {
         try {
             const updatePost = await api.patch(`/post/${postObject.id}`, {
                 content: content,
-                title: title
+                title: title,
+                lastEditedAt: new Date().toISOString()
             })
             const postResponseData = updatePost.data as Post;
             if (postResponseData) {
@@ -133,9 +143,20 @@ export default function EditPost() {
             <Sidebar />
 
             <div style={{ paddingBottom: 0, height: "100vh" }} className={dashboardStyles.content}>
-                <DashboardHeader returnButton title='Blog' subDirectory="/ Editar" />
+                <DashboardHeader
+                    returnButton title='Blog'
+                    subDirectory="/ Editar"
+                    customDirectory={fromPreview && `/dashboard/blog/post/preview`}
+                    customDirectoryParams={fromPreview &&
+                    {
+                        query: {
+                            post: JSON.stringify(postObject)
+                        },
+                        asPath: `/dashboard/blog/post/preview`
+                    }}
+                />
 
-                <div id="postCreateContainer" className={styles.postFrame}>
+                <div className={styles.postFrame}>
                     <header>
                         <input value={title} onChange={(event) => setTitle(event.target.value)} className={`${styles.title} ${styles.titleInput}`} type="text" placeholder="Insira um título único para o artigo." />
                         <div className={`${styles.holder} ${styles.subHeader}`}>
@@ -164,7 +185,7 @@ export default function EditPost() {
                                 fontSize={`1.2rem`}
                                 color={`#1F7EEE`}
                                 isLoading={loading}
-                                disabled={title === postObject.title && content === postObject.content}
+                                disabled={!hasEdited}
                                 padding={`0.7rem 1.5rem`}
                                 onClick={checkInputs}
                             />
@@ -175,6 +196,7 @@ export default function EditPost() {
                                 iconSize={`medium`}
                                 fontSize={`1.2rem`}
                                 color={`#D1351B`}
+                                disabled={!hasEdited}
                                 padding={`0.7rem 1.5rem`}
                                 onClick={() => { router.back() }}
                             />
@@ -196,7 +218,7 @@ export default function EditPost() {
                             <div ref={containerRef} dangerouslySetInnerHTML={{ __html: convertedContent }}>
                             </div>
                             :
-                            <textarea onChange={(event) => handleTextChange(event.target.value)} value={content} className={styles.contentInput} placeholder={`Digite aqui o artigo no formato markdown...`} />
+                            <textarea id="postCreateContainer" onChange={(event) => handleTextChange(event.target.value)} value={content} className={styles.contentInput} placeholder={`Digite aqui o artigo no formato markdown...`} />
                     }
                 </div>
             </div>

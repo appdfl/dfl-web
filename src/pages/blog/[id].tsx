@@ -64,7 +64,7 @@ export default function Post({ postData }) {
                 </div>
             </section>
 
-            <article className={`${styles.article} wrapper`}>
+            <article className={`${styles.article} article wrapper`}>
                 <div className={`wrapper ${styles.content}`} dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
             </article>
 

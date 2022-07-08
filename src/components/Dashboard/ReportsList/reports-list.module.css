@@ -72,6 +72,8 @@
     background: var(--color-2);
     border-radius: 0px 0px 1.5rem 1.5rem;
     transition: var(--transition-05);
+
+    overflow-y: overlay;
 }
 
 .list ul {

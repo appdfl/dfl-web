@@ -12,6 +12,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 type Props = {
     reports: Array<Report> | Array<string>;
     simpleLayout?: boolean;
+    height?: string;
 }
 
 import ArrowUpIcon from '@mui/icons-material/ArrowUpward';
@@ -75,14 +76,14 @@ import ArrowDownIcon from '@mui/icons-material/ArrowDownward';
     ] */
 /* as={`/dashboard/reports/report_${report.id}`} */
 
-export default function ReportsList({ reports, simpleLayout }: Props) {
+export default function ReportsList({ reports, simpleLayout, height }: Props) {
     function renderItems() {
         const items = reports.map((report) => {
             const date = new Date(report.createdAt)
             const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate()
             const month = date.getUTCMonth() < 10 ? `0${date.getUTCMonth()}` : date.getUTCMonth()
             return (
-                <Link href={{ pathname: "/dashboard/reports/report", query: { report: JSON.stringify(report) } }} as={`/dashboard/reports/report/`}>
+                <Link key={report.id} href={{ pathname: "/dashboard/reports/report", query: { report: JSON.stringify(report) } }} as={`/dashboard/reports/report`}>
                     <li className={styles.reportContainer} key={report.id}>
                         <div className={styles.reportItem}>
                             <h3 className={styles.address}>{report.address}</h3>
@@ -175,7 +176,7 @@ export default function ReportsList({ reports, simpleLayout }: Props) {
             <Skeleton baseColor={`var(--background-02)`} highlightColor={`var(--border)`} borderRadius={`1.5rem`} height={`15rem`} />
             : reports[0] === "error" ?
                 <p>error</p> :
-                <div className={styles.holder}>
+                <div style={{ height: height ? height : "100%" }} className={styles.holder}>
                     <header className={styles.header}>
                         <ul>
                             <li className={styles.address}>
@@ -231,7 +232,7 @@ export default function ReportsList({ reports, simpleLayout }: Props) {
                             }
                         </ul>
                     </header>
-                    <div className={styles.list}>
+                    <div style={{ maxHeight: height ? height : "fitContent" }} className={styles.list}>
                         <ul>
                             {reportsItems}
                         </ul>

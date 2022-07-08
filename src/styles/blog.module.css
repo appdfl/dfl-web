@@ -57,34 +57,12 @@
     font-weight: bold;
 }
 
-.article {
-    background-color: var(--background-02);
-}
-
 .blog h2 {
     margin-bottom: 2.5rem;
 }
 
 .article {
-    font-size: 1.8rem;
-    line-height: 1.6;
-    padding-inline: 1.5rem;
-}
-
-.article ul {
-    list-style: inherit;
-
-    list-style-type: disc;
-    margin-block-start: 1rem;
-    margin-block-end: 1rem;
-    padding-inline-start: 4rem;
-}
-
-.article p {
-    margin-block-start: 1rem;
-    margin-block-end: 1rem;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+    background-color: var(--background-02);
 }
 
 .backToHome {
@@ -106,7 +84,6 @@
 .content {
     text-align: left;
     padding-inline: 5rem;
-
     min-height: 35rem;
 
     background-color: var(--background-modal);

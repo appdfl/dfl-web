@@ -3,6 +3,7 @@ import html from 'remark-html';
 import remarkImages from 'remark-images';
 import remarkBreaks from 'remark-breaks'
 import remarkGfm from 'remark-gfm'
+import remarkDirective from 'remark-directive'
 import { api } from './api';
 import { Post } from '../@types/application';
 
@@ -28,6 +29,7 @@ export async function formatPostContent(postContent) {
         .use(html)
         .use(remarkBreaks)
         .use(remarkGfm)
+        .use(remarkDirective)
         .use(remarkImages)
         .process(postContent)
     const contentHtml = processedContent.toString()
@@ -72,3 +74,28 @@ export async function getPostDataFormatted(id: string) {
         contentHtml,
     }
 }
+
+/* import { visit } from 'unist-util-visit' */
+
+// This plugin is an example to turn `::note` into divs, passing arbitrary
+// attributes.
+// @type {import('unified').Plugin<[], import('mdast').Root>} */
+/* function myRemarkPlugin() {
+    return (tree) => {
+        visit(tree, (node) => {
+            if (
+                node.type === 'textDirective' ||
+                node.type === 'leafDirective' ||
+                node.type === 'containerDirective'
+            ) {
+                if (node.name !== 'note') return
+
+                const data = node.data || (node.data = {})
+                const tagName = node.type === 'textDirective' ? 'span' : 'div'
+
+                data.hName = tagName
+                data.hProperties = h(tagName, node.attributes).properties
+            }
+        })
+    }
+} */

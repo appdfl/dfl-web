@@ -14,9 +14,13 @@ type Props = {
     subDirectory?: string;
     returnButton?: boolean;
     customDirectory?: string;
+    customDirectoryParams?: {
+        asPath: string,
+        query?: any,
+    };
 }
 
-export default function DashboardHeader({ title, subDirectory, returnButton, customDirectory }: Props) {
+export default function DashboardHeader({ title, subDirectory, returnButton, customDirectory, customDirectoryParams }: Props) {
     const router = useRouter()
     const { admin } = useAuthContext();
 
@@ -34,9 +38,13 @@ export default function DashboardHeader({ title, subDirectory, returnButton, cus
                     <div className={`${styles.titleHolder}`}>
                         <ReturnIcon className={styles.returnIcon} />
                         <div className={styles.titleHolder} style={{ alignItems: "flex-end" }}>
-                            <h1 className={`${styles.title} ${styles.hoverClick} ${styles.click}`} onClick={customDirectory ?
-                                () => router.push(customDirectory) :
-                                () => router.back()}
+                            <h1 className={`${styles.title} ${styles.hoverClick} ${styles.click}`} onClick={
+                                customDirectory ?
+                                    customDirectoryParams ?
+                                        () => router.push({ pathname: customDirectory, query: customDirectoryParams.query }, customDirectoryParams.asPath)
+                                        : () => router.push(customDirectory)
+                                    : () => router.back()
+                            }
                             >{title}</h1>
                             <h1 className={styles.directoryTitle}>{`${subDirectory && subDirectory}`}</h1>
                         </div>
