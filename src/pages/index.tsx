@@ -541,14 +541,16 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
 
                         <span>Tendo isso dito, esperamos que você aproveite o app!</span>
 
-                        <button onClick={() => setModalOpen(true)} className={`button ${styles.button}`}>
-                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M17.4166 8.70825H13.75V3.20825H8.24998V8.70825H4.58331L11 15.1249L17.4166 8.70825ZM10.0833 10.5416V5.04159H11.9166V10.5416H12.9891L11 12.5308L9.01081 10.5416H10.0833ZM4.58331 16.9583H17.4166V18.7916H4.58331V16.9583Z"
-                                    fill="#F3F7F4" />
-                            </svg>
-                            Baixar o Aplicativo
-                        </button>
+                        <a href="https://expo.dev/artifacts/eas/3jpv6PdemyfhVkpbBx4ZUz.apk">
+                            <button className={`button ${styles.button}`}>
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M17.4166 8.70825H13.75V3.20825H8.24998V8.70825H4.58331L11 15.1249L17.4166 8.70825ZM10.0833 10.5416V5.04159H11.9166V10.5416H12.9891L11 12.5308L9.01081 10.5416H10.0833ZM4.58331 16.9583H17.4166V18.7916H4.58331V16.9583Z"
+                                        fill="#F3F7F4" />
+                                </svg>
+                                Baixar o Aplicativo
+                            </button>
+                        </a>
                         <a target="_blank"
                             href="https://instagram.com/appdfl">Instagram</a>
                     </div>

@@ -67,7 +67,9 @@ function Map({ latitude, longitude, height }: Props) {
         return <div>O mapa não pôde ser carregado, nos desculpe.</div>
     }
 
-    return isLoaded ? renderMap() : <div style={{ display: "flex", flex: 1, justifyContent: "space-between", alignItems: "center" }} className='spinner'></div>
+    return isLoaded ? renderMap() : <div style={{ display: "flex", flex: 1, justifyContent: "space-between", alignItems: "center" }} >
+        <div className='spinner' />
+    </div>
 }
 
 export default React.memo(Map)
