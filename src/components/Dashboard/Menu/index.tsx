@@ -23,11 +23,12 @@ import BlogIcon from '@mui/icons-material/TopicOutlined';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 
-import NavLink from "./NavLink";
+import NavLink from "../NavLink";
 import { useTheme } from "next-themes";
 
 import { useAuthContext } from "../../../context/AuthContext";
 import { useRouter } from "next/router";
+import { isScreenWide } from "../../../utils/isScreenWide";
 
 // if it's not set in localStorage value is null, then !! will set as false
 
@@ -45,7 +46,22 @@ export default function Sidebar(/* { actualSection }: Props */) {
         console.log(theme)
     }
 
-    const [sidebarOpened, setSidebarOpened] = useState(true)
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        function handleScreenResize() {
+            const isWide = isScreenWide();
+            if (isWide) {
+                setIsMobile(false)
+            } else {
+                setIsMobile(true)
+            }
+        }
+
+        window.addEventListener('resize', handleScreenResize);
+        return () => window.removeEventListener('resize', handleScreenResize);
+    })
+
+    const [sidebarOpened, setSidebarOpened] = useState(false)
     function toggleSidebar() {
         console.log("Abrindo ou fechando sidebar")
         setSidebarOpened(!sidebarOpened)
@@ -75,7 +91,7 @@ export default function Sidebar(/* { actualSection }: Props */) {
     }, [])
 
     return (
-        <nav className={`${styles.sidebar} ${sidebarOpened ? "" : styles.close}`}>
+        <nav className={`${styles.sidebar} ${sidebarOpened ? "" : styles.closed}`}>
             <header>
                 <Link href={`/dashboard`}>
                     <Logo style={{ cursor: "pointer" }} className={styles.logo} />
@@ -111,15 +127,18 @@ export default function Sidebar(/* { actualSection }: Props */) {
                 </div>
 
                 <div>
-                    <div className={styles.reportFrame}>
-                        <ReportIcon className={styles.reportIcon} />
-                        <h6>Encontrou algum problema?</h6>
-                        <p>Reporte o erro para que ele seja corrigido</p>
-                        <button>
-                            <FlagIcon className={styles.icon} />
-                            <span>REPORTAR</span>
-                        </button>
-                    </div>
+                    {
+                        !isMobile &&
+                        <div className={styles.reportFrame}>
+                            <ReportIcon className={styles.reportIcon} />
+                            <h6>Encontrou algum problema?</h6>
+                            <p>Reporte o erro para que ele seja corrigido</p>
+                            <button>
+                                <FlagIcon className={styles.icon} />
+                                <span>REPORTAR</span>
+                            </button>
+                        </div>
+                    }
 
                     <footer className={styles.footer}>
                         <li className={styles.mode}>

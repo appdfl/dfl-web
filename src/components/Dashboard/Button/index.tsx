@@ -48,7 +48,7 @@ export default function DashboardButton({ title, onClick, Icon, selected, color,
                 padding: ${padding ? padding : `0.75rem 1.5rem`};
             }
 
-            ${styles.buttonLoading}::after {
+            button .spinner::after {
                 borderTopColor: ${contentColor ? contentColor : color ? color : `var(--light-gray)`};
             }
 
@@ -62,6 +62,11 @@ export default function DashboardButton({ title, onClick, Icon, selected, color,
             }
 
             `}</style>
+            {/* <style global jsx>{`
+                .spinner::after {
+                    border-top-color: ${`var(--color-1)`};
+                }
+            `}</style> */}
         </button>
     );
 }

@@ -81,7 +81,7 @@ export default function ReportsList({ reports, simpleLayout, height }: Props) {
         const items = reports.map((report) => {
             const date = new Date(report.createdAt)
             const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate()
-            const month = date.getUTCMonth() < 10 ? `0${date.getUTCMonth()}` : date.getUTCMonth()
+            const month = date.getUTCMonth() < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth()
             return (
                 <Link key={report.id} href={{ pathname: "/dashboard/reports/report", query: { report: JSON.stringify(report) } }} as={`/dashboard/reports/report`}>
                     <li className={styles.reportContainer} key={report.id}>

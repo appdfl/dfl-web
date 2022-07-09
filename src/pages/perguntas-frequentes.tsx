@@ -1,13 +1,12 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Layout from "../components/Layout";
 
 import styles from "/src/styles/perguntas-frequentes.module.css"
 
 export default function PerguntasFrequentes() {
     return (
-        <div>
-            <Header />
-
+        <>
             <section className={"header"}>
                 <div className="wrapper">
                     <header>
@@ -65,8 +64,14 @@ export default function PerguntasFrequentes() {
                     </div>
                 </div>
             </section>
-
-            <Footer />
-        </div>
+        </>
     );
+}
+
+PerguntasFrequentes.getLayout = function getLayout(page) {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
 }

@@ -6,7 +6,7 @@ import dashboardStyles from "/src/styles/dashboard/dashboard.module.css";
 
 import CheckCircleOutlined from '@mui/icons-material/CheckCircleOutlined';
 
-import Sidebar from '../../components/Dashboard/Sidebar';
+import Sidebar from '../../components/Dashboard/Menu';
 import DashboardHeader from '../../components/Dashboard/Header';
 import DashboardSectionTitle from '../../components/Dashboard/SectionTitle';
 

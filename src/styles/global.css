@@ -8,6 +8,7 @@
     */
     --nav-height: 7.2rem;
     --sidebar-width: 25rem;
+    --sidebar-height: 7.5rem;
     --collapsed-sidebar-width: 8.5rem;
 
     --primary-color-01: #4F9D69;
@@ -28,6 +29,7 @@
     --font-color: #565454;
     /* --font-color: #707070; */
     --font-light: #495057;
+    --border: #cdcdcd;
 
     --color-1: #aeb5b0;
     --color-2: #d2d2cb;
@@ -115,6 +117,14 @@ body {
 
 html.dashboard {
     background: var(--body-color);
+}
+
+#dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 button {

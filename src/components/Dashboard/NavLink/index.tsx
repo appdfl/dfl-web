@@ -63,15 +63,15 @@ export default function NavLink({ title, Icon, href, defaultSvg, isActualSection
                     color: ${iconGap ? "var(--font-color)" : accentColor ? accentColor : "white"};
                 }
             `}</style>
-            <style jsx global>{`
+            <style jsx>{`
                 .navLink-container a:hover,
                 .navLink-container.selected a {
-                    background-color: ${accentColor ? accentColor : "var(--primary-color-02)"};
+                    background-color: ${accentColor ? accentColor : "var(--accent-color)"};
                 }
 
                 [data-theme='dark'] .navLink-container a:hover,
                 [data-theme='dark'] .navLink-container.selected a {
-                    background-color: ${accentColor ? accentColor : "var(--accent-color)"};
+                    background-color: ${accentColor ? accentColor : "var(--font-color)"};
                 }
             `}</style>
         </li>

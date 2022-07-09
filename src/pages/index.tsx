@@ -32,6 +32,7 @@ import { getPostsData } from '../utils/posts';
 const ANIMATION_TIME = 250 // 0.25 segundos
 
 import { aboutData } from '../utils/data/about_data';
+import Layout from '../components/Layout';
 
 export async function getStaticProps() {
     const reportsData = await (await api.get(`/report`)).data as Array<Report>;
@@ -193,13 +194,10 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
     }
 
     return (
-        <div>
-
+        <>
             <Head>
                 <title>DFL</title>
             </Head>
-
-            <Header />
 
             <section id='home' className={styles.home}>
                 <div className={`wrapper ${styles.wrapper}`}>
@@ -373,8 +371,11 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                                             <div className={styles.holder}>
                                                 <Icon className={styles.info}>calendar_today</Icon>
                                                 <p>{new Date(pinnedPost.createdAt).toLocaleDateString('pt-BR')}</p>
+                                                {
+                                                    !isMobile &&
+                                                    <span>•</span>
+                                                }
                                             </div>
-                                            <span>•</span>
                                             <div className={styles.holder}>
                                                 <img className={"profileImage"} src={pinnedPost.redactor.image_url} alt="Imagem do perfil do usuário que escreveu o artigo do blog." />
                                                 <p>artigo por <strong>{`${pinnedPost.redactor.first_name}`}</strong></p>
@@ -385,7 +386,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                             </Link>
                         }
                         <Link href={`/blog/${lastPost.id}`}>
-                            <div style={{ flex: pinnedPost && pinnedPost !== lastPost ? 0.5 : 1 }} className={styles.blogCardContainer}>
+                            <div style={{ flex: 1, height: "fit-content" }} className={styles.blogCardContainer}>
                                 <header className={`${styles.holder}`}>
                                     <RecentIcon className={`${styles.blogIcon} ${styles.light}`} />
                                     <h4 className={`${styles.cardTitle} ${styles.light}`}>Último artigo</h4>
@@ -396,8 +397,11 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                                         <div className={styles.holder}>
                                             <Icon className={styles.info}>calendar_today</Icon>
                                             <p>{new Date(lastPost.createdAt).toLocaleDateString('pt-BR')}</p>
+                                            {
+                                                !isMobile &&
+                                                <span>•</span>
+                                            }
                                         </div>
-                                        <span>•</span>
                                         <div className={styles.holder}>
                                             <img className={"profileImage"} src={lastPost.redactor.image_url} alt="Imagem do perfil do usuário que escreveu o artigo do blog." />
                                             <p>artigo por <strong>{`${lastPost.redactor.first_name}`}</strong></p>
@@ -494,7 +498,6 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                 </div>
             </section>
 
-            <Footer />
             <BackToTop />
             <Modal
                 title={`Eita! Parece que temos um problema...`}
@@ -512,7 +515,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                 footerContent={<div className={styles.footer}>
                     <p>Possui um código de <strong>acesso antecipado</strong>?</p>
                     <div>
-                        <input value={code} onChange={(event) => setCode(event.target.value)} spellCheck={false} maxLength={16} type="text" name="" id="" />
+                        <input autoCapitalize="none" value={code} onChange={(event) => setCode(event.target.value)} spellCheck={false} maxLength={16} type="text" name="" id="" />
                         <Send onClick={checkBetaCode} style={{ cursor: "pointer", color: "var(--background-color-01)" }} />
                     </div>
                 </div>}
@@ -520,6 +523,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                 setModalOpen={setModalOpen}
             />
             <Modal
+                padding='1rem 1.5rem'
                 content={<>
                     <div className={styles.downloadModal}>
                         <header>
@@ -527,12 +531,17 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                             <h6>Isso significa que, ao baixar o aplicativo, você entende que ele pode apresentar falhas, instabilidades e problemas.</h6>
                         </header>
 
-                        <p>Nada deve divergir de maneira exagerada do esperado, mas alguns problemas incluem: <br />
+                        {
+                            !isMobile &&
+                            <h4>Atenção! Esse arquivo só funciona em dispositivos móveis Android!</h4>
+                        }
+
+                        <p>Nada deve divergir de maneira exagerada do esperado, mas alguns problemas incluem: <br /><br />
                             • Ter que relogar no aplicativo constantemente, por conta de autenticação <br />
                             • Ter que reabrir o aplicativo constantemente, por conta de crashes <br />
                             • Ter que esperar mais que o normal para que o servidor responda a suas ações <br />
-                            Ou seja, mesmo que já estejamos cientes de alguns problemas, pedimos que compartilhem conosco por meio de nosso Instagram qualquer falha identificada no aplicativo.
                         </p>
+                        <p>Ou seja, mesmo que já estejamos cientes de alguns problemas, pedimos que compartilhem conosco por meio de nosso Instagram qualquer falha identificada no aplicativo.</p>
                         <p>Agora que o estado do app foi explicado, precisamos deixar claro que, por enquanto, só é possível baixar o aplicativo em dispositivos Android. Por fora da PlayStore.</p>
                         <p>
                             Esperamos que os motivos tenham ficado explícitos no nosso F.A.Q.
@@ -541,7 +550,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
 
                         <span>Tendo isso dito, esperamos que você aproveite o app!</span>
 
-                        <a href="https://expo.dev/artifacts/eas/3jpv6PdemyfhVkpbBx4ZUz.apk">
+                        <a style={{ textDecoration: "none" }} href="https://expo.dev/artifacts/eas/3jpv6PdemyfhVkpbBx4ZUz.apk">
                             <button className={`button ${styles.button}`}>
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -558,8 +567,16 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                 modalOpen={downloadModalOpen}
                 setModalOpen={setDownloadModalOpen}
             />
-        </div>
+        </>
     );
+}
+
+Landing.getLayout = function getLayout(page) {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
 }
 
 Landing.theme = "light"

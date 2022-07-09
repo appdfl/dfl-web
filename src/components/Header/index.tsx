@@ -86,7 +86,9 @@ export default function Header() {
                         }
 
                         const lastMenuElement = document.querySelector(`.${styles.menu} a[title*=${lastSectionId}]`)
-                        lastMenuElement.classList.remove(styles.active)
+                        if (lastMenuElement) {
+                            lastMenuElement.classList.remove(styles.active)
+                        }
 
                         setLastSectionId(sectionId)
                     }
@@ -208,7 +210,7 @@ export default function Header() {
                             </ul>
                         </div>
                     </div>
-                    <div className={styles.backdrop}></div>
+                    <div onClick={() => setMenuVisible(false)} className={styles.backdrop}></div>
                 </div>
 
                 <button type='button' className={styles['open-menu']} aria-expanded="false" aria-label="Abrir menu" onClick={() => setMenuVisible(true)}>

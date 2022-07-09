@@ -8,7 +8,7 @@ import { useAuthContext } from '../../../context/AuthContext';
 
 import { SetStateAction, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import NavLink from '../Sidebar/NavLink';
+import NavLink from '../NavLink';
 
 type Props = {
     isOpen: boolean;

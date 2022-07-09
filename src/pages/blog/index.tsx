@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import styles from "/src/styles/blog.module.css"
 
 import { getPostsDataFormatted } from '../../utils/posts';
+import Layout from '../../components/Layout';
 
 export async function getStaticProps() {
     const allPostsData = await getPostsDataFormatted();
@@ -21,12 +22,10 @@ export async function getStaticProps() {
 
 export default function Blog({ allPostsData }) {
     return (
-        <div>
+        <>
             <Head>
                 <title>Blog</title>
             </Head>
-
-            <Header />
 
             <section className={`header`}>
                 <div className="wrapper">
@@ -58,8 +57,14 @@ export default function Blog({ allPostsData }) {
                     </ul>
                 </div>
             </section>
-
-            <Footer />
-        </div>
+        </>
     );
+}
+
+Blog.getLayout = function getLayout(page) {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
 }

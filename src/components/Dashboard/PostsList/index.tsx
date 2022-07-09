@@ -89,7 +89,13 @@ export default function PostsList({ posts, drafts, completeList, skeletonHeight 
         }
     }
 
-    const postsItems = posts && posts.map((post) => {
+    const postsItems = posts && posts.sort(post => {
+        if (post.pinned === false) {
+            return 1
+        } else {
+            return -1
+        }
+    }).map((post) => {
         const date = new Date(post.createdAt)
         const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate()
         const month = date.getMonth() < 10 ? `0${date.getUTCMonth() + 1}` : date.getMonth()

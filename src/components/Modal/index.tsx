@@ -6,10 +6,11 @@ type Props = {
     content: React.ReactNode;
     footerContent?: React.ReactNode;
     modalOpen: boolean;
+    padding?: string;
     setModalOpen: (modalOpen: boolean) => void;
 }
 
-export default function Modal({ title, content, modalOpen, setModalOpen, footerContent }: Props) {
+export default function Modal({ title, content, modalOpen, setModalOpen, padding, footerContent }: Props) {
     const modal = useRef(null);
 
     function closeModal() {
@@ -52,7 +53,7 @@ export default function Modal({ title, content, modalOpen, setModalOpen, footerC
                         <span onClick={closeModal} className={styles.close}>&times;</span>
                     </div>
                 }
-                <div className={styles.modalContent}>
+                <div style={{ padding: padding ? padding : `1.5rem 2.5rem` }} className={styles.modalContent}>
                     {content}
                 </div>
                 {

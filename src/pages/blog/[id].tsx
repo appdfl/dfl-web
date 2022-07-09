@@ -11,6 +11,7 @@ import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined';
 import styles from "/src/styles/blog.module.css"
 
 import { getAllPostIds, getPostDataFormatted } from '../../utils/posts';
+import Layout from '../../components/Layout';
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const paths = await getAllPostIds();
@@ -34,8 +35,6 @@ export default function Post({ postData }) {
             <Head>
                 <title>{postData.title}</title>
             </Head>
-
-            <Header />
 
             <section style={{ paddingBottom: "5rem" }} className={`header`}>
                 <div className={`wrapper`}>
@@ -67,8 +66,14 @@ export default function Post({ postData }) {
             <article className={`${styles.article} article wrapper`}>
                 <div className={`wrapper ${styles.content}`} dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
             </article>
-
-            <Footer />
         </div>
     );
+}
+
+Post.getLayout = function getLayout(page) {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
 }

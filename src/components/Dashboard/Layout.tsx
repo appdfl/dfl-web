@@ -1,10 +1,11 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "./Menu";
 
 export default function Layout({ children }) {
     return (
-        <>
+        <div id="dashboard">
             <Sidebar />
-            <main>{children}</main>
-        </>
+            {children}
+            {/* <main></main> */}
+        </div>
     )
 }

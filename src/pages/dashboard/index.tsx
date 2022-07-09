@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import styles from "/src/styles/dashboard/dashboard.module.css";
 
-import Sidebar from '../../components/Dashboard/Sidebar';
+import Sidebar from '../../components/Dashboard/Menu';
 import DashboardHeader from '../../components/Dashboard/Header';
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
@@ -126,7 +126,7 @@ export default function Dashboard() {
                     className={styles.content}
                 >
                     <DashboardHeader title='Dashboard' />
-                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1 }}>
+                    <div className={styles.contentFrame}>
                         <div className={styles.wrapper2}>
                             <DashboardSectionTitle title='Relatórios' />
                             <div className={styles.holder}>

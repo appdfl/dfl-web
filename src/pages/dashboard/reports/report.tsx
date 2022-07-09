@@ -7,7 +7,7 @@ import { Report } from "../../../@types/application";
 import dashboardStyles from "/src/styles/dashboard/dashboard.module.css"
 import styles from "/src/styles/dashboard/report.module.css"
 
-import Sidebar from "../../../components/Dashboard/Sidebar";
+import Sidebar from "../../../components/Dashboard/Menu";
 import DashboardHeader from "../../../components/Dashboard/Header";
 import DashboardButton from "../../../components/Dashboard/Button";
 import CommentsList from "../../../components/Dashboard/CommentsList";
@@ -54,7 +54,7 @@ export default function DashboardReport() {
 
     const [isLoading, setLoading] = useState(false)
 
-    async function updateReport(returnToHome?: boolean) {
+    async function updateReport() {
         setLoading(true)
         const response = await api.patch(`/report/${reportObject.id}`, {
             approved: approved,
@@ -63,16 +63,9 @@ export default function DashboardReport() {
         const responseObject = response.data;
         console.log(responseObject, response.status)
         if (response.status === 200) {
-            if (returnToHome === true) {
-                console.log("Entrou aqui")
-                router.push("/dashboard/reports?updateReports=true")
-            } else {
-                console.log("Passou reto")
-                setLoading(false)
-                setReportObject(responseObject)
-                setErrorOrSuccessMessage("Relatório atualizado com sucesso!")
-                /* router.push(`/dashboard/reports/report?report=${JSON.stringify(responseObject)}&successUpdating=true`, `/dashboard/reports/report`) */
-            }
+            setLoading(false)
+            setReportObject(responseObject)
+            setErrorOrSuccessMessage("Relatório atualizado com sucesso!")
         } else {
             setLoading(false)
             setErrorOrSuccessMessage("Não foi possível atualizar o relatório. Tente novamente mais tarde :(")
@@ -84,9 +77,29 @@ export default function DashboardReport() {
         const response = await api.delete(`/report/${reportObject.id}`)
         console.log("Relatório deletado com sucesso.", response.status)
         if (response.status === 200) {
+            setDeleteModalVisible(false)
             setErrorOrSuccessMessage("Relatório deletado com sucesso!")
         } else {
+            setDeleteModalVisible(false)
             setErrorOrSuccessMessage("Não foi possível deletar o relatório. Tente novamente mais tarde :(")
+        }
+    }
+
+    async function reportProfile() {
+        setLoading(true)
+        const response = await api.patch(`/report/${reportObject.id}`, {
+            approved: false,
+            resolved: false
+        })
+        const responseObject = response.data;
+        console.log(responseObject, response.status)
+        if (response.status === 200) {
+            setReportModalVisible(false)
+            setErrorOrSuccessMessage("O relatório foi denunciado e o usuário que o postou recebeu uma notificação com sucesso!")
+        } else {
+            setReportModalVisible(false)
+            setLoading(false)
+            setErrorOrSuccessMessage("Não foi possível denunciar o relatório. Tente novamente mais tarde :(")
         }
     }
 
@@ -128,7 +141,7 @@ export default function DashboardReport() {
 
             <Sidebar />
 
-            <div className={dashboardStyles.content}>
+            <div style={{ paddingBottom: 0 }} className={dashboardStyles.content}>
                 <DashboardHeader returnButton title='Relatórios' subDirectory="/ Relatório" customDirectory={report === null && `/dashboard/reports?updateReports=true`} />
 
                 <div className={styles.reportFrame}>
@@ -220,7 +233,11 @@ export default function DashboardReport() {
                                     <p>Este relatório será exibido para os usuários, tornando possível a interação por meio de comentários e avaliações.</p>
                                 </div>
                                 <div className={styles.toggle_switch}>
-                                    <span onClick={() => setApproved(!approved)} className={`${styles.switch} ${approved && styles.active}`}></span>
+                                    <span onClick={() => {
+                                        if (!isLoading) {
+                                            setApproved(!approved)
+                                        }
+                                    }} className={`${styles.switch} ${approved && styles.active}`}></span>
                                 </div>
                             </div>
                             <div style={{ backgroundColor: "var(--primary-color-01)" }} className={styles.line}></div>
@@ -230,7 +247,11 @@ export default function DashboardReport() {
                                     <p>Este relatório será arquivado, portanto, ele será marcado como “somente-visualização”.</p>
                                 </div>
                                 <div className={styles.toggle_switch}>
-                                    <span onClick={() => setResolved(!resolved)} className={`${styles.switch} ${resolved && styles.active}`}></span>
+                                    <span onClick={() => {
+                                        if (!isLoading) {
+                                            setResolved(!resolved)
+                                        }
+                                    }} className={`${styles.switch} ${resolved && styles.active}`}></span>
                                 </div>
                             </div>
                         </div>
@@ -330,13 +351,11 @@ export default function DashboardReport() {
                 setIsVisible={() => setReportModalVisible(!isReportModalVisible)}
                 color={`#747474`}
                 Icon={ReportIcon}
+                isLoading={isLoading}
                 title={"Você está prestes a denunciar esse relatório."}
                 description={<p>Este relatório será ocultado e arquivado automaticamente e o usuário que o postou sofrerá uma penalidade.</p>}
                 buttonText="Denunciar"
-                actionFunction={async () => {
-                    await setApproved(false)
-                    updateReport(true)
-                }}
+                actionFunction={reportProfile}
             />
 
             <DashboardModal
@@ -344,6 +363,7 @@ export default function DashboardReport() {
                 setIsVisible={() => setDeleteModalVisible(!isDeleteModalVisible)}
                 color={`#D1351B`}
                 Icon={DeleteIcon}
+                isLoading={isLoading}
                 title={"Você está prestes a deletar esse relatório."}
                 description={<p>Ao deletar um relatório, não há mais volta. Pense bem antes de fazer isso.</p>}
                 buttonText="Deletar"

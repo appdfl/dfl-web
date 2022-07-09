@@ -7,7 +7,7 @@ import { Post } from "../../../../@types/application";
 import dashboardStyles from "/src/styles/dashboard/dashboard.module.css"
 import styles from "/src/styles/dashboard/post.module.css"
 
-import Sidebar from "../../../../components/Dashboard/Sidebar";
+import Sidebar from "../../../../components/Dashboard/Menu";
 import DashboardHeader from "../../../../components/Dashboard/Header";
 import DashboardButton from "../../../../components/Dashboard/Button";
 
@@ -35,7 +35,7 @@ import { useAuthContext } from "../../../../context/AuthContext";
 import SuccessAndErrorModal from "../../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal";
 
 import { AnimatePresence, motion } from "framer-motion";
-import NavLink from "../../../../components/Dashboard/Sidebar/NavLink";
+import NavLink from "../../../../components/Dashboard/NavLink";
 
 export default function CreatePost() {
     const router = useRouter()
