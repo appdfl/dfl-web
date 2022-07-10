@@ -252,8 +252,7 @@ export default function DashboardStatistics() {
         </div>
     }
 
-    const { isScreenWide } = useScreenSize();
-
+    /* const { isScreenWide } = useScreenSize(); */
 
     const [mounted, setMounted] = useState(false)
 
@@ -305,7 +304,8 @@ export default function DashboardStatistics() {
                                     <VictoryChart
                                         containerComponent={<VictoryVoronoiContainer />}
                                         width={775}
-                                        height={isScreenWide ? 200 : 500}
+                                        /* height={isScreenWide ? 200 : 500} */
+                                        height={200}
                                         /* domainPadding={{ y: 5 }} */
                                         domain={{ y: [0, 1000] }}
                                         padding={{ top: 5, bottom: 25, left: 50, right: 25 }}
@@ -369,7 +369,8 @@ export default function DashboardStatistics() {
                                     <VictoryChart
                                         containerComponent={<VictoryVoronoiContainer />}
                                         width={825}
-                                        height={isScreenWide ? 135 : 350}
+                                        /* height={isScreenWide ? 135 : 350} */
+                                        height={135}
                                         /* domainPadding={{ y: 5 }} */
                                         padding={{ top: 5, bottom: 25, left: 25, right: 25 }}
                                     >

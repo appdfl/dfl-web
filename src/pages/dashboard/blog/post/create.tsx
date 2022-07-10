@@ -59,9 +59,10 @@ export default function CreatePost() {
     const [previewMode, setPreviewMode] = useState(false)
     const [loading, setLoading] = useState(false)
 
-    function handleTextChange(text) {
-        setContent(text)
-
+    function handleTextChange(text?: string) {
+        if (text) {
+            setContent(text)
+        }
         const element = document.getElementById("postCreateContainer")
         console.log("Atualizando o tamanho do textarea")
         element.style.height = "1px";
@@ -98,6 +99,7 @@ export default function CreatePost() {
         if (containerRef.current) {
             containerRef.current.classList.add(`${styles.postContainer}`);
         }
+        handleTextChange();
     });
 
     async function uploadDraft() {

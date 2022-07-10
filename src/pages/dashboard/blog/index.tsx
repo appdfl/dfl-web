@@ -132,7 +132,7 @@ export default function Blog() {
                         <>
                             <div className={styles.header}>
                                 <DashboardSectionTitle title='Todos os posts' />
-                                <p>Essa área somente é visível para administradores.</p>
+                                <p>Esta área só é visível para administradores.</p>
                             </div>
                             <div style={{ width: "100%" }}>
                                 <PostsList completeList posts={posts.filter(post => post.redactor.first_name !== admin.first_name)} skeletonHeight={`15rem`} />

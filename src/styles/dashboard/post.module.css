@@ -8,6 +8,10 @@
 
     background-color: var(--background-02);
     border-radius: 1.5rem 1.5rem 0px 0px;
+    padding: 3.5rem 2.5rem var(--sidebar-height) 2.5rem;
+}
+
+.postFrame.preview {
     padding: 3.5rem 3.5rem var(--sidebar-height) 3.5rem;
 }
 
@@ -80,7 +84,7 @@
     align-items: flex-start;
     text-align: left;
 
-    padding: 1.5rem;
+    padding: 0.25rem;
     height: fit-content;
 
     flex: 1;
@@ -184,9 +188,17 @@
         padding: 3.5rem 3.5rem 0px 3.5rem;
     }
 
+    .postFrame.preview {
+        padding: 5rem;
+    }
+
     .topHeader {
         flex-direction: row;
         align-items: center;
+    }
+
+    .postContainer {
+        padding: 1.5rem;
     }
 
     .buttonsHolder {

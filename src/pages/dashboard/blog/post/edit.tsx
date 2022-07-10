@@ -53,9 +53,10 @@ export default function EditPost() {
 
     const hasEdited = content !== postObject.content || title !== postObject.title
 
-    function handleTextChange(text) {
-        setContent(text)
-
+    function handleTextChange(text?: string) {
+        if (text) {
+            setContent(text)
+        }
         const element = document.getElementById("postCreateContainer")
         console.log("Atualizando o tamanho do textarea")
         element.style.height = "1px";
@@ -101,6 +102,7 @@ export default function EditPost() {
             containerRef.current.classList.add(`${styles.postContainer}`);
             containerRef.current.classList.add(`article`);
         }
+        handleTextChange();
     });
 
     const date = new Date(postObject.lastEditedAt ? postObject.lastEditedAt : postObject.createdAt)

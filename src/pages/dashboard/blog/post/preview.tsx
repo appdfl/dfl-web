@@ -138,7 +138,7 @@ export default function PreviewPost() {
             <div style={{ paddingBottom: 0, height: "100%" }} className={dashboardStyles.content}>
                 <DashboardHeader returnButton title='Blog' subDirectory={"/ Visualizar"} customDirectory={successUpdating ? `/dashboard/blog?updatePosts=true` : `/dashboard/blog`} />
 
-                <div style={{ padding: `5rem` }} className={styles.postFrame}>
+                <div className={`${styles.postFrame} ${styles.preview}`}>
                     <header>
                         <div className={styles.topHeader}>
                             <h2 className={styles.title}>{postObject.title}</h2>

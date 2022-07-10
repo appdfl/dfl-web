@@ -67,7 +67,7 @@
     }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 475px) {
     .directoryTitle {
         display: none;
     }

@@ -31,6 +31,12 @@
     justify-content: space-between;
 }
 
+.header p {
+    font-size: 1rem;
+    color: var(--font-color);
+    font-weight: 600;
+}
+
 .arrowIcon {
     font-size: 1rem;
     color: var(--font-color);
@@ -151,5 +157,9 @@
 
     .wrapper2 {
         flex: 0.5;
+    }
+
+    .header p {
+        font-size: 1.4rem;
     }
 }
