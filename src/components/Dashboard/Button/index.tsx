@@ -27,11 +27,13 @@ export default function DashboardButton({ title, onClick, Icon, selected, color,
     const backgroundColorStyle = backgroundColor || selected ? `${backgroundColor ? backgroundColor : color}` : "transparent"
     const colorStyle = selected || contentColor ? `${contentColor ? contentColor : "var(--background-01)"}` : `${color ? color : "var(--light-gray)"}`
 
+    const style = width ? { padding: padding && padding, fontSize: fontSize, width: width } : { padding: padding && padding, fontSize: fontSize }
+
     return (
         <button
             onClick={onClick}
             disabled={isLoading || disabled}
-            style={{ width: width && width, padding: padding && padding, fontSize: fontSize }}
+            style={style}
             //className={`${styles.button} ${isLoading ? styles.loading : disabled ? styles.blocked : ""} ${isLoading ? styles.buttonLoading : ""}`}
             className={`${styles.button} ${isLoading || disabled ? styles.blocked : ""} ${isLoading ? "spinner" : ""}`}
         >

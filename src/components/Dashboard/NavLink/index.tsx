@@ -13,24 +13,36 @@ type NavLinkProps = {
     disabled?: boolean;
     onClick?: () => void;
     iconGap?: string;
+    iconOnly?: boolean;
     accentColor?: string;
     upperCase?: boolean;
+    padding?: string;
 }
 
-export default function NavLink({ title, Icon, href, defaultSvg, isActualSection, disabled, accentColor, iconGap, onClick, upperCase }: NavLinkProps) {
+export default function NavLink({ title, Icon, href, defaultSvg, isActualSection, disabled, accentColor, iconGap, onClick, padding, iconOnly, upperCase }: NavLinkProps) {
     return (
-        <li onClick={onClick && onClick} className={`navLink-container ${styles.container} ${isActualSection && "selected"}`} style={{ cursor: disabled ? "not-allowed" : "pointer" }}>
+        <li
+            onClick={onClick && onClick}
+            className={`navLink-container ${styles.container} ${isActualSection && "selected"}`}
+            style={{ cursor: disabled ? "not-allowed" : "pointer" }}
+        >
             {
                 disabled || !href ?
-                    <a>
+                    <a style={iconOnly ? { alignItems: "center", justifyContent: "center" } : { display: "flex" }}>
                         <Icon className={`navLink-icon ${styles.icon}`} style={{ width: `2.5rem`, height: `2.5rem` }} />
-                        <span style={{ textTransform: upperCase ? "uppercase" : "capitalize" }} className={`navLink-text ${styles.navText}`}>{title}</span>
+                        {
+                            !iconOnly &&
+                            <span style={{ textTransform: upperCase ? "uppercase" : "capitalize" }} className={`navLink-text ${styles.navText}`}>{title}</span>
+                        }
                     </a>
                     :
                     <Link href={href ? href : "/dashboard"}>
-                        <a>
+                        <a style={iconOnly ? { alignItems: "center", justifyContent: "center" } : { display: "flex" }}>
                             <Icon className={`navLink-icon ${styles.icon}`} style={{ width: `2.5rem`, height: `2.5rem` }} />
-                            <span style={{ textTransform: upperCase ? "uppercase" : "capitalize" }} className={`navLink-text ${styles.navText}`}>{title}</span>
+                            {
+                                !iconOnly &&
+                                <span style={{ textTransform: upperCase ? "uppercase" : "capitalize" }} className={`navLink-text ${styles.navText}`}>{title}</span>
+                            }
                         </a>
                     </Link>
             }
@@ -42,11 +54,12 @@ export default function NavLink({ title, Icon, href, defaultSvg, isActualSection
                 }
 
                 .navLink-container a {
-                    padding-left: ${iconGap ? `1rem` : "2rem"};
+                    ${padding ? `padding:${padding}` : `padding-left: ${iconGap ? `1rem` : "2rem"};`
+                }
                 }
 
                 .navLink-icon {
-                    margin-right: ${iconGap ? iconGap : "3rem"};
+                    margin-right: ${iconOnly ? "0px" : iconGap ? iconGap : "2rem"};
                 }
                 
                 .navLink-icon path {

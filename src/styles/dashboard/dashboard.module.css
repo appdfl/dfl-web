@@ -1,29 +1,16 @@
 .content {
-    /* display: flex;
-    flex-direction: column;
-    gap: 3.5rem;
-
-    position: absolute;
-    top: 0;
-    top: 0;
-    left: var(--sidebar-width);
-    flex: 1;
-    width: calc(100vw - var(--sidebar-width));
-    margin-left: auto;
-
-    transition: var(--transition-05);
-
-    padding: 5rem 5rem; */
     display: flex;
+    width: 100%;
     flex-direction: column;
     gap: 3.5rem;
 
+    position: initial;
     flex: 1;
-    width: 100vw;
 
     transition: var(--transition-05);
 
-    padding: 5rem 5rem;
+    padding: 5rem 3.5rem;
+    margin-bottom: var(--sidebar-height);
 }
 
 .contentFrame {
@@ -31,6 +18,8 @@
     flex-direction: column;
     justify-content: space-between;
     flex: 1;
+
+    gap: 3rem;
 
     flex-wrap: wrap;
 }
@@ -108,12 +97,59 @@
 .holder {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 
     flex: 1;
     height: 100%;
     width: 100%;
 
+    flex-wrap: wrap;
+
     gap: 1.5rem;
+}
+
+.map {
+    width: 100%;
+}
+
+.reportsList {
+    height: 100%;
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 3.5rem;
+
+        position: absolute;
+        top: 0;
+        top: 0;
+        left: var(--sidebar-width);
+        flex: 1;
+        width: calc(100vw - var(--sidebar-width));
+        margin-left: auto;
+
+        transition: var(--transition-05);
+
+        padding: 5rem 5rem;
+    }
+
+    .section1 {
+        flex-direction: row;
+    }
+
+    .map {
+        width: 49%;
+    }
+
+    .reportsList {
+        width: 49%;
+    }
+
+    .wrapper2 {
+        flex: 0.5;
+    }
 }

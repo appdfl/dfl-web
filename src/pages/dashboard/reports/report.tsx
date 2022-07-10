@@ -29,6 +29,7 @@ import { useResize } from "../../../utils/hooks/useResize";
 
 import { api } from "../../../utils/api";
 import SuccessAndErrorModal from "../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal";
+import { useScreenSize } from "../../../utils/hooks/useScreenSize";
 
 export default function DashboardReport() {
     const router = useRouter()
@@ -133,6 +134,8 @@ export default function DashboardReport() {
         )
     );
 
+    const { isScreenWide } = useScreenSize();
+
     return (
         <div className={`dashboard`}>
             <Head>
@@ -142,7 +145,7 @@ export default function DashboardReport() {
             <Sidebar />
 
             <div style={{ paddingBottom: 0 }} className={dashboardStyles.content}>
-                <DashboardHeader returnButton title='Relatórios' subDirectory="/ Relatório" customDirectory={report === null && `/dashboard/reports?updateReports=true`} />
+                <DashboardHeader returnButton title='Relatórios' subDirectory={isScreenWide && "/ Relatório"} customDirectory={report === null && `/dashboard/reports?updateReports=true`} />
 
                 <div className={styles.reportFrame}>
                     <header>
@@ -160,7 +163,7 @@ export default function DashboardReport() {
                         </div>
                     </header>
 
-                    <div className={styles.holder}>
+                    <div className={`${styles.holder} ${styles.section1}`}>
                         <div className={styles.location}>
                             <h3 className={styles.header}>Localização</h3>
                             <Map latitude={parseFloat(reportObject.coordinates[0])} longitude={parseFloat(reportObject.coordinates[1])} />
@@ -186,19 +189,20 @@ export default function DashboardReport() {
                     </div>
 
                     <div className={`${styles.section2} ${styles.align}`}>
-                        <header>
+                        <div>
                             <h4>Sugestão de <strong>@{reportObject.profile.username}:</ strong></h4>
-                            <div style={{ gap: "1.5rem", justifyContent: "space-between" }} className={`${styles.holder} `}>
-                                <p>O local possui lixeiras?</p>
-                                <input type="checkbox" name="hasTrashBins" readOnly checked={reportObject.hasTrashBins} />
-                            </div>
-                        </header>
-                        <p>
-                            {
-                                reportObject.suggestion.length > 0 ? `"${reportObject.suggestion}"`
-                                    : "[vazio]"
-                            }
-                        </p>
+                            <p>
+                                {
+                                    reportObject.suggestion.length > 0 ? `"${reportObject.suggestion}"`
+                                        : "[vazio]"
+                                }
+                            </p>
+                        </div>
+                        <div style={{ gap: "1.5rem", justifyContent: "space-between" }} className={`${styles.holder} `}>
+                            <p>O local possui lixeiras?</p>
+                            <input type="checkbox" name="hasTrashBins" readOnly checked={reportObject.hasTrashBins} />
+                        </div>
+
                     </div>
 
                     {
@@ -318,7 +322,7 @@ export default function DashboardReport() {
                                     Icon={ReportIcon}
                                     iconSize={"small"}
                                     onClick={() => setReportModalVisible(true)}
-                                    width={`20rem`}
+                                    width={isScreenWide && `20rem`}
                                     fontSize={`1.2rem`}
                                 />
                             </div>
@@ -334,7 +338,7 @@ export default function DashboardReport() {
                                     iconSize={"small"}
                                     onClick={() => setDeleteModalVisible(true)}
                                     color={`#D1351B`}
-                                    width={`20rem`}
+                                    width={isScreenWide && `20rem`}
                                     fontSize={`1.2rem`}
                                 />
                             </div>

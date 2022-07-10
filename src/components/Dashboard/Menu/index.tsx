@@ -28,7 +28,7 @@ import { useTheme } from "next-themes";
 
 import { useAuthContext } from "../../../context/AuthContext";
 import { useRouter } from "next/router";
-import { isScreenWide } from "../../../utils/isScreenWide";
+import { useScreenSize } from "../../../utils/hooks/useScreenSize";
 
 // if it's not set in localStorage value is null, then !! will set as false
 
@@ -46,22 +46,15 @@ export default function Sidebar(/* { actualSection }: Props */) {
         console.log(theme)
     }
 
-    const [isMobile, setIsMobile] = useState(false);
+    const [sidebarOpened, setSidebarOpened] = useState(true)
+    const { isScreenWide } = useScreenSize();
+
     useEffect(() => {
-        function handleScreenResize() {
-            const isWide = isScreenWide();
-            if (isWide) {
-                setIsMobile(false)
-            } else {
-                setIsMobile(true)
-            }
+        if (!isScreenWide) {
+            setSidebarOpened(true)
         }
+    }, [isScreenWide])
 
-        window.addEventListener('resize', handleScreenResize);
-        return () => window.removeEventListener('resize', handleScreenResize);
-    })
-
-    const [sidebarOpened, setSidebarOpened] = useState(false)
     function toggleSidebar() {
         console.log("Abrindo ou fechando sidebar")
         setSidebarOpened(!sidebarOpened)
@@ -90,75 +83,88 @@ export default function Sidebar(/* { actualSection }: Props */) {
         }
     }, [])
 
+    const iconOnly = isScreenWide === true ? false : true
+
     return (
         <nav className={`${styles.sidebar} ${sidebarOpened ? "" : styles.closed}`}>
-            <header>
-                <Link href={`/dashboard`}>
-                    <Logo style={{ cursor: "pointer" }} className={styles.logo} />
-                </Link>
-                <Icon onClick={toggleSidebar} className={styles.menuIcon}>{sidebarOpened ? "segment" : "menu"}</Icon>
-            </header>
+            {
+                isScreenWide &&
+                <header>
+                    <Link href={`/dashboard`}>
+                        <Logo style={{ cursor: "pointer" }} className={styles.logo} />
+                    </Link>
+                    <Icon onClick={toggleSidebar} className={styles.menuIcon}>{sidebarOpened ? "segment" : "menu"}</Icon>
+                </header>
+            }
 
-            <div className={styles.menuBar}>
-                <div className={styles.menu}>
-                    {/* <li className={styles.searchBox}>
+            <div className={styles.menu}>
+                {/* <li className={styles.searchBox}>
                         <SearchIcon className={styles.icon} />
                         <input type="text" placeholder="Pesquisar" onClick={() => setSidebarOpened(true)} />
                     </li> */}
-                    <ul className="menuLinks">
-                        <NavLink title={"Dashboard"} href={"/dashboard"}
-                            Icon={DashboardIcon}
-                            isActualSection={actualSection === "dashboard"}
-                        />
-                        <NavLink title={"Relatórios"} href={"/dashboard/reports"}
-                            Icon={ReportsIcon}
-                            isActualSection={actualSection === "reports"}
-                        />
-                        <NavLink title={"Estatísticas"} href={"/dashboard/statistics"}
-                            Icon={StatisticsIcon}
-                            isActualSection={actualSection === "statistics"}
-                        />
-                        <NavLink title={"Blog"} href={"/dashboard/blog"}
-                            Icon={BlogIcon}
-                            isActualSection={actualSection === "blog"}
-                            disabled={admin.role !== "redactor" && admin.role !== "admin" ? true : false}
-                        />
-                    </ul>
-                </div>
+                <NavLink title={"Dashboard"} href={"/dashboard"}
+                    Icon={DashboardIcon}
+                    iconOnly={iconOnly}
+                    padding={!isScreenWide && `2rem`}
+                    isActualSection={actualSection === "dashboard"}
+                />
+                <NavLink title={"Relatórios"} href={"/dashboard/reports"}
+                    Icon={ReportsIcon}
+                    iconOnly={iconOnly}
+                    padding={!isScreenWide && `2rem`}
+                    isActualSection={actualSection === "reports"}
+                />
+                <NavLink title={"Estatísticas"} href={"/dashboard/statistics"}
+                    Icon={StatisticsIcon}
+                    iconOnly={iconOnly}
+                    padding={!isScreenWide && `2rem`}
+                    isActualSection={actualSection === "statistics"}
+                />
+                <NavLink title={"Blog"} href={"/dashboard/blog"}
+                    Icon={BlogIcon}
+                    iconOnly={iconOnly}
+                    padding={!isScreenWide && `2rem`}
+                    isActualSection={actualSection === "blog"}
+                    disabled={admin.role !== "redactor" && admin.role !== "admin" ? true : false}
+                />
+            </div>
 
+            {
+                isScreenWide &&
                 <div>
-                    {
-                        !isMobile &&
-                        <div className={styles.reportFrame}>
-                            <ReportIcon className={styles.reportIcon} />
-                            <h6>Encontrou algum problema?</h6>
-                            <p>Reporte o erro para que ele seja corrigido</p>
-                            <button>
-                                <FlagIcon className={styles.icon} />
-                                <span>REPORTAR</span>
-                            </button>
-                        </div>
-                    }
+                    <div className={styles.reportFrame}>
+                        <ReportIcon className={styles.reportIcon} />
+                        <h6>Encontrou algum problema?</h6>
+                        <p>Reporte o erro para que ele seja corrigido</p>
+                        <button>
+                            <FlagIcon className={styles.icon} />
+                            <span>REPORTAR</span>
+                        </button>
+                    </div>
 
                     <footer className={styles.footer}>
                         <li className={styles.mode}>
-                            <div className={styles.moon_sun}>
-                                <div className={styles.centralize}>
-                                    <DarkModeIcon className={`${styles.icon} ${styles.moon}`} />
-                                </div>
-                                <div className={styles.centralize}>
-                                    <LightModeIcon className={`${styles.icon} ${styles.sun}`} />
-                                </div>
-                            </div>
-                            <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{theme === "dark" ? "Modo Escuro" : "Modo Claro"}</p></div>
+                            {
+                                isScreenWide &&
+                                <>
+                                    <div className={styles.moon_sun}>
+                                        <div className={styles.centralize}>
+                                            <DarkModeIcon className={`${styles.icon} ${styles.moon}`} />
+                                        </div>
+                                        <div className={styles.centralize}>
+                                            <LightModeIcon className={`${styles.icon} ${styles.sun}`} />
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{theme === "dark" ? "Modo Escuro" : "Modo Claro"}</p></div>
+                                </>
+                            }
                             <div className={styles.toggle_switch}>
                                 <span onClick={switchTheme} className={styles.switch}></span>
                             </div>
                         </li>
                     </footer>
                 </div>
-
-            </div>
+            }
         </nav>
     );
 }

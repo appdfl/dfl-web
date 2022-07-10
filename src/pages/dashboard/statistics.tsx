@@ -29,6 +29,7 @@ import { Profile, Report } from '../../@types/application';
 import { getUsersData } from '../../utils/users';
 
 import Layout from '../../components/Dashboard/Layout';
+import { useScreenSize } from '../../utils/hooks/useScreenSize';
 
 export default function DashboardStatistics() {
     const { admin } = useAuthContext();
@@ -245,11 +246,14 @@ export default function DashboardStatistics() {
 
     function LegendButton({ legend }) {
         const text = legend.charAt(0).toUpperCase() + legend.slice(1);
-        return <div onClick={() => selected === legend ? setSelected("") : setSelected(legend)} className={`${styles.sectionHolder} ${styles.legend}`}>
+        return <div style={{ display: "flex", alignItems: "center" }} onClick={() => selected === legend ? setSelected("") : setSelected(legend)} className={`${styles.legend}`}>
             <div className={styles.square} style={{ backgroundColor: colors[legend] }} />
             <span style={{ fontWeight: selected === legend ? 700 : 500 }}>{text}</span>
         </div>
     }
+
+    const { isScreenWide } = useScreenSize();
+
 
     const [mounted, setMounted] = useState(false)
 
@@ -282,15 +286,15 @@ export default function DashboardStatistics() {
                         admin.role === 'admin' &&
                         <div className={styles.section}>
                             <DashboardSectionTitle title='Usuários' />
-                            <div className={styles.sectionHolder}>
+                            <div className={`${styles.sectionHolder} ${styles.section1}`}>
                                 <div className={styles.userFramesHolder}>
-                                    <StatFrame children={
+                                    <StatFrame minWidth='25rem' children={
                                         <>
                                             <span>Usuários cadastrados hoje</span>
                                             <h4>{`+${stats.users.today}`}</h4>
                                         </>
                                     } />
-                                    <StatFrame children={
+                                    <StatFrame minWidth='25rem' children={
                                         <>
                                             <span>Usuários cadastrados</span>
                                             <h4>{`${stats.users.total} no total`}</h4>
@@ -301,7 +305,7 @@ export default function DashboardStatistics() {
                                     <VictoryChart
                                         containerComponent={<VictoryVoronoiContainer />}
                                         width={775}
-                                        height={200}
+                                        height={isScreenWide ? 200 : 500}
                                         /* domainPadding={{ y: 5 }} */
                                         domain={{ y: [0, 1000] }}
                                         padding={{ top: 5, bottom: 25, left: 50, right: 25 }}
@@ -340,14 +344,14 @@ export default function DashboardStatistics() {
                     <div className={styles.section}>
                         <DashboardSectionTitle title='Relatórios' />
                         <div className={`${styles.sectionHolder} ${styles.reportsSection}`}>
-                            <div className={styles.sectionHolder}>
-                                <StatFrame minWidth='24rem' children={
+                            <div style={{ flexWrap: "wrap" }} className={styles.sectionHolder}>
+                                <StatFrame children={
                                     <>
                                         <span>Relatórios cadastrados hoje</span>
                                         <h4>{`+${stats.reports.today}`}</h4>
                                     </>
                                 } />
-                                <StatFrame minWidth='22.5rem' backgroundGradient='var(--attention-gradient)' children={
+                                <StatFrame backgroundGradient='var(--attention-gradient)' children={
                                     <>
                                         <h4>{`${stats.reports.needApproval} relatórios`}</h4>
                                         <span>requerem aprovação</span>
@@ -355,8 +359,8 @@ export default function DashboardStatistics() {
                                 } />
                                 {stats.reports.needApproval > 50 ? stats.reports.needApproval > 200 ? reportsWarning : reportsAdvise : reportsOk}
                             </div>
-                            <div className={styles.sectionHolder}>
-                                <div className={`${styles.section} ${styles.legend}`}>
+                            <div className={styles.chart2Holder}>
+                                <div style={{ marginRight: "2rem" }} className={`${styles.section} ${styles.legend}`}>
                                     <LegendButton legend="recebidos" />
                                     <LegendButton legend="aprovados" />
                                     <LegendButton legend="resolvidos" />
@@ -365,7 +369,7 @@ export default function DashboardStatistics() {
                                     <VictoryChart
                                         containerComponent={<VictoryVoronoiContainer />}
                                         width={825}
-                                        height={135}
+                                        height={isScreenWide ? 135 : 350}
                                         /* domainPadding={{ y: 5 }} */
                                         padding={{ top: 5, bottom: 25, left: 25, right: 25 }}
                                     >
@@ -426,6 +430,7 @@ export default function DashboardStatistics() {
                                         />
                                     </VictoryChart>
                                 </div>
+
                             </div>
                             <div className={styles.sectionHolder}>
                                 <div className={`${styles.reportsWarning} ${styles.reportsWarning2}`}>

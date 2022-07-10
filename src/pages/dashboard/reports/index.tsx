@@ -11,6 +11,7 @@ import { getReportsData } from '../../../utils/reports';
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from 'next/router';
 import Layout from '../../../components/Dashboard/Layout';
+import { useScreenSize } from '../../../utils/hooks/useScreenSize';
 
 export default function Reports() {
     const router = useRouter();
@@ -50,6 +51,8 @@ export default function Reports() {
         }
     };
 
+    const { isScreenWide } = useScreenSize();
+
     return <>
         <Head>
             <title>Relatórios</title>
@@ -67,7 +70,7 @@ export default function Reports() {
             >
                 <DashboardHeader title='Relatórios' />
                 <div style={{ width: "100%" }}>
-                    <ReportsList reports={reports} />
+                    <ReportsList simpleLayout={!isScreenWide && "onlyTitle"} reports={reports} />
                 </div>
             </motion.div>
         </AnimatePresence>

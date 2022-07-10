@@ -36,6 +36,7 @@ import SuccessAndErrorModal from "../../../../components/Dashboard/Modal/Presets
 
 import { AnimatePresence, motion } from "framer-motion";
 import NavLink from "../../../../components/Dashboard/NavLink";
+import { useScreenSize } from "../../../../utils/hooks/useScreenSize";
 
 export default function CreatePost() {
     const router = useRouter()
@@ -126,6 +127,8 @@ export default function CreatePost() {
         }
     }
 
+    const { isScreenWide } = useScreenSize();
+
     return (
         <div className={`dashboard`}>
             <Head>
@@ -135,7 +138,7 @@ export default function CreatePost() {
             <Sidebar />
 
             <div style={{ paddingBottom: 0, height: "100vh" }} className={dashboardStyles.content}>
-                <DashboardHeader returnButton title='Blog' subDirectory="/ Criar" />
+                <DashboardHeader returnButton title='Blog' subDirectory={isScreenWide && "/ Criar"} />
 
                 <div id="postCreateContainer" className={styles.postFrame}>
                     <header>

@@ -38,6 +38,7 @@ import DeletePostModal from "../../../../components/Dashboard/Modal/Presets/Dele
 import PinPostModal from "../../../../components/Dashboard/Modal/Presets/PinPostModal";
 import PublishPostModal from "../../../../components/Dashboard/Modal/Presets/PublishPostModal";
 import SuccessAndErrorModal from "../../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal";
+import { useScreenSize } from "../../../../utils/hooks/useScreenSize";
 
 export default function PreviewPost() {
     const router = useRouter()
@@ -130,6 +131,8 @@ export default function PreviewPost() {
         router.push('/dashboard/blog?updatePosts=true')
     }
 
+    const { isScreenWide } = useScreenSize();
+
     return (
         <div className={`dashboard`}>
             <Head>
@@ -139,7 +142,7 @@ export default function PreviewPost() {
             <Sidebar />
 
             <div style={{ paddingBottom: 0, height: "100%" }} className={dashboardStyles.content}>
-                <DashboardHeader returnButton title='Blog' subDirectory="/ Visualizar" customDirectory={successUpdating ? `/dashboard/blog?updatePosts=true` : `/dashboard/blog`} />
+                <DashboardHeader returnButton title='Blog' subDirectory={isScreenWide && "/ Visualizar"} customDirectory={successUpdating ? `/dashboard/blog?updatePosts=true` : `/dashboard/blog`} />
 
                 <div style={{ padding: `5rem` }} className={styles.postFrame}>
                     <header>

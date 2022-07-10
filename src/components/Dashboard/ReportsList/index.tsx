@@ -11,8 +11,8 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 type Props = {
     reports: Array<Report> | Array<string>;
-    simpleLayout?: boolean;
-    height?: string;
+    simpleLayout?: string;
+    maxHeight?: string;
 }
 
 import ArrowUpIcon from '@mui/icons-material/ArrowUpward';
@@ -76,7 +76,7 @@ import ArrowDownIcon from '@mui/icons-material/ArrowDownward';
     ] */
 /* as={`/dashboard/reports/report_${report.id}`} */
 
-export default function ReportsList({ reports, simpleLayout, height }: Props) {
+export default function ReportsList({ reports, simpleLayout, maxHeight }: Props) {
     function renderItems() {
         const items = reports.map((report) => {
             const date = new Date(report.createdAt)
@@ -86,17 +86,18 @@ export default function ReportsList({ reports, simpleLayout, height }: Props) {
                 <Link key={report.id} href={{ pathname: "/dashboard/reports/report", query: { report: JSON.stringify(report) } }} as={`/dashboard/reports/report`}>
                     <li className={styles.reportContainer} key={report.id}>
                         <div className={styles.reportItem}>
-                            <h3 className={styles.address}>{report.address}</h3>
-
-                            <div className={styles.user}>
-                                <img className={dashboardStyles.profileImage} src={report.profile.image_url} alt="Imagem de perfil do usuário que publicou o relatório" />
-                                <p className={styles.username}>{report.profile.username}</p>
-                            </div>
-                            <p className={styles.date}>{`${day}/${month}/${date.getUTCFullYear()}`}</p>
-                            <p className={styles.rating}>{GetRatingsAverage(report)}</p>
+                            <h3 style={{ flex: simpleLayout === "onlyTitle" ? 1 : 0.4 }} className={styles.address}>{report.address}</h3>
                             {
-                                !simpleLayout &&
+                                simpleLayout !== "onlyTitle" &&
                                 <>
+                                    <div className={styles.user}>
+                                        <img className={dashboardStyles.profileImage} src={report.profile.image_url} alt="Imagem de perfil do usuário que publicou o relatório" />
+                                        <p className={styles.username}>{report.profile.username}</p>
+                                    </div>
+                                    <p className={styles.date}>{`${day}/${month}/${date.getUTCFullYear()}`}</p>
+
+                                    <p className={styles.rating}>{GetRatingsAverage(report)}</p>
+
                                     <input type="checkbox" className={styles.hasTrashBins} name="hasTrashBins" readOnly checked={report.hasTrashBins} />
                                     <input type="checkbox" className={styles.resolved} name="resolved" readOnly checked={report.resolved} />
                                     <input type="checkbox" className={styles.approved} name="approved" readOnly checked={report.approved} />
@@ -176,63 +177,68 @@ export default function ReportsList({ reports, simpleLayout, height }: Props) {
             <Skeleton baseColor={`var(--background-02)`} highlightColor={`var(--border)`} borderRadius={`1.5rem`} height={`15rem`} />
             : reports[0] === "error" ?
                 <p>error</p> :
-                <div style={{ height: height ? height : "100%" }} className={styles.holder}>
+                <div style={{ maxHeight: maxHeight ? maxHeight : "fitContent" }} className={styles.holder}>
                     <header className={styles.header}>
                         <ul>
-                            <li className={styles.address}>
+                            <li style={{ flex: simpleLayout === "onlyTitle" ? 1 : 0.4 }} className={styles.address}>
                                 Endereço
                             </li>
-                            <li className={styles.user}>
-                                Usuário
-                            </li>
-                            <li onClick={switchDateFilter} className={styles.date}>
-                                Data
-                                {/* {
+                            {
+                                simpleLayout !== "onlyTitle" &&
+                                <>
+                                    <li className={styles.user}>
+                                        Usuário
+                                    </li>
+                                    <li onClick={switchDateFilter} className={styles.date}>
+                                        Data
+                                        {/* {
                             dateFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                            </li>
-                            <li onClick={switchRatingFilter} className={styles.rating}>
-                                Avaliação
-                                {/* {
+                                    </li>
+                                    <li onClick={switchRatingFilter} className={styles.rating}>
+                                        Avaliação
+                                        {/* {
                             ratingFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                            </li>
-                            {
-                                !simpleLayout &&
-                                <>
-                                    <li onClick={switchTrashBinFilter} className={styles.hasTrashBins}>
-                                        Possui lixeiras
-                                        {/* {
+                                    </li>
+                                    {
+                                        !simpleLayout &&
+                                        <>
+                                            <li onClick={switchTrashBinFilter} className={styles.hasTrashBins}>
+                                                Possui lixeiras
+                                                {/* {
                             hasTrashBinFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                                    </li>
-                                    <li onClick={switchResolvedFilter} className={styles.resolved}>
-                                        Resolvido
-                                        {/* {
+                                            </li>
+                                            <li onClick={switchResolvedFilter} className={styles.resolved}>
+                                                Resolvido
+                                                {/* {
                             resolvedFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                                    </li>
-                                    <li onClick={switchApprovedFilter} className={styles.approved}>
-                                        Aprovado
-                                        {/* {
+                                            </li>
+                                            <li onClick={switchApprovedFilter} className={styles.approved}>
+                                                Aprovado
+                                                {/* {
                             approvedFilter === 0 ?
                                 <ArrowUpIcon className={dashboardStyles.arrowIcon} />
                                 : <ArrowDownIcon className={dashboardStyles.arrowIcon} />
                         } */}
-                                    </li>
+                                            </li>
+                                        </>
+                                    }
                                 </>
                             }
                         </ul>
                     </header>
-                    <div style={{ maxHeight: height ? height : "fitContent" }} className={styles.list}>
+                    <div style={{ maxHeight: maxHeight ? maxHeight : "fitContent" }} className={styles.list}>
                         <ul>
                             {reportsItems}
                         </ul>

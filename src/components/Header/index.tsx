@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { isScreenWide } from '../../utils/isScreenWide';
 
 import styles from './header.module.css';
 import Logo from '/public/logo.svg'
@@ -10,6 +9,7 @@ import FacebookIcon from '/public/icons/facebook_icon.svg'
 import TwitterIcon from '/public/icons/twitter_icon.svg'
 
 import { useRouter } from 'next/router';
+import { useScreenSize } from '../../utils/hooks/useScreenSize';
 
 export default function Header() {
     const router = useRouter();
@@ -46,6 +46,8 @@ export default function Header() {
         console.log(lastSectionId)
     }
 
+    const { isScreenWide, width } = useScreenSize();
+
     const handleScroll = () => {
         showNavOnScroll()
 
@@ -81,7 +83,7 @@ export default function Header() {
                         const menuElement = document.querySelector(`.${styles.menu} a[title*=${sectionId}]`)
                         menuElement.classList.add(styles.active)
 
-                        if (!isMobile && isHome) {
+                        if (isScreenWide && isHome) {
                             updateNavLine(menuElement)
                         }
 
@@ -100,23 +102,15 @@ export default function Header() {
         }
     }
 
-    const [isMobile, setIsMobile] = useState(false);
-    function handleScreenResize() {
-        const isWide = isScreenWide()
-        if (isWide) {
-            setIsMobile(false)
-
-            if (lastSectionId) {
-                const menuElement = document.querySelector(`.${styles.menu} a[title*=${lastSectionId}]`)
-                // O atraso é necessário para que a barra de navegação termine a animação e o botão fique no local correto
-                setTimeout(() => {
-                    updateNavLine(menuElement)
-                }, 250);
-            }
-        } else {
-            setIsMobile(true)
+    useEffect(() => {
+        if (lastSectionId) {
+            const menuElement = document.querySelector(`.${styles.menu} a[title*=${lastSectionId}]`)
+            // O atraso é necessário para que a barra de navegação termine a animação e o botão fique no local correto
+            setTimeout(() => {
+                updateNavLine(menuElement)
+            }, 250);
         }
-    }
+    }, [width])
 
     useEffect(() => {
         function updateMenuButtonsWidth() {
@@ -139,11 +133,6 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     });
 
-    useEffect(() => {
-        window.addEventListener('resize', handleScreenResize);
-        return () => window.removeEventListener('resize', handleScreenResize);
-    });
-
     return (
         <nav className={`${styles.nav} ${isMenuVisible && styles.menuExpanded} ${isScreenScrolled && styles.scroll}`}>
             <div className={`wrapper ${styles.wrapper}`}>
@@ -161,7 +150,7 @@ export default function Header() {
                     <div className={styles.content}>
                         <ul className={styles.list}>
                             {
-                                !isMobile && isHome && <div ref={navLine} className={styles.navLine}></div>
+                                isScreenWide && isHome && <div ref={navLine} className={styles.navLine}></div>
                             }
                             {
                                 isHome ?
@@ -188,7 +177,7 @@ export default function Header() {
                                             d="M17.4167 8.70833H13.75V3.20833H8.25V8.70833H4.58334L11 15.125L17.4167 8.70833ZM10.0833 10.5417V5.04166H11.9167V10.5417H12.9892L11 12.5308L9.01084 10.5417H10.0833ZM4.58334 16.9583H17.4167V18.7917H4.58334V16.9583Z"
                                             fill="#346259" />
                                     </svg>
-                                    {isMobile ? "Baixar o APP" : "Baixar o Aplicativo"}
+                                    {!isScreenWide ? "Baixar o APP" : "Baixar o Aplicativo"}
                                 </a>
                             </Link>
                             <ul className={`social-links ${styles["social-links"]}`}>

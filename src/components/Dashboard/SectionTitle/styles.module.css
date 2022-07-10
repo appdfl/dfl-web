@@ -22,10 +22,16 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 2.4rem;
+    font-size: 1.8rem;
     line-height: 2.9rem;
     display: flex;
     align-items: center;
 
     color: var(--font-color);
+}
+
+@media (min-width: 1024px) {
+    .container h2 {
+        font-size: 2.4rem;
+    }
 }

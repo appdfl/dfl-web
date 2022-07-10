@@ -20,6 +20,10 @@
     font-size: 1.2rem;
 }
 
+.additionalInfo {
+    display: none;
+}
+
 .actions {
     display: flex;
     flex-direction: row;
@@ -27,13 +31,14 @@
     justify-content: center;
     gap: 1.5rem;
 
+    margin-top: 1rem;
+
     z-index: 5;
     /* gap: 0.5rem;
     justify-content: space-around; */
 }
 
 .viewsFrame {
-    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -76,4 +81,17 @@
     gap: 2rem;
 
     width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .actions {
+        margin-top: 0px;
+    }
+
+    .additionalInfo {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
 }

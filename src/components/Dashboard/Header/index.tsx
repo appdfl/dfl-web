@@ -46,7 +46,10 @@ export default function DashboardHeader({ title, subDirectory, returnButton, cus
                                     : () => router.back()
                             }
                             >{title}</h1>
-                            <h1 className={styles.directoryTitle}>{`${subDirectory && subDirectory}`}</h1>
+                            {
+                                subDirectory &&
+                                <h1 className={styles.directoryTitle}>{`${subDirectory}`}</h1>
+                            }
                         </div>
                     </div>
                     :

@@ -18,7 +18,6 @@ import styles from '../styles/landing.module.css';
 
 import { Post, Report } from '../@types/application';
 
-import { isScreenWide } from '../utils/isScreenWide';
 import { getUsersData } from '../utils/users';
 
 import Send from '@mui/icons-material/SendOutlined';
@@ -33,6 +32,7 @@ const ANIMATION_TIME = 250 // 0.25 segundos
 
 import { aboutData } from '../utils/data/about_data';
 import Layout from '../components/Layout';
+import { useScreenSize } from '../utils/hooks/useScreenSize';
 
 export async function getStaticProps() {
     const reportsData = await (await api.get(`/report`)).data as Array<Report>;
@@ -74,7 +74,6 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
     const [modalOpen, setModalOpen] = useState(false);
     const [downloadModalOpen, setDownloadModalOpen] = useState(false);
 
-    const [isMobile, setIsMobile] = useState(false);
     // Determinamos o padrão como sendo falso já que a exibição da seção "about" também funciona normalmente no telefone
 
     const [currentTag, setCurrentTag] = useState("community" as string)
@@ -90,19 +89,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
         }, ANIMATION_TIME);
     }
 
-    useEffect(() => {
-        function handleScreenResize() {
-            const isWide = isScreenWide();
-            if (isWide) {
-                setIsMobile(false)
-            } else {
-                setIsMobile(true)
-            }
-        }
-
-        window.addEventListener('resize', handleScreenResize);
-        return () => window.removeEventListener('resize', handleScreenResize);
-    })
+    const { isScreenWide } = useScreenSize();
 
     const Column1 = <div className={`${styles[`column-1`]} ${aboutInstancesVisible === true ? "fadeIn" : "fadeOut"}`}>
         <div className={styles["info-container"]}>
@@ -270,7 +257,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                         </div>
                         <div className={styles.description}>
                             {
-                                isMobile ?
+                                !isScreenWide ?
                                     <>
                                         {PhoneContainer}
                                         {Column1}
@@ -372,7 +359,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                                                 <Icon className={styles.info}>calendar_today</Icon>
                                                 <p>{new Date(pinnedPost.createdAt).toLocaleDateString('pt-BR')}</p>
                                                 {
-                                                    !isMobile &&
+                                                    isScreenWide &&
                                                     <span>•</span>
                                                 }
                                             </div>
@@ -398,7 +385,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                                             <Icon className={styles.info}>calendar_today</Icon>
                                             <p>{new Date(lastPost.createdAt).toLocaleDateString('pt-BR')}</p>
                                             {
-                                                !isMobile &&
+                                                isScreenWide &&
                                                 <span>•</span>
                                             }
                                         </div>
@@ -532,7 +519,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                         </header>
 
                         {
-                            !isMobile &&
+                            isScreenWide &&
                             <h4>Atenção! Esse arquivo só funciona em dispositivos móveis Android!</h4>
                         }
 

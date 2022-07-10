@@ -31,9 +31,10 @@ type Props = {
     drafts?: boolean;
     completeList?: boolean;
     skeletonHeight: string;
+    mobileDesign?: boolean;
 }
 
-export default function PostsList({ posts, drafts, completeList, skeletonHeight }: Props) {
+export default function PostsList({ posts, drafts, completeList, skeletonHeight, mobileDesign }: Props) {
     //console.log(posts)
     const router = useRouter();
     const proportions = drafts ?
@@ -149,11 +150,11 @@ export default function PostsList({ posts, drafts, completeList, skeletonHeight 
                         {deleteButton}
                     </div>
 
-                    <p style={{ flex: proportions.date }}>{`${day}/${month}/${date.getUTCFullYear()}`}</p>
+                    <p className={styles.additionalInfo} style={{ flex: proportions.date }}>{`${day}/${month}/${date.getUTCFullYear()}`}</p>
 
                     {
                         !drafts &&
-                        <div style={{ flex: proportions.views }} className={styles.viewsFrame}>
+                        <div style={{ flex: proportions.views }} className={`${styles.viewsFrame} ${styles.additionalInfo}`}>
                             <ViewsIcon style={{ fontSize: `1.4rem` }} />
                             <p>{post.views}</p>
                         </div>
@@ -182,19 +183,19 @@ export default function PostsList({ posts, drafts, completeList, skeletonHeight 
                                 </li>
                                 {
                                     completeList &&
-                                    <li style={{ flex: proportions.redactor }}>
+                                    <li className={styles.additionalInfo} style={{ flex: proportions.redactor }}>
                                         Redator
                                     </li>
                                 }
-                                <li style={{ flex: proportions.actions }}>
+                                <li className={styles.additionalInfo} style={{ flex: proportions.actions }}>
                                     Ações
                                 </li>
-                                <li style={{ flex: proportions.date }}>
+                                <li className={styles.additionalInfo} style={{ flex: proportions.date }}>
                                     Data
                                 </li>
                                 {
                                     !drafts &&
-                                    <li style={{ flex: proportions.views }}>
+                                    <li className={styles.additionalInfo} style={{ flex: proportions.views }}>
                                         Visualizações
                                     </li>
                                 }

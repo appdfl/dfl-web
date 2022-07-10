@@ -27,6 +27,7 @@ import CloudIcon from '@mui/icons-material/CloudOutlined';
 import { api } from "../../../../utils/api";
 import { formatPostContent } from "../../../../utils/posts";
 import SuccessAndErrorModal from "../../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal";
+import { useScreenSize } from "../../../../utils/hooks/useScreenSize";
 
 export default function EditPost() {
     const router = useRouter()
@@ -134,6 +135,8 @@ export default function EditPost() {
         }
     }
 
+    const { isScreenWide } = useScreenSize();
+
     return (
         <div className={`dashboard`}>
             <Head>
@@ -145,7 +148,7 @@ export default function EditPost() {
             <div style={{ paddingBottom: 0, height: "100vh" }} className={dashboardStyles.content}>
                 <DashboardHeader
                     returnButton title='Blog'
-                    subDirectory="/ Editar"
+                    subDirectory={isScreenWide && "/ Editar"}
                     customDirectory={fromPreview && `/dashboard/blog/post/preview`}
                     customDirectoryParams={fromPreview &&
                     {

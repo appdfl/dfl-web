@@ -129,19 +129,19 @@ export default function Dashboard() {
                     <div className={styles.contentFrame}>
                         <div className={styles.wrapper2}>
                             <DashboardSectionTitle title='Relatórios' />
-                            <div className={styles.holder}>
-                                <div style={{ flex: 0.5 }}>
-                                    <Map height='27.5rem' latitude={-14.235004} longitude={-51.92528} />
+                            <div className={`${styles.holder} ${styles.section1}`}>
+                                <div className={styles.map}>
+                                    <Map height='20rem' latitude={-14.235004} longitude={-51.92528} />
                                 </div>
-                                <div style={{ flex: 0.5, height: "100%" }}>
-                                    <ReportsList height='27.5rem' reports={stats.reports.reports} simpleLayout />
+                                <div className={styles.reportsList}>
+                                    <ReportsList maxHeight={'27.5rem'} reports={stats.reports.reports} simpleLayout={"onlyTitle"} />
                                 </div>
                             </div>
                         </div>
                         <div className={styles.wrapper2}>
                             <DashboardSectionTitle title='Estatísticas' />
                             <div className={styles.holder}>
-                                <div className={styles.wrapper} style={{ flex: 0.5 }}>
+                                <div className={styles.wrapper} style={{ flex: 1 }}>
                                     <h3>Usuários</h3>
                                     <div className={styles.holder}>
                                         <StatFrame children={
@@ -158,7 +158,7 @@ export default function Dashboard() {
                                         } />
                                     </div>
                                 </div>
-                                <div className={styles.wrapper} style={{ flex: 0.5 }}>
+                                <div className={styles.wrapper} style={{ flex: 1 }}>
                                     <h3>Relatórios</h3>
                                     <div className={styles.holder}>
                                         <StatFrame minWidth='24rem' children={
