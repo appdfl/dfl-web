@@ -8,6 +8,7 @@ import ReturnIcon from '@mui/icons-material/SubdirectoryArrowLeft';
 
 import { useAuthContext } from '../../../context/AuthContext';
 import DashboardProfilePopout from '../ProfilePopout';
+import { useScreenSize } from '../../../utils/hooks/useScreenSize';
 
 type Props = {
     title: string;

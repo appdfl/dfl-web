@@ -145,7 +145,7 @@ export default function DashboardReport() {
             <Sidebar />
 
             <div style={{ paddingBottom: 0 }} className={dashboardStyles.content}>
-                <DashboardHeader returnButton title='Relatórios' subDirectory={isScreenWide && "/ Relatório"} customDirectory={report === null && `/dashboard/reports?updateReports=true`} />
+                <DashboardHeader returnButton title='Relatórios' subDirectory={"/ Relatório"} customDirectory={report === null && `/dashboard/reports?updateReports=true`} />
 
                 <div className={styles.reportFrame}>
                     <header>

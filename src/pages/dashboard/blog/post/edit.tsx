@@ -135,8 +135,6 @@ export default function EditPost() {
         }
     }
 
-    const { isScreenWide } = useScreenSize();
-
     return (
         <div className={`dashboard`}>
             <Head>
@@ -148,7 +146,7 @@ export default function EditPost() {
             <div style={{ paddingBottom: 0, height: "100vh" }} className={dashboardStyles.content}>
                 <DashboardHeader
                     returnButton title='Blog'
-                    subDirectory={isScreenWide && "/ Editar"}
+                    subDirectory={"/ Editar"}
                     customDirectory={fromPreview && `/dashboard/blog/post/preview`}
                     customDirectoryParams={fromPreview &&
                     {

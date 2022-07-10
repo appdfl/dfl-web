@@ -7,6 +7,8 @@
 
     max-width: 30rem;
     position: absolute;
+    top: 100px;
+    right: 35px;
 
     text-align: left;
 
@@ -99,4 +101,11 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     /* text-fill-color: transparent; */
+}
+
+@media (min-width: 1024px) {
+    .container {
+        top: 100px;
+        right: 50px;
+    }
 }

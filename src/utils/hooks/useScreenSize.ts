@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 
 export const useScreenSize = () => {
-    const [isScreenWide, setIsScreenWide] = useState(false);
+    const [isScreenWide, setIsScreenWide] = useState(window.innerWidth >= 1024 ? true : false);
+    const [width, setWidth] = useState(window.innerWidth);
 
     function handleScreenResize() {
-        const width = window.innerWidth; /* Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) */
+        const windowWidth = window.innerWidth; /* Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) */
 
-        if (width >= 1024 && !isScreenWide) {
+        if (windowWidth >= 1024 && !isScreenWide) {
             console.log("Tela agora é larga.");
             setIsScreenWide(true);
-        } else if (width < 1024 && isScreenWide) {
+        } else if (windowWidth < 1024 && isScreenWide) {
             console.log("Tela agora é pequena.");
             setIsScreenWide(false);
         }
-        return width;
+        setWidth(windowWidth);
     }
-    const width = handleScreenResize();
 
     useEffect(() => {
         window.addEventListener('resize', handleScreenResize);

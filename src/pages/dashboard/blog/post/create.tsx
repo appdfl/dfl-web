@@ -127,8 +127,6 @@ export default function CreatePost() {
         }
     }
 
-    const { isScreenWide } = useScreenSize();
-
     return (
         <div className={`dashboard`}>
             <Head>
@@ -138,7 +136,7 @@ export default function CreatePost() {
             <Sidebar />
 
             <div style={{ paddingBottom: 0, height: "100vh" }} className={dashboardStyles.content}>
-                <DashboardHeader returnButton title='Blog' subDirectory={isScreenWide && "/ Criar"} />
+                <DashboardHeader returnButton title='Blog' subDirectory={"/ Criar"} />
 
                 <div id="postCreateContainer" className={styles.postFrame}>
                     <header>

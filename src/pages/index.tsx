@@ -537,7 +537,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
 
                         <span>Tendo isso dito, esperamos que você aproveite o app!</span>
 
-                        <a style={{ textDecoration: "none" }} href="https://expo.dev/artifacts/eas/3jpv6PdemyfhVkpbBx4ZUz.apk">
+                        <a style={{ textDecoration: "none" }} href="https://expo.dev/artifacts/eas/ukLUE8xd9mdsXfMLumj7VR.apk">
                             <button className={`button ${styles.button}`}>
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path

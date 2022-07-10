@@ -10,6 +10,7 @@
     align-items: center;
     flex-direction: row;
     gap: 1rem;
+    overflow: hidden;
 }
 
 .hoverClick:hover {
@@ -63,5 +64,11 @@
 @media (min-width: 1024px) {
     .title {
         font-size: 3.6rem;
+    }
+}
+
+@media (max-width: 350px) {
+    .directoryTitle {
+        display: none;
     }
 }

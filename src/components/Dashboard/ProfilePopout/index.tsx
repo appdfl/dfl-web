@@ -56,7 +56,6 @@ export default function DashboardProfilePopout({ isOpen, toggleOpen }: Props) {
                 isOpen && (
                     <motion.div
                         className={styles.container}
-                        style={{ top: 100, right: 50 }}
                         initial={"closed"}
                         animate={"open"}
                         exit={"closed"}
