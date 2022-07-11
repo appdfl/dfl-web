@@ -14,7 +14,7 @@ import { useScreenSize } from '../../utils/hooks/useScreenSize';
 export default function Header() {
     const router = useRouter();
 
-    const isHome = router.asPath === '/';
+    const isHome = router.pathname === '/';
 
     const navLine = useRef(null);
     function updateNavLine(button) {
@@ -22,8 +22,6 @@ export default function Header() {
         // navLine.style.width = `${element.offsetWidth}px`;
         if (button && navLine.current && isHome) {
             navLine.current.style.left = `${button.offsetLeft + (button.offsetWidth / 2) - (navLine.current.offsetWidth / 2)}px`;
-        } else {
-            return console.warn("Um botão não foi encontrado para ser selecionado.")
         }
     }
 

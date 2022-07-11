@@ -70,7 +70,7 @@ export default function Reports() {
             >
                 <DashboardHeader title='Relatórios' />
                 <div style={{ width: "100%" }}>
-                    <ReportsList simpleLayout={!isScreenWide && "onlyTitle"} reports={reports} />
+                    <ReportsList simpleLayout={!isScreenWide ? "mobile" : null} reports={reports} />
                 </div>
             </motion.div>
         </AnimatePresence>

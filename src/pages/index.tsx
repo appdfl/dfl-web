@@ -56,7 +56,7 @@ export async function getStaticProps() {
             usersAmount,
             blogData
         },
-        revalidate: 60,
+        revalidate: 86400,
     };
 }
 
@@ -69,6 +69,14 @@ type Props = {
     blogData: Array<Post>
     usersAmount: number;
 }
+
+import phone_overlay from "/public/images/phone_overlay.png";
+
+import communityScreen from "/public/images/screens/CommunityScreen.png";
+import reportsScreen from "/public/images/screens/ReportsScreen.png";
+
+import reportScreen_1 from "/public/images/screens/ReportScreen_1.png"
+import reportScreen_2 from "/public/images/screens/ReportScreen_2.png"
 
 const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -147,20 +155,44 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
 
     const PhoneContainer = <div className={styles["phone-container"]}>
         <div className={styles["overlay-container"]}>
-            <img className={styles["phone-overlay"]} src="/images/phone_overlay.png"
-                alt="Modelo de telefone que circunda imagens de telas presentes no aplicativo." />
+            <Image
+                priority
+                className={styles["phone-overlay"]} width={265} height={535}
+                src={phone_overlay}
+                alt="Modelo de telefone que circunda imagens de telas presentes no aplicativo."
+            />
         </div>
-        <img className={`${styles["app-overlay"]} ${aboutInstancesVisible === true ? "fadeIn" : "fadeOut"}`} src={currentTag === "community" ? "/images/screens/CommunityScreen.png" : currentTag === "reports" ? "/images/screens/ReportsScreen.png" : "/images/screens/ReportScreen_1.png"}
-            alt='Tela da seção "Comunidade" do aplicativo móvel.' />
+        <div style={{ position: "relative", top: "-100%" }}>
+            <Image
+                priority
+                className={`${styles["app-overlay"]} ${aboutInstancesVisible === true ? "fadeIn" : "fadeOut"}`}
+                width={233} height={502}
+                src={currentTag === "community" ? communityScreen : currentTag === "reports" ? reportsScreen : reportScreen_1}
+                alt='Tela da seção "Comunidade" do aplicativo móvel.'
+            />
+        </div>
     </div>
 
     const PhoneContainer2 = <div className={`${styles["phone-container"]} ${aboutInstancesVisible === true ? "fadeIn" : "fadeOut"}`}>
         <div className={styles["overlay-container"]}>
-            <img className={styles["phone-overlay"]} src="/images/phone_overlay.png"
+            <Image
+                priority
+                className={styles["phone-overlay"]}
+                width={265}
+                height={535}
+                src={phone_overlay}
                 alt="Modelo de telefone que circunda imagens de telas presentes no aplicativo." />
         </div>
-        <img className={`${styles["app-overlay"]}`} src={"/images/screens/ReportScreen_2.png"}
-            alt='Tela da seção "Comunidade" do aplicativo móvel.' />
+        <div style={{ position: "relative", top: "-100%" }}>
+            <Image
+                priority
+                className={`${styles["app-overlay"]}`}
+                width={233}
+                height={502}
+                src={reportScreen_2}
+                alt='Tela da seção "Comunidade" do aplicativo móvel.'
+            />
+        </div>
     </div>
 
     const pinnedPost = blogData.find(post => post.pinned === true)
@@ -373,7 +405,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                             </Link>
                         }
                         <Link href={`/blog/${lastPost.id}`}>
-                            <div style={{ flex: 1, height: "fit-content" }} className={styles.blogCardContainer}>
+                            <div style={{ height: "fit-content" }} className={styles.blogCardContainer}>
                                 <header className={`${styles.holder}`}>
                                     <RecentIcon className={`${styles.blogIcon} ${styles.light}`} />
                                     <h4 className={`${styles.cardTitle} ${styles.light}`}>Último artigo</h4>

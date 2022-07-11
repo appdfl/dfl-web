@@ -67,7 +67,7 @@ export default function Configurations() {
                             <div className={`${reportStyles.holder} ${reportStyles.align} ${reportStyles.option}`}>
                                 <div style={{ flex: 0.6 }} className={reportStyles.optionText}>
                                     <h4><strong>Ativar tema escuro</strong> <br /></h4>
-                                    <p>Este relatório será ocultado e arquivado automaticamente e o usuário que o postou sofrerá uma penalidade.</p>
+                                    <p>Alterna o esquema de cores da página para um tema mais agradável aos olhos em ambientes de baixa luminosidade.</p>
                                 </div>
                                 <div style={{ display: "flex", width: "5rem" }}>
                                     <div className={"toggle_switch"}>

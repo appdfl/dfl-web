@@ -58,9 +58,12 @@ export default function EditPost() {
             setContent(text)
         }
         const element = document.getElementById("postCreateContainer")
-        console.log("Atualizando o tamanho do textarea")
-        element.style.height = "1px";
-        element.style.height = (3 + element.scrollHeight) + "px";
+        //console.log("Atualizando o tamanho do textarea")
+
+        if (element) {
+            element.style.height = "1px";
+            element.style.height = (3 + element.scrollHeight) + "px";
+        }
     }
 
     const checkInputs = async () => {

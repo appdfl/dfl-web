@@ -120,7 +120,7 @@ export default function Dashboard() {
                                     <Map height='20rem' latitude={-14.235004} longitude={-51.92528} />
                                 </div>
                                 <div className={styles.reportsList}>
-                                    <ReportsList maxHeight={'27.5rem'} reports={stats.reports.reports} simpleLayout={"onlyTitle"} />
+                                    <ReportsList maxHeight={'27.5rem'} reports={stats.reports.reports} simpleLayout={"mobile"} />
                                 </div>
                             </div>
                         </div>

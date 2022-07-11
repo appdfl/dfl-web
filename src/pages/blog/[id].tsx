@@ -12,24 +12,29 @@ import styles from "/src/styles/blog.module.css"
 
 import { getAllPostIds, getPostDataFormatted } from '../../utils/posts';
 import Layout from '../../components/Layout';
+import { useRouter } from 'next/router';
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const paths = await getAllPostIds();
     return {
         paths,
-        fallback: "blocking",
+        fallback: false,
     };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const postData = await getPostDataFormatted(params.id as string);
-    return {
-        props: { postData },
-        revalidate: 10,
-    };
+    if (postData) {
+        return {
+            props: { postData },
+            revalidate: 86400,
+        };
+    }
 }
 
 export default function Post({ postData }) {
+    const router = useRouter();
+
     return (
         <div style={{ backgroundColor: "var(--background-02)" }}>
             <Head>

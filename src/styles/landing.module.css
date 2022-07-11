@@ -431,7 +431,7 @@
     flex-direction: column;
     gap: 0.5rem;
 
-    flex: 1;
+    width: 100%;
 }
 
 .blogWrapper .blogIcon {
@@ -521,7 +521,6 @@
 
 .blogPostInfo p {
     color: var(--background-modal);
-
 }
 
 /* Modal Footer */
@@ -843,7 +842,7 @@
     }
 
     .blogCardContainer {
-        flex: 0.5;
+        flex: 1;
     }
 
     .blogPostInfo {

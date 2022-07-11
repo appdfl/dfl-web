@@ -129,7 +129,7 @@ export default function Sidebar(/* { actualSection }: Props */) {
                 />
             </div>
 
-            {
+            {/* {
                 isScreenWide &&
                 <div className={styles.reportFrame}>
                     <ReportIcon className={styles.reportIcon} />
@@ -140,9 +140,19 @@ export default function Sidebar(/* { actualSection }: Props */) {
                         <span>REPORTAR</span>
                     </button>
                 </div>
-            }
+            } */}
 
             {
+                isScreenWide &&
+                <div className={styles.reportFrame}>
+                    <ReportIcon className={styles.reportIcon} />
+                    <h6>Quadro de Avisos</h6>
+                    <p>{`Por conta de otimização, peço a todos que alterem o tema da página para o "Modo Escuro", na página "Configurações", por meio do menu exibido ao clicar em sua foto de perfil :)`}</p>
+                </div>
+            }
+
+
+            {/* {
                 isScreenWide &&
                 <footer className={styles.footer}>
                     <li className={"mode"}>
@@ -160,7 +170,7 @@ export default function Sidebar(/* { actualSection }: Props */) {
                         </div>
                     </li>
                 </footer>
-            }
+            } */}
         </nav>
     );
 }

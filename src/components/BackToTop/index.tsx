@@ -13,9 +13,12 @@ export default function BackToTop() {
     }
 
     useEffect(() => {
-        window.addEventListener('scroll', showBackToTopButtonOnScroll);
-        return () => window.removeEventListener('scroll', showBackToTopButtonOnScroll);
-    });
+        const backToTopButton = document.querySelector(`.${styles.backToTopButton}`)
+        if (backToTopButton) {
+            window.addEventListener('scroll', showBackToTopButtonOnScroll);
+            return () => window.removeEventListener('scroll', showBackToTopButtonOnScroll);
+        }
+    }, []);
 
     return (
         <a className={styles.backToTopButton} href="#">

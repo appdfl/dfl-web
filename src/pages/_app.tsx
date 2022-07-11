@@ -29,7 +29,7 @@ export default function App({ Component, pageProps, router }: AppPropsWithLayout
     return (
         <AuthProvider>
             <RouteGuard>
-                <ThemeProvider defaultTheme='light'>
+                <ThemeProvider defaultTheme="system">
                     <AnimatePresence exitBeforeEnter onExitComplete={handleExitComplete} >
                         <Layout Component={Component} pageProps={pageProps} key={router.route} />
                     </AnimatePresence>

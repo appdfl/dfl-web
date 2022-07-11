@@ -86,16 +86,15 @@ export default function ReportsList({ reports, simpleLayout, maxHeight }: Props)
                 <Link key={report.id} href={{ pathname: "/dashboard/reports/report", query: { report: JSON.stringify(report) } }} as={`/dashboard/reports/report`}>
                     <li className={styles.reportContainer} key={report.id}>
                         <div className={styles.reportItem}>
-                            <h3 style={{ flex: simpleLayout === "onlyTitle" ? 1 : 0.4 }} className={styles.address}>{report.address}</h3>
+                            <h3 className={styles.address}>{report.address}</h3>
+                            <div className={styles.user}>
+                                <img className={dashboardStyles.profileImage} src={report.profile.image_url} alt="Imagem de perfil do usuário que publicou o relatório" />
+                                <p className={styles.username}>{report.profile.username}</p>
+                            </div>
+                            <p className={styles.date}>{`${day}/${month}/${date.getUTCFullYear()}`}</p>
                             {
-                                simpleLayout !== "onlyTitle" &&
+                                simpleLayout !== "mobile" &&
                                 <>
-                                    <div className={styles.user}>
-                                        <img className={dashboardStyles.profileImage} src={report.profile.image_url} alt="Imagem de perfil do usuário que publicou o relatório" />
-                                        <p className={styles.username}>{report.profile.username}</p>
-                                    </div>
-                                    <p className={styles.date}>{`${day}/${month}/${date.getUTCFullYear()}`}</p>
-
                                     <p className={styles.rating}>{GetRatingsAverage(report)}</p>
 
                                     <input type="checkbox" className={styles.hasTrashBins} name="hasTrashBins" readOnly checked={report.hasTrashBins} />
@@ -180,11 +179,11 @@ export default function ReportsList({ reports, simpleLayout, maxHeight }: Props)
                 <div style={{ maxHeight: maxHeight ? maxHeight : "fitContent" }} className={styles.holder}>
                     <header className={styles.header}>
                         <ul>
-                            <li style={{ flex: simpleLayout === "onlyTitle" ? 1 : 0.4 }} className={styles.address}>
-                                Endereço
+                            <li className={styles.address}>
+                                {simpleLayout === "mobile" ? "Relatório" : "Endereço"}
                             </li>
                             {
-                                simpleLayout !== "onlyTitle" &&
+                                simpleLayout !== "mobile" &&
                                 <>
                                     <li className={styles.user}>
                                         Usuário

@@ -67,11 +67,15 @@ export async function getPostDataFormatted(id: string) {
     const dataResponse = await api.get(`/post/${id}`)
     const post = dataResponse.data;
     const contentHtml = await formatPostContent(post.content)
-    const date = new Date(post.createdAt).toLocaleDateString('pt-BR')
-    return {
-        ...post,
-        date,
-        contentHtml,
+    if (post.content) {
+        const date = new Date(post.createdAt).toLocaleDateString('pt-BR')
+        return {
+            ...post,
+            date,
+            contentHtml,
+        }
+    } else {
+        return null
     }
 }
 
