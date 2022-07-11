@@ -159,6 +159,8 @@
     gap: 0.5rem;
     flex: 1;
 
+    width: 100vw;
+
     /* overflow-y: scroll; */
 }
 
@@ -180,91 +182,6 @@
 
     margin-top: 3rem;
     border-top: 1px solid var(--border);
-}
-
-.footer .mode {
-    width: 7.5rem;
-    border-radius: 0.6rem;
-    background-color: var(--background-02);
-    position: relative;
-    transition: var(--transition-05);
-}
-
-
-.footer .mode .moon_sun {
-    height: 5rem;
-    width: 6rem;
-}
-
-.footer .mode .moon_sun {
-    display: none;
-}
-
-.mode .moon_sun .centralize {
-    height: 100%;
-    position: absolute;
-}
-
-.mode .moon_sun .moon {
-    opacity: 0;
-}
-
-.mode .moon_sun .sun {
-    opacity: 1;
-}
-
-[data-theme='dark'] .mode .moon_sun .sun {
-    opacity: 0;
-}
-
-[data-theme='dark'] .mode .moon_sun .moon {
-    opacity: 1;
-}
-
-.centralize {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.footer .toggle_switch {
-    position: absolute;
-    right: 0;
-    height: 100%;
-    min-width: 6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.6rem;
-    cursor: pointer;
-
-    background-color: var(--accent-color);
-}
-
-.toggle_switch .switch {
-    position: relative;
-    height: 2.2rem;
-    width: 4rem;
-    border-radius: 2.5rem;
-    background-color: var(--lighter-gray);
-    transition: var(--transition-05);
-}
-
-.switch::before {
-    content: '';
-    position: absolute;
-    height: 1.5rem;
-    width: 1.5rem;
-    border-radius: 50%;
-    top: 50%;
-    left: 0.5rem;
-    transform: translateY(-50%);
-    background-color: var(--background-01);
-    transition: var(--transition-04);
-}
-
-[data-theme='dark'] .switch::before {
-    left: 2rem;
 }
 
 .reportFrame {
@@ -363,10 +280,6 @@
         width: 100%;
     }
 
-    .sidebar .footer .toggle_switch {
-        background-color: rgba(0, 0, 0, 0);
-    }
-
     .menu {
         height: fit-content;
         display: flex;
@@ -375,19 +288,7 @@
         width: 100%;
     }
 
-    .footer .mode {
-        width: fit-content;
-    }
-
     .footer::before {
         width: 100%;
-    }
-
-    .footer .mode {
-        width: 100%;
-    }
-
-    .footer .mode .moon_sun {
-        display: block;
     }
 }

@@ -142,28 +142,25 @@ export default function Sidebar(/* { actualSection }: Props */) {
                 </div>
             }
 
-
-            <footer className={styles.footer}>
-                <li className={styles.mode}>
-                    {
-                        isScreenWide &&
-                        <>
-                            <div className={styles.moon_sun}>
-                                <div className={styles.centralize}>
-                                    <DarkModeIcon className={`${styles.icon} ${styles.moon}`} />
-                                </div>
-                                <div className={styles.centralize}>
-                                    <LightModeIcon className={`${styles.icon} ${styles.sun}`} />
-                                </div>
+            {
+                isScreenWide &&
+                <footer className={styles.footer}>
+                    <li className={"mode"}>
+                        <div className={"moon_sun"}>
+                            <div className={"centralize"}>
+                                <DarkModeIcon className={`${styles.icon} moon`} />
                             </div>
-                            <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{theme === "dark" ? "Modo Escuro" : "Modo Claro"}</p></div>
-                        </>
-                    }
-                    <div className={styles.toggle_switch}>
-                        <span onClick={switchTheme} className={styles.switch}></span>
-                    </div>
-                </li>
-            </footer>
+                            <div className={"centralize"}>
+                                <LightModeIcon className={`${styles.icon} sun`} />
+                            </div>
+                        </div>
+                        <div className={`${styles.modeText}`}><p className={`${styles.text}`}>{theme === "dark" ? "Modo Escuro" : "Modo Claro"}</p></div>
+                        <div className={"toggle_switch"}>
+                            <span onClick={switchTheme} className={"switch"}></span>
+                        </div>
+                    </li>
+                </footer>
+            }
         </nav>
     );
 }

@@ -157,7 +157,7 @@ export default function DashboardReport() {
                             </div>
                             <span>•</span>
                             <div className={styles.holder}>
-                                <img className={dashboardStyles.profileImage} src={reportObject.profile.image_url} alt="Imagem do perfil do usuário que postou o relatório" />
+                                <img className={dashboardStyles.profileImage} src={reportObject.profile ? reportObject.profile.image_url : "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640"} alt="Imagem do perfil do usuário que postou o relatório" />
                                 <p>relatado por <strong>{reportObject.profile.username}</strong></p>
                             </div>
                         </div>

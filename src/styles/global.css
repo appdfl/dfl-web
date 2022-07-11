@@ -332,6 +332,91 @@ section p {
     line-height: 2.5rem;
 }
 
+/* TOGGLE SWITCH */
+
+.centralize {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.mode {
+    width: 7.5rem;
+    border-radius: 0.6rem;
+    background-color: var(--background-02);
+    position: relative;
+    transition: var(--transition-05);
+}
+
+.mode .moon_sun {
+    height: 5rem;
+    width: 6rem;
+}
+
+.mode .moon_sun {
+    display: none;
+}
+
+.mode .moon_sun .centralize {
+    height: 100%;
+    position: absolute;
+}
+
+.mode .moon_sun .moon {
+    opacity: 0;
+}
+
+.mode .moon_sun .sun {
+    opacity: 1;
+}
+
+[data-theme='dark'] .mode .moon_sun .sun {
+    opacity: 0;
+}
+
+[data-theme='dark'] .mode .moon_sun .moon {
+    opacity: 1;
+}
+
+.toggle_switch {
+    display: flex;
+    min-width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.6rem;
+    cursor: pointer;
+
+    /* background-color: var(--accent-color); */
+}
+
+.toggle_switch .switch {
+    position: relative;
+    height: 2.2rem;
+    width: 4rem;
+    border-radius: 2.5rem;
+    background-color: var(--lighter-gray);
+    transition: var(--transition-05);
+}
+
+.switch::before {
+    content: '';
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    background-color: var(--background-01);
+    transition: var(--transition-04);
+}
+
+[data-theme='dark'] .switch::before {
+    left: 2rem;
+}
+
 @media (min-width: 1024px) {
     .wrapper {
         width: min(112rem, 100%);
@@ -346,5 +431,17 @@ section p {
     .header {
         padding-top: calc(var(--nav-height) + 12rem);
         padding-bottom: 12rem;
+    }
+
+    .toggle_switch {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .mode {
+        width: 100%;
+    }
+
+    .mode .moon_sun {
+        display: block;
     }
 }

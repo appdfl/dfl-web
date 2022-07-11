@@ -1,27 +1,21 @@
 import Head from 'next/head';
-import Link from 'next/link';
 
 import styles from "/src/styles/dashboard/dashboard.module.css";
 
-import Sidebar from '../../components/Dashboard/Menu';
 import DashboardHeader from '../../components/Dashboard/Header';
 import { useEffect, useState } from 'react';
-import { useTheme } from 'next-themes';
-import DashboardModal from '../../components/Dashboard/Modal';
-
-import DeleteIcon from '@mui/icons-material/DeleteOutline';
-import DashboardButton from '../../components/Dashboard/Button';
 
 import { motion, AnimatePresence } from "framer-motion";
+
 import DashboardSectionTitle from '../../components/Dashboard/SectionTitle';
 import ReportsList from '../../components/Dashboard/ReportsList';
 import Map from '../../components/Dashboard/Map';
 import StatFrame from '../../components/Dashboard/Statistics/StatFrame';
+import Layout from '../../components/Dashboard/Layout';
+
 import { getReportsData } from '../../utils/reports';
 import { Profile, Report } from '../../@types/application';
 import { getUsersData } from '../../utils/users';
-import Layout from '../../components/Dashboard/Layout';
-
 
 export default function Dashboard() {
 
@@ -102,14 +96,6 @@ export default function Dashboard() {
             opacity: 0
         }
     };
-
-    /* (
-       <div className={`dashboard`}>
-           <Head>
-               <title>Dashboard</title>
-           </Head>
-
-           <Sidebar /> */
 
     return (
         <>

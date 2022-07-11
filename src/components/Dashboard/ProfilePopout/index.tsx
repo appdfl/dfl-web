@@ -86,7 +86,7 @@ export default function DashboardProfilePopout({ isOpen, toggleOpen }: Props) {
                         </header>
                         <div style={{ backgroundColor: "var(--background-01)" }} className={styles.line}></div>
                         <ul className={styles.buttons}>
-                            <NavLink title='Configurações' Icon={ConfigIcon} defaultSvg href={`/dashboard/config`} />
+                            <NavLink title='Configurações' Icon={ConfigIcon} defaultSvg href={`/dashboard/configurations`} />
                             <NavLink title='Log-out' Icon={LogoutIcon} onClick={logoutAdmin} />
                         </ul>
                     </motion.div>
