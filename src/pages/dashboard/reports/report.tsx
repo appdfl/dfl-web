@@ -30,8 +30,11 @@ import { useResize } from "../../../utils/hooks/useResize";
 import { api } from "../../../utils/api";
 import SuccessAndErrorModal from "../../../components/Dashboard/Modal/Presets/SuccessAndErrorModal";
 import { useScreenSize } from "../../../utils/hooks/useScreenSize";
+import { useAuthContext } from "../../../context/AuthContext";
 
 export default function DashboardReport() {
+    const { admin } = useAuthContext();
+
     const router = useRouter()
     const { report } = router.query
 
@@ -309,41 +312,44 @@ export default function DashboardReport() {
                         <CommentsList comments={reportObject.comments ? reportObject.comments : []} />
                     </div>
 
-                    <div className={`${styles.panel} ${styles.align}`}>
-                        <h3 className={styles.header}>Zona de Perigo</h3>
-                        <div style={{ border: `0.5px solid #D1351B` }} className={`${styles.container}`}>
-                            <div className={`${styles.holder} ${styles.align} ${styles.option}`}>
-                                <div className={styles.optionText}>
-                                    <h4><strong>Denunciar relatório</strong> <br /></h4>
-                                    <p>Este relatório será ocultado e arquivado automaticamente e o usuário que o postou sofrerá uma penalidade.</p>
+                    {
+                        admin.role === "admin" &&
+                        <div className={`${styles.panel} ${styles.align}`}>
+                            <h3 className={styles.header}>Zona de Perigo</h3>
+                            <div style={{ border: `0.5px solid #D1351B` }} className={`${styles.container}`}>
+                                <div className={`${styles.holder} ${styles.align} ${styles.option}`}>
+                                    <div className={styles.optionText}>
+                                        <h4><strong>Denunciar relatório</strong> <br /></h4>
+                                        <p>Este relatório será ocultado e arquivado automaticamente e o usuário que o postou sofrerá uma penalidade.</p>
+                                    </div>
+                                    <DashboardButton
+                                        title={`Denunciar Relatório`}
+                                        Icon={ReportIcon}
+                                        iconSize={"small"}
+                                        onClick={() => setReportModalVisible(true)}
+                                        width={isScreenWide && `20rem`}
+                                        fontSize={`1.2rem`}
+                                    />
                                 </div>
-                                <DashboardButton
-                                    title={`Denunciar Relatório`}
-                                    Icon={ReportIcon}
-                                    iconSize={"small"}
-                                    onClick={() => setReportModalVisible(true)}
-                                    width={isScreenWide && `20rem`}
-                                    fontSize={`1.2rem`}
-                                />
-                            </div>
-                            <div style={{ backgroundColor: "#D1351B" }} className={styles.line}></div>
-                            <div className={`${styles.holder} ${styles.align} ${styles.option}`}>
-                                <div className={styles.optionText}>
-                                    <h4><strong>Deletar relatório</strong> <br /></h4>
-                                    <p>Ao deletar um relatório, não há mais volta. Pense bem antes de fazer isso.</p>
+                                <div style={{ backgroundColor: "#D1351B" }} className={styles.line}></div>
+                                <div className={`${styles.holder} ${styles.align} ${styles.option}`}>
+                                    <div className={styles.optionText}>
+                                        <h4><strong>Deletar relatório</strong> <br /></h4>
+                                        <p>Ao deletar um relatório, não há mais volta. Pense bem antes de fazer isso.</p>
+                                    </div>
+                                    <DashboardButton
+                                        title={`Deletar Relatório`}
+                                        Icon={DeleteIcon}
+                                        iconSize={"small"}
+                                        onClick={() => setDeleteModalVisible(true)}
+                                        color={`#D1351B`}
+                                        width={isScreenWide && `20rem`}
+                                        fontSize={`1.2rem`}
+                                    />
                                 </div>
-                                <DashboardButton
-                                    title={`Deletar Relatório`}
-                                    Icon={DeleteIcon}
-                                    iconSize={"small"}
-                                    onClick={() => setDeleteModalVisible(true)}
-                                    color={`#D1351B`}
-                                    width={isScreenWide && `20rem`}
-                                    fontSize={`1.2rem`}
-                                />
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
 

@@ -563,7 +563,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                         <p>Ou seja, mesmo que já estejamos cientes de alguns problemas, pedimos que compartilhem conosco por meio de nosso Instagram qualquer falha identificada no aplicativo.</p>
                         <p>Agora que o estado do app foi explicado, precisamos deixar claro que, por enquanto, só é possível baixar o aplicativo em dispositivos Android. Por fora da PlayStore.</p>
                         <p>
-                            Esperamos que os motivos tenham ficado explícitos no nosso F.A.Q.
+                            Isso implica em que, ao baixar o arquivo .apk, o Play Protect acusará o aplicativo como malicioso, mas não se preocupe, isso ocorre pois o app não foi enviado para a revisão da Google.
                             Um guia detalhado de como instalar o aplicativo em seu dispositivo está disponível logo atrás dessa mensagem.
                         </p>
 

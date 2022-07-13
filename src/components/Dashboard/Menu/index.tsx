@@ -84,6 +84,7 @@ export default function Sidebar(/* { actualSection }: Props */) {
     }, [])
 
     const iconOnly = isScreenWide === true ? false : true
+    const showBlog = admin.role === "admin" || admin.role === "moderator" || admin.role === "redactor" && isScreenWide ? true : false
 
     return (
         <nav className={`${styles.sidebar} ${sidebarOpened ? "" : styles.closed}`}>
@@ -120,13 +121,16 @@ export default function Sidebar(/* { actualSection }: Props */) {
                     padding={!isScreenWide && `2rem`}
                     isActualSection={actualSection === "statistics"}
                 />
-                <NavLink title={"Blog"} href={"/dashboard/blog"}
-                    Icon={BlogIcon}
-                    iconOnly={iconOnly}
-                    padding={!isScreenWide && `2rem`}
-                    isActualSection={actualSection === "blog"}
-                    disabled={admin.role !== "redactor" && admin.role !== "admin" ? true : false}
-                />
+                {
+                    showBlog &&
+                    <NavLink title={"Blog"} href={"/dashboard/blog"}
+                        Icon={BlogIcon}
+                        iconOnly={iconOnly}
+                        padding={!isScreenWide && `2rem`}
+                        isActualSection={actualSection === "blog"}
+                        disabled={admin.role !== "redactor" && admin.role !== "admin" ? true : false}
+                    />
+                }
             </div>
 
             {/* {

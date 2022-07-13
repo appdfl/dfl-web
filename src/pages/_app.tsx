@@ -41,8 +41,10 @@ export default function App({ Component, pageProps, router }: AppPropsWithLayout
 
 const Layout = ({ Component, pageProps }) => {
     if (Component.getLayout) {
-        return Component.getLayout(<Component {...pageProps} />);
+        return Component.getLayout(<Component title="Password Protected"
+            path="edge-functions/basic-auth-password" {...pageProps} />);
     } else {
-        return <Component {...pageProps} />;
+        return <Component title="Password Protected"
+            path="edge-functions/basic-auth-password" {...pageProps} />;
     }
 };
