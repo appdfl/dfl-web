@@ -465,7 +465,7 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                         <h4>Guia de Download</h4>
                         <h2>Como instalar o aplicativo?</h2>
                         <p>Ainda estamos trabalhando no aplicativo, por isso, não tivemos a oportunidade de tornar o aplicativo
-                            disponível na PlayStore.<br />
+                            disponível na Play Store.<br />
                             <span className="underlined">Por enquanto, pedimos que siga os seguinte passos:</span>
                         </p>
                     </header>
@@ -519,9 +519,28 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
 
             <BackToTop />
             <Modal
-                title={`Eita! Parece que temos um problema...`}
+                title={isScreenWide ? `Eita! Parece que temos um problema...` : `Acesso Antecipado da Escola Avançada de Tecnologia (EAT)`}
                 content={<>
-                    <p>
+                    {
+                        isScreenWide ?
+                            <div>
+                                <p>Infelizmente, o aplicativo atualmente só está disponível para dispositivos Android.</p>
+                            </div>
+                            :
+                            <div>
+                                <a style={{ textDecoration: "none" }}>
+                                    <button onClick={() => setDownloadModalOpen(true)} className={`button ${styles.button}`}>
+                                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M17.4166 8.70825H13.75V3.20825H8.24998V8.70825H4.58331L11 15.1249L17.4166 8.70825ZM10.0833 10.5416V5.04159H11.9166V10.5416H12.9891L11 12.5308L9.01081 10.5416H10.0833ZM4.58331 16.9583H17.4166V18.7916H4.58331V16.9583Z"
+                                                fill="#F3F7F4" />
+                                        </svg>
+                                        Ir para o download
+                                    </button>
+                                </a>
+                            </div>
+                    }
+                    {/* <p>
                         Como você já deve estar sabendo, o aplicativo ainda não está pronto. <br />
                         Pedimos a você que fique atento às nossas <a target="_blank"
                             href="https://instagram.com/appdfl">redes sociais</a> pois por lá postaremos qualquer novidade
@@ -529,15 +548,15 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                         Mas <small><i>spoilerzinho</i></small>: tamo chegando lá.
                         <br /> <br />
                         - Atenciosamente, Edu da Equipe DFL 💚
-                    </p>
+                    </p> */}
                 </>}
-                footerContent={<div className={styles.footer}>
+                /* footerContent={!isScreenWide && <div className={styles.footer}>
                     <p>Possui um código de <strong>acesso antecipado</strong>?</p>
                     <div>
                         <input autoCapitalize="none" value={code} onChange={(event) => setCode(event.target.value)} spellCheck={false} maxLength={16} type="text" name="" id="" />
                         <Send onClick={checkBetaCode} style={{ cursor: "pointer", color: "var(--background-color-01)" }} />
                     </div>
-                </div>}
+                </div>} */
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
             />
@@ -550,10 +569,13 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                             <h6>Isso significa que, ao baixar o aplicativo, você entende que ele pode apresentar falhas, instabilidades e problemas.</h6>
                         </header>
 
-                        {
-                            isScreenWide &&
-                            <h4>Atenção! Esse arquivo só funciona em dispositivos móveis Android!</h4>
-                        }
+                        {/* {
+                            isScreenWide && */}
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: `2rem`, padding: `3.5rem`, backgroundColor: `var(--primary-color-04)`, borderRadius: `0.5rem` }}>
+                            <img style={{ filter: `invert(80%)` }} src="/images/alphalumen-instituto.png" alt="Logo do alphaLumen" />
+                            <h4 style={{ color: `var(--font-color)` }}>{`Atenção! Essa versão está disponível por tempo limitado durante a EAT (Escola Avançada de Tecnologia) fornecida pelo Instituto Alpha Lumen. O download ficará indisponível após o fim do evento, às 23:59 do dia 22/07/2022. `}</h4>
+                        </div>
+                        {/* } */}
 
                         <p>Nada deve divergir de maneira exagerada do esperado, mas alguns problemas incluem: <br /><br />
                             • Ter que relogar no aplicativo constantemente, por conta de autenticação <br />
@@ -561,15 +583,13 @@ const Landing = ({ aboutData, reportsObject, usersAmount, blogData }: Props) => 
                             • Ter que esperar mais que o normal para que o servidor responda a suas ações <br />
                         </p>
                         <p>Ou seja, mesmo que já estejamos cientes de alguns problemas, pedimos que compartilhem conosco por meio de nosso Instagram qualquer falha identificada no aplicativo.</p>
-                        <p>Agora que o estado do app foi explicado, precisamos deixar claro que, por enquanto, só é possível baixar o aplicativo em dispositivos Android. Por fora da PlayStore.</p>
-                        <p>
-                            Isso implica em que, ao baixar o arquivo .apk, o Play Protect acusará o aplicativo como malicioso, mas não se preocupe, isso ocorre pois o app não foi enviado para a revisão da Google.
-                            Um guia detalhado de como instalar o aplicativo em seu dispositivo está disponível logo atrás dessa mensagem.
-                        </p>
+                        <p>Precisamos deixar claro que, por enquanto, só é possível baixar o aplicativo em dispositivos Android. Por fora da PlayStore.</p>
+                        <p> <b> Isso implica que, ao baixar o arquivo .apk, o Play Protect acusará o aplicativo como malicioso, mas não se preocupe, isso ocorre pois o app não foi enviado para a revisão da Google.</b></p>
+                        <p>Um guia detalhado de como instalar o aplicativo em seu dispositivo está disponível logo atrás dessa mensagem.</p>
 
                         <span>Tendo isso dito, esperamos que você aproveite o app!</span>
 
-                        <a style={{ textDecoration: "none" }} href="https://expo.dev/artifacts/eas/kGCj8KTU1uhei7gBnk6vBY.apk">
+                        <a style={{ textDecoration: "none" }} href="https://expo.dev/artifacts/eas/cYdpfdJ7WrAbn4Vh7emY8a.apk">
                             <button className={`button ${styles.button}`}>
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
