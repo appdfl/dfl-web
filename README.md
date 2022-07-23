@@ -41,13 +41,12 @@ Utilize o **yarn** ou o **npm install** para instalar as dependências do projet
 Em seguida, inicie o projeto.
 
 ```cl
-npm run start
+npm run start // ou next dev para ambientes de desenvolvimento local
 ```
-
 
 
 ## 📄 Licença
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 <br />
