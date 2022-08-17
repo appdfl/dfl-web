@@ -15,38 +15,38 @@
 ![cover](.github/cover.png?style=flat)
 
 
-## 💻 Projeto
-Um aplicativo que irá lhe ajudar a reportar focos de lixo e encontrar pontos de coleta em sua cidade.
+## 💻 Project
+An application that will help you to report garbage outbreaks and find collection points in your city.
 
-## ✨ Tecnologias
+## ✨ Technologies
 
--   [ ] HTML
--   [ ] CSS
--   [ ] JavaScript
--   [ ] React
--   [ ] Next.js
--   [ ] Material Icons
--   [ ] Express
--   [ ] Axios
+- [ ] HTML
+- [ ] CSS
+- [ ] JavaScript
+- [ ] React
+- [ ] Next.js
+- [ ] Material Icons
+- [ ] Express
+- [ ] Axios
 
 
 ## 🔖 Layout
 
-Você pode visualizar o layout do projeto através [desse link](https://www.figma.com/file/6PllN3nfMjMHgkNk6AKCRV). É necessário ter conta no [Figma](http://figma.com/) para acessá-lo.
+You can view the layout of the project through [this link](https://www.figma.com/file/6PllN3nfMjMHgkNk6AKCRV). You need an account on [Figma](http://figma.com/) to access it.
 
 
-## Executando o projeto
+## Running the project
 
-Utilize o **yarn** ou o **npm install** para instalar as dependências do projeto.
-Em seguida, inicie o projeto.
+Use **yarn** or **npm install** to install project dependencies.
+Then start the project.
 
 ```cl
-npm run start // ou next dev para ambientes de desenvolvimento local
+npm run start // or next dev for local development environments
 ```
 
 
-## 📄 Licença
+## 📄 License
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.
 
 <br />
